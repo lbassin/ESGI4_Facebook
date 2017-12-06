@@ -8389,6 +8389,11 @@ body {
   -webkit-animation: pulse 1.5s infinite;
 }
 
+.pulse-button:hover {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
 @-webkit-keyframes pulse {
   0% {
 
