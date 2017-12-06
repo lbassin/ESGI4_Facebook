@@ -19,6 +19,9 @@
 
         <script>
             window.fbAppId = '{{ env('FACEBOOK_APP_ID') }}';
+            window.URLs = {
+                dashboard: 'http://google.fr/'
+            }
         </script>
 
         <script src="{{ asset('js/fb-login.js') }}"></script>
