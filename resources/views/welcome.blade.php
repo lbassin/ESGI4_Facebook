@@ -9,12 +9,13 @@
         <title>Foliobook</title>
 
         <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+        <script src="//cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     </head>
     <body>
         <div id="app"></div>
-        <button id="fbConnect">Connexion FB</button>
         <div id="particles-js"></div>
-        <span class='pulse-button'>Créer mon site</span>
+
+        <span id="fbConnect" class="pulse-button">Créer mon site</span>
 
         <script>
             window.fbAppId = '{{ env('FACEBOOK_APP_ID') }}';
@@ -22,13 +23,6 @@
 
         <script src="{{ asset('js/fb-login.js') }}"></script>
         <script src="{{ asset('js/app.js') }}"></script>
-        <script>
-            window.fbLoaded = function (){
-                console.log('Fb ready');
-            }
-        </script>
-        <script src="{{ asset('js/app.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
         <script src="{{ asset('js/particles.js') }}"></script>
     </body>
 </html>

@@ -12186,7 +12186,7 @@ module.exports = function spread(callback) {
 
 window.fbAsyncInit = function () {
     FB.init({
-        appId: '149733959103073',
+        appId: window.fbAppId,
         cookie: true,
         xfbml: true,
         version: 'v2.10'
