@@ -84,7 +84,9 @@ function addFacebookLoginEvent() {
     $('#fbConnect').click(function () {
         FB.login(function (result) {
 
-            if (result.status === 'connected') {}
+            if (result.status === 'connected') {
+                laert('connected');
+            }
         }, { scope: 'public_profile, email' });
     });
 }

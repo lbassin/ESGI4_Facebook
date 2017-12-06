@@ -21,8 +21,8 @@
             window.fbAppId = '{{ env('FACEBOOK_APP_ID') }}';
         </script>
 
-        <script src="{{ asset('js/fb-login.js') }}"></script>
         <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/fb-login.js') }}"></script>
         <script src="{{ asset('js/particles.js') }}"></script>
     </body>
 </html>

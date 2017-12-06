@@ -195,7 +195,9 @@ var count_particles, _update;
 count_particles = document.querySelector('.js-count-particles');
 _update = function update() {
     if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
-        count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
+        if (count_particles) {
+            count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
+        }
     }
     requestAnimationFrame(_update);
 };

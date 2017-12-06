@@ -7,7 +7,7 @@ function addFacebookLoginEvent() {
         FB.login(function (result) {
 
             if (result.status === 'connected') {
-
+                laert('connected');
             }
 
         }, {scope: 'public_profile, email'})
