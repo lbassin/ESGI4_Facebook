@@ -8,7 +8,7 @@
 
         <title>Foliobook</title>
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css'), env('REDIRECT_HTTPS') }}">
     </head>
     <body>
         <div id="app">
@@ -23,9 +23,9 @@
                 console.log('Fb ready');
             }
         </script>
-        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/app.js'), env('REDIRECT_HTTPS') }}"></script>
         <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-        <script src="{{ asset('js/particles.js') }}"></script>
+        <script src="{{ asset('js/particles.js'), env('REDIRECT_HTTPS') }}"></script>
 
     </body>
 </html>
