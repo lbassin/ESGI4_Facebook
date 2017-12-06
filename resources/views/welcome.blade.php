@@ -23,7 +23,7 @@
                 console.log('Fb ready');
             }
         </script>
-        <script src="{{ asset('js/app.js', env('REDIRECT_HTTPS') }}"></script>
+        <script src="{{ asset('js/app.js', env('REDIRECT_HTTPS')) }}"></script>
         <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
         <script src="{{ asset('js/particles.js', env('REDIRECT_HTTPS')) }}"></script>
 
