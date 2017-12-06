@@ -88,7 +88,6 @@ function addFacebookLoginEvent() {
         }, { scope: 'public_profile, email' });
     });
 }
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/home/laurent/Documents/Cours/ESGI/4IW/S1/Facebook/projets/docker-laravel/resources/assets/js/fb/fb-login.js'");
 
 /***/ })
 
