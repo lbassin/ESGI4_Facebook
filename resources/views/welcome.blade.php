@@ -9,16 +9,14 @@
         <title>Foliobook</title>
     </head>
     <body>
-        <div id="app">
-
-        </div>
+        <div id="app"></div>
+        <button id="fbConnect">Connexion FB</button>
 
         <script>
-            window.fbLoaded = function (){
-                console.log('Fb ready');
-            }
+            window.fbAppId = '{{ env('FACEBOOK_APP_ID') }}';
         </script>
-        <script src="{{ asset('js/app.js') }}"></script>
 
+        <script src="{{ asset('js/fb-login.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

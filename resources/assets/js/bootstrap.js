@@ -29,4 +29,4 @@ if (token) {
  * Facebook SDK
  */
 
-require('./sdk-facebook');
+require('./fb/sdk-facebook');
