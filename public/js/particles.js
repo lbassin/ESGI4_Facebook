@@ -76,8 +76,6 @@ module.exports = __webpack_require__(44);
 /***/ 44:
 /***/ (function(module, exports) {
 
-/* ---- particles.js config ---- */
-
 particlesJS("particles-js", {
     "particles": {
         "number": {
@@ -189,17 +187,42 @@ particlesJS("particles-js", {
     "retina_detect": true
 });
 
-/* ---- stats.js config ---- */
-
-var count_particles, _update;
-count_particles = document.querySelector('.js-count-particles');
-_update = function update() {
-    if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
-        //count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
-    }
+$(document).ready(function () {
+    var count_particles, _update;
+    count_particles = document.querySelector('.js-count-particles');
+    _update = function update() {
+        if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
+            if (count_particles) {
+                count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
+            }
+        }
+        requestAnimationFrame(_update);
+    };
     requestAnimationFrame(_update);
-};
-requestAnimationFrame(_update);
+
+    $('.title').each(function () {
+        $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
+    });
+
+    anime.timeline({
+        loop: false
+    }).add({
+        targets: '.title .letter',
+        translateY: [100, 0],
+        translateZ: 0,
+        opacity: [0, 1],
+        easing: "easeOutExpo",
+        duration: 1400,
+        delay: function delay(el, i) {
+            return 700 + 30 * i;
+        }
+    });
+
+    $('.spin, .item').css('display', 'none');
+    setTimeout(function () {
+        $('.spin, .item').fadeTo(1000, 1);
+    }, 1500);
+});
 
 /***/ })
 
