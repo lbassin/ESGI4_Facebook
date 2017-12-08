@@ -3,5 +3,5 @@
 @section('title', 'Facebook Permissions')
 
 @section('content')
-    <h1 style="color: #fff;">Permissions</h1>
+    <h1>Permissions</h1>
 @endsection
