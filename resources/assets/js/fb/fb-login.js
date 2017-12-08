@@ -11,11 +11,11 @@ function addFacebookLoginEvent() {
             $("#spin").addClass("processing");
             FB.login(function (result) {
                 if (result.status === 'connected') {
+                    $("#spin").removeClass("processing");
+                    $("#spin").addClass("done");
                     setTimeout(function () {
-                        $("#spin").removeClass("processing");
-                        $("#spin").addClass("done");
+                        window.location.href = window.URLs.dashboard;
                     }, 1500);
-                    window.location.href = window.URLs.dashboard;
                 } else {
                     $("#spin").removeClass("processing");
                     $("#spin").addClass("spin");
