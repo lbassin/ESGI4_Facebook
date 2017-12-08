@@ -5,11 +5,9 @@ window.fbLoaded = function () {
 function addFacebookLoginEvent() {
     $('#fbConnect').click(() => {
         FB.login(function (result) {
-
             if (result.status === 'connected') {
-                laert('connected');
+                window.location.href = window.URLs.dashboard;
             }
-
-        }, {scope: 'public_profile, email'})
+        }, {scope: window.fbData.scope})
     });
 }

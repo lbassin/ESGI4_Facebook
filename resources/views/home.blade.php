@@ -18,7 +18,14 @@
         <span id="fbConnect" class="pulse-button">Créer mon site</span>
 
         <script>
-            window.fbAppId = '{{ env('FACEBOOK_APP_ID') }}';
+            window.fbData = {
+                appId: '{{ env('FACEBOOK_APP_ID') }}',
+                scope: 'public_profile,email'
+            };
+
+            window.URLs = {
+                dashboard: '{{ route('dashboard') }}'
+            }
         </script>
 
         <script src="{{ asset('js/app.js') }}"></script>

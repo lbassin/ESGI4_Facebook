@@ -1,6 +1,6 @@
 window.fbAsyncInit = function () {
     FB.init({
-        appId: window.fbAppId,
+        appId: window.fbData.appId,
         cookie: true,
         xfbml: true,
         version: 'v2.10'
@@ -8,7 +8,6 @@ window.fbAsyncInit = function () {
 
     window.fbLoaded();
 };
-
 (function (d, s, id) {
     let js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) {

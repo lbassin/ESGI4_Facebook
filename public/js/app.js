@@ -12186,7 +12186,7 @@ module.exports = function spread(callback) {
 
 window.fbAsyncInit = function () {
     FB.init({
-        appId: window.fbAppId,
+        appId: window.fbData.appId,
         cookie: true,
         xfbml: true,
         version: 'v2.10'
@@ -12194,7 +12194,6 @@ window.fbAsyncInit = function () {
 
     window.fbLoaded();
 };
-
 (function (d, s, id) {
     var js = void 0,
         fjs = d.getElementsByTagName(s)[0];
