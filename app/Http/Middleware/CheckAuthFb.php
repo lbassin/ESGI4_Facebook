@@ -49,6 +49,10 @@ class CheckAuthFb
         /** @var string $fbSdkRequest */
         $fbSdkRequest = $this->fb->getJavaScriptHelper()->getRawSignedRequest();
 
+        if(empty($fbSdkRequest) && empty($fbToken)){
+            return redirect()->route('home');
+        }
+
         if (empty($fbSdkRequest)) {
             return $next($request);
         }
