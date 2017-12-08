@@ -33,6 +33,7 @@ class CheckAuthFb
      * CheckAuthFb constructor.
      * @param LaravelFacebookSdk $fb
      * @param LoggerInterface $logger
+     * @param FacebookHelper $fbHelper
      */
     public function __construct(LaravelFacebookSdk $fb, LoggerInterface $logger, FacebookHelper $fbHelper)
     {
@@ -53,6 +54,11 @@ class CheckAuthFb
 
         if (empty($fbToken)) {
             return redirect()->route('home');
+        }
+
+        if(!$this->fbHelper->tokenIsValid($fbToken)){
+            $request->session()->flash('redirectTo', $request->path());
+            return redirect()->route('fbReAskPermissions');
         }
 
         $this->fb->setDefaultAccessToken($fbToken);
@@ -82,6 +88,7 @@ class CheckAuthFb
             }
             $permissions = $response->getDecodedBody()['data'];
         } catch (FacebookSDKException $ex) {
+            dd($ex);
             $this->logger->error('[FACEBOOK] CheckAuthFb : ' . $ex->getMessage());
             abort(503);
         }
