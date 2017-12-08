@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\FacebookHelper;
 use App\Http\Middleware\CheckAuthFb;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookResponse;
@@ -18,27 +19,30 @@ class DashboardController extends Controller
      * @var LaravelFacebookSdk
      */
     private $fb;
+    /**
+     * @var FacebookHelper
+     */
+    private $fbHelper;
 
     /**
      * DashboardController constructor.
      * @param LaravelFacebookSdk $fb
+     * @param FacebookHelper $fbHelper
      */
-    public function __construct(LaravelFacebookSdk $fb)
+    public function __construct(LaravelFacebookSdk $fb, FacebookHelper $fbHelper)
     {
         $this->fb = $fb;
+        $this->fbHelper = $fbHelper;
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws FacebookSDKException
      */
-    public function index(Request $request)
+    public function index()
     {
-        /** @var \Illuminate\Session\Store $session */
-        $session = $request->session();
         /** @var string $fbToken */
-        $fbToken = $session->get(CheckAuthFb::FB_TOKEN_KEY);
+        $fbToken = $this->fbHelper->getToken();
 
         $this->fb->setDefaultAccessToken($fbToken);
 

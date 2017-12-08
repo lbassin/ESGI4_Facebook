@@ -11,11 +11,15 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::middleware(['CheckAuthFb'])->group(function() {
+Route::get('/fbAskPermission', 'FacebookController@reAskPermissions')->name('fbReAskPermissions');
+
+Route::middleware(['CheckAuthFb'])->group(function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 });
 

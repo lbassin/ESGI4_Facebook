@@ -6,7 +6,9 @@ window.fbAsyncInit = function () {
         version: 'v2.10'
     });
 
-    window.fbLoaded();
+    if (window.fbLoaded) {
+        window.fbLoaded();
+    }
 };
 (function (d, s, id) {
     let js, fjs = d.getElementsByTagName(s)[0];

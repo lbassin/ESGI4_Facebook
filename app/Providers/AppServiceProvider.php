@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\ServiceProvider;
-use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 
 class AppServiceProvider extends ServiceProvider
 {
