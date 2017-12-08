@@ -88,6 +88,8 @@ class CheckAuthFb
 
         $fbPermission = [];
         foreach ($permissions as $permission) {
+            dump($permission);
+
             if (!isset($permission['permission']) || !isset($permission['status'])) {
                 continue;
             }

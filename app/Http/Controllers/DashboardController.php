@@ -49,6 +49,7 @@ class DashboardController extends Controller
         try {
             /** @var FacebookResponse $response */
             $response = $this->fb->get('/me?fields=id,name,email');
+            dump($response->getDecodedBody());
         } catch (FacebookSDKException $e) {
             dd($e->getMessage());
         }
