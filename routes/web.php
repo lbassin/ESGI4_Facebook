@@ -12,5 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+})->name('home');
+
+Route::middleware(['CheckAuthFb'])->group(function() {
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 });
+
