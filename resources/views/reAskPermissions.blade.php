@@ -7,7 +7,10 @@
     <p>
         Des permissions sont manquantes [...]
     </p>
-    <button>Allow the application</button>
+    <button id="reAskPermissions">Allow the application</button>
 
-    <script src="{{ asset('js/fb-reAskPermission.js') }}"></script>
+    <script>
+        let redirectTo = '{{ $redirectTo }}';
+    </script>
+    <script src="{{ asset('js/fb-reAskPermissions.js') }}"></script>
 @endsection

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Helpers;
 
+use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookResponse;
 use Illuminate\Session\Store;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
@@ -65,23 +66,35 @@ class FacebookHelper
     /**
      * @param string $token
      * @return bool
-     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function tokenIsValid(string $token): bool
     {
+        /** @var string $fbAppId */
         $fbAppId = env('FACEBOOK_APP_ID');
+        /** @var string $fbAppSecret */
         $fbAppSecret = env('FACEBOOK_APP_SECRET');
 
         $this->fb->setDefaultAccessToken($fbAppId . '|' . $fbAppSecret);
 
-        /** @var FacebookResponse $response */
-        $response = $this->fb->get('debug_token?input_token=' . $token);
+        try {
+            /** @var FacebookResponse $response */
+            $response = $this->fb->get('debug_token?input_token=' . $token);
+        } catch (FacebookSDKException $ex) {
+            // TODO
+        }
 
-        if (!isset($response->getDecodedBody()['is_valid'])) {
+        if (!isset($response->getDecodedBody()['data']['is_valid'])) {
             return false;
         }
 
-        return $response->getDecodedBody()['is_valid'] !== 'false';
+        /** @var bool $isValid */
+        $isValid = $response->getDecodedBody()['data']['is_valid'] !== false;
+
+        if (!$isValid) {
+            $this->session->forget(FacebookHelper::FB_TOKEN_KEY);
+        }
+
+        return $isValid;
     }
 
 }

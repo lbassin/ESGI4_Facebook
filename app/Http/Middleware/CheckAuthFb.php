@@ -56,7 +56,7 @@ class CheckAuthFb
             return redirect()->route('home');
         }
 
-        if(!$this->fbHelper->tokenIsValid($fbToken)){
+        if (!$this->fbHelper->tokenIsValid($fbToken)) {
             $request->session()->flash('redirectTo', $request->path());
             return redirect()->route('fbReAskPermissions');
         }
@@ -88,7 +88,6 @@ class CheckAuthFb
             }
             $permissions = $response->getDecodedBody()['data'];
         } catch (FacebookSDKException $ex) {
-            dd($ex);
             $this->logger->error('[FACEBOOK] CheckAuthFb : ' . $ex->getMessage());
             abort(503);
         }
