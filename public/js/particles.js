@@ -218,6 +218,10 @@ $(document).ready(function () {
         }
     });
 
+    $('.ml12').each(function () {
+        $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
+    });
+
     $('.spin, .item').css('display', 'none');
     setTimeout(function () {
         $('.spin, .item').fadeTo(1000, 1);

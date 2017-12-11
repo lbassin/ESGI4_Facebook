@@ -91,10 +91,12 @@ function addFacebookLoginEvent() {
             $("#spin").addClass("processing");
             FB.login(function (result) {
                 if (result.status === 'connected') {
-                    $("#spin").removeClass("processing");
-                    $("#spin").addClass("done");
                     setTimeout(function () {
-                        window.location.href = window.URLs.dashboard;
+                        $("#spin").removeClass("processing");
+                        $("#spin").addClass("done");
+                        setTimeout(function () {
+                            window.location.href = window.URLs.dashboard;
+                        }, 500);
                     }, 1500);
                 } else {
                     $("#spin").removeClass("processing");
