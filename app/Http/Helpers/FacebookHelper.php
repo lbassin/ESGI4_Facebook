@@ -15,8 +15,17 @@ use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
  */
 class FacebookHelper
 {
+    /**
+     *
+     */
     const FB_TOKEN_KEY = 'fb_token';
+    /**
+     *
+     */
     const FB_USER_ID = 'fb_user_id';
+    /**
+     *
+     */
     const FB_SCOPES = 'public_profile,email,manage_pages';
 
     /**
@@ -99,7 +108,7 @@ class FacebookHelper
         /** @var FacebookResponse $response */
         $response = $this->fb->get($query, $this->getToken());
 
-        if(!isset($response->getDecodedBody()['accounts']['data'])){
+        if (!isset($response->getDecodedBody()['accounts']['data'])) {
             return [];
         }
 
@@ -109,9 +118,29 @@ class FacebookHelper
         return $pages;
     }
 
+    /**
+     * @return string
+     */
     public function getUserId(): string
     {
         return $this->session->get(FacebookHelper::FB_USER_ID) ?: '';
+    }
+
+    /**
+     * @param string $id
+     * @return string
+     * @throws FacebookSDKException
+     */
+    public function getPageName(string $id): string
+    {
+        /** @var FacebookResponse $response */
+        $response = $this->fb->get($id . '?fields=name')->getDecodedBody();
+
+        if (!isset($response['name'])) {
+            return '';
+        }
+
+        return $response['name'];
     }
 
 }

@@ -22,7 +22,7 @@
     <h2>Available Pages</h2>
     <ul>
         @foreach ($pages as $tmp)
-            <li>{{ $tmp['name'] }}</li>
+            <li>{{ $tmp['name'] }} - {{ $tmp['id'] }}</li>
         @endforeach
     </ul>
 
@@ -30,9 +30,11 @@
 
     <h2>Website :</h2>
     <ul>
-        @foreach ($websites as $tmp)
-            <li>{{ $tmp }}</li>
-        @endforeach
+        @forelse ($websites as $tmp)
+            <li>{{ $tmp['name'] }} - {{ $tmp['source_id'] }}</li>
+        @empty
+            <p>No website found</p>
+        @endforelse
     </ul>
 
     </body>
