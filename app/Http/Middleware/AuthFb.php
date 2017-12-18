@@ -10,6 +10,7 @@ use Facebook\Authentication\AccessToken;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookResponse;
 use Illuminate\Http\Request;
+use Illuminate\Session\Store;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 
 /**
@@ -26,17 +27,27 @@ class AuthFb
      * @var FacebookHelper
      */
     private $fbHelper;
+    /**
+     * @var Store
+     */
+    private $session;
 
 
     /**
      * AuthFb constructor.
      * @param LaravelFacebookSdk $fb
      * @param FacebookHelper $fbHelper
+     * @param Store $session
      */
-    public function __construct(LaravelFacebookSdk $fb, FacebookHelper $fbHelper)
+    public function __construct(
+        LaravelFacebookSdk $fb,
+        FacebookHelper $fbHelper,
+        Store $session
+    )
     {
         $this->fb = $fb;
         $this->fbHelper = $fbHelper;
+        $this->session = $session;
     }
 
     /**
@@ -49,9 +60,9 @@ class AuthFb
     {
         /** @var string $fbToken */
         $fbToken = null;
-        try{
+        try {
             $fbToken = $this->getToken($request);
-        }catch (FacebookSDKException $exception){
+        } catch (FacebookSDKException $exception) {
             $request->session()->flash('redirectTo', $request->path());
             return redirect()->route('fbReAskPermissions');
         }
@@ -72,7 +83,7 @@ class AuthFb
             return redirect()->route('fbReAskPermissions');
         }
 
-        $request->session()->put(FacebookHelper::FB_TOKEN_KEY, $fbToken);
+        $this->setSessionData();
 
         return $next($request);
     }
@@ -140,5 +151,34 @@ class AuthFb
         $fbToken = $longLifeToken->getValue();
 
         return $fbToken;
+    }
+
+    /**
+     * @throws FacebookSDKException
+     */
+    private function setSessionData(): void
+    {
+        /** @var string $fbToken */
+        $fbToken = $this->fb->getDefaultAccessToken()->getValue();
+        /** @var string $fbUserId */
+        $fbUserId = $this->getUserId();
+
+        $this->session->put(FacebookHelper::FB_TOKEN_KEY, $fbToken);
+        $this->session->put(FacebookHelper::FB_USER_ID, $fbUserId);
+    }
+
+    /**
+     * @throws FacebookSDKException
+     */
+    private function getUserId(): string
+    {
+        /** @var FacebookResponse $response */
+        $response = $this->fb->get('me?fields=id')->getDecodedBody();
+
+        if (!isset($response['id'])) {
+            return $response['id'];
+        }
+
+        return $response['id'];
     }
 }

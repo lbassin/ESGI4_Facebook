@@ -15,14 +15,8 @@ use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
  */
 class FacebookHelper
 {
-    /**
-     *
-     */
     const FB_TOKEN_KEY = 'fb_token';
-
-    /**
-     *
-     */
+    const FB_USER_ID = 'fb_user_id';
     const FB_SCOPES = 'public_profile,email,manage_pages';
 
     /**
@@ -55,11 +49,10 @@ class FacebookHelper
     }
 
     /**
-     *
+     * @return string
      */
     public function getToken(): string
     {
-        /** @var string $fbToken */
         return $this->session->get(FacebookHelper::FB_TOKEN_KEY) ?: '';
     }
 
@@ -114,6 +107,11 @@ class FacebookHelper
         $pages = $response->getDecodedBody()['accounts']['data'];
 
         return $pages;
+    }
+
+    public function getUserId(): string
+    {
+        return $this->session->get(FacebookHelper::FB_USER_ID) ?: '';
     }
 
 }
