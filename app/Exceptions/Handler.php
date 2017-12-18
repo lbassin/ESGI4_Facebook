@@ -3,10 +3,34 @@
 namespace App\Exceptions;
 
 use Exception;
+use Facebook\Exceptions\FacebookSDKException;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Psr\Log\LoggerInterface;
 
+/**
+ * Class Handler
+ * @package App\Exceptions
+ */
 class Handler extends ExceptionHandler
 {
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * Handler constructor.
+     * @param Container $container
+     * @param LoggerInterface $logger
+     */
+    function __construct(Container $container, LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+
+        parent::__construct($container);
+    }
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -31,11 +55,16 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
+     * @param  \Exception $exception
      * @return void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
+        if($exception instanceof FacebookSDKException){
+            $this->logger->error('[FACEBOOK] CheckAuthFb : ' . $exception->getMessage());
+        }
+
         parent::report($exception);
     }
 

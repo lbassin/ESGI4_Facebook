@@ -23,7 +23,7 @@ class FacebookHelper
     /**
      *
      */
-    const FB_SCOPES = 'public_profile,email';
+    const FB_SCOPES = 'public_profile,email,manage_pages';
 
     /**
      * @var Store
@@ -60,12 +60,13 @@ class FacebookHelper
     public function getToken(): string
     {
         /** @var string $fbToken */
-        return $this->session->get(FacebookHelper::FB_TOKEN_KEY);
+        return $this->session->get(FacebookHelper::FB_TOKEN_KEY) ?: '';
     }
 
     /**
      * @param string $token
      * @return bool
+     * @throws FacebookSDKException
      */
     public function tokenIsValid(string $token): bool
     {
@@ -76,12 +77,8 @@ class FacebookHelper
 
         $this->fb->setDefaultAccessToken($fbAppId . '|' . $fbAppSecret);
 
-        try {
-            /** @var FacebookResponse $response */
-            $response = $this->fb->get('debug_token?input_token=' . $token);
-        } catch (FacebookSDKException $ex) {
-            // TODO
-        }
+        /** @var FacebookResponse $response */
+        $response = $this->fb->get('debug_token?input_token=' . $token);
 
         if (!isset($response->getDecodedBody()['data']['is_valid'])) {
             return false;
@@ -95,6 +92,28 @@ class FacebookHelper
         }
 
         return $isValid;
+    }
+
+    /**
+     * @return array
+     * @throws FacebookSDKException
+     */
+    public function getPages(): array
+    {
+        /** @var string $query */
+        $query = 'me/?fields=accounts{name}';
+
+        /** @var FacebookResponse $response */
+        $response = $this->fb->get($query, $this->getToken());
+
+        if(!isset($response->getDecodedBody()['accounts']['data'])){
+            return [];
+        }
+
+        /** @var array $pages */
+        $pages = $response->getDecodedBody()['accounts']['data'];
+
+        return $pages;
     }
 
 }

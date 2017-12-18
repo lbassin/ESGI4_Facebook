@@ -40,22 +40,41 @@ class DashboardController extends BaseController
      */
     public function index()
     {
+        dump(session()->all());
+
         /** @var string $fbToken */
         $fbToken = $this->fbHelper->getToken();
 
         $this->fb->setDefaultAccessToken($fbToken);
 
-        try {
-            /** @var FacebookResponse $response */
-            $response = $this->fb->get('/me?fields=id,name,email');
-        } catch (FacebookSDKException $e) {
-            dd($e->getMessage());
-        }
+        /** @var FacebookResponse $response */
+        $response = $this->fb->get('/me?fields=id,name,email');
 
         $dataUser = $response->getGraphUser();
 
         return view('dashboard', [
-            'data' => $dataUser
+            'data' => $dataUser,
+            'pages' => $this->getPages(),
+            'websites' => $this->getWebsites()
         ]);
+    }
+
+    /**
+     * @return array
+     * @throws FacebookSDKException
+     */
+    private function getPages(){
+        $pages = $this->fbHelper->getPages();
+
+        return $pages;
+    }
+
+    /**
+     * @return array
+     */
+    private function getWebsites(){
+        $websites = ['Nope'];
+
+        return $websites;
     }
 }
