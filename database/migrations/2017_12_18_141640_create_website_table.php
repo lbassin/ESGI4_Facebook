@@ -14,9 +14,9 @@ class CreateWebsiteTable extends Migration
     public function up()
     {
         Schema::create('website', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('source_id');
+            $table->increments(\App\Model\Website::ID);
+            $table->bigInteger(\App\Model\Website::USER_ID);
+            $table->bigInteger(\App\Model\Website::SOURCE_ID);
             $table->timestamps();
         });
     }
