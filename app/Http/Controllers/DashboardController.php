@@ -3,17 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Helpers\FacebookHelper;
-use App\Http\Middleware\CheckAuthFb;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookResponse;
-use Illuminate\Http\Request;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
+use Illuminate\Routing\Controller as BaseController;
 
 /**
  * Class DashboardController
  * @package App\Http\Controllers
  */
-class DashboardController extends Controller
+class DashboardController extends BaseController
 {
     /**
      * @var LaravelFacebookSdk

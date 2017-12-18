@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Helpers\FacebookHelper;
 use Illuminate\Session\Store;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
+use Illuminate\Routing\Controller as BaseController;
 
 /**
  * Class FacebookController
  * @package App\Http\Controllers
  */
-class FacebookController extends Controller
+class FacebookController extends BaseController
 {
     /**
      * @var LaravelFacebookSdk
