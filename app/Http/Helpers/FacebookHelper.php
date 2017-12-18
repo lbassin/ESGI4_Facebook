@@ -47,5 +47,4 @@ class FacebookHelper
         return $this->session->get(FacebookHelper::FB_TOKEN_KEY);
 
     }
-
 }

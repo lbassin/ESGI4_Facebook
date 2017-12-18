@@ -56,6 +56,8 @@ class DashboardController extends Controller
         $dataUser = $response->getGraphUser();
 
         return view('dashboard', [
+            'userpic' => "https://graph.facebook.com/".$dataUser['id']."/picture",
+            'name' => $dataUser['name'],
             'data' => $dataUser
         ]);
     }
