@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::get('/fbAskPermission', 'FacebookController@reAskPermissions')->name('fbReAskPermissions');
 
-Route::middleware(['CheckAuthFb'])->group(function () {
+Route::middleware(['AuthFb'])->group(function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 });
 

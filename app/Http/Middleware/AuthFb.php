@@ -16,7 +16,7 @@ use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
  * Class CheckAuthFb
  * @package App\Http\Middleware
  */
-class CheckAuthFb
+class AuthFb
 {
     /**
      * @var LaravelFacebookSdk
@@ -29,7 +29,7 @@ class CheckAuthFb
 
 
     /**
-     * CheckAuthFb constructor.
+     * AuthFb constructor.
      * @param LaravelFacebookSdk $fb
      * @param FacebookHelper $fbHelper
      */

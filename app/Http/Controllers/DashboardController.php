@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Helpers\FacebookHelper;
+use App\Http\Helpers\UserHelper;
+use App\Model\Website;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookResponse;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
@@ -22,16 +24,26 @@ class DashboardController extends BaseController
      * @var FacebookHelper
      */
     private $fbHelper;
+    /**
+     * @var UserHelper
+     */
+    private $userHelper;
 
     /**
      * DashboardController constructor.
      * @param LaravelFacebookSdk $fb
      * @param FacebookHelper $fbHelper
+     * @param UserHelper $userHelper
      */
-    public function __construct(LaravelFacebookSdk $fb, FacebookHelper $fbHelper)
+    public function __construct(
+        LaravelFacebookSdk $fb,
+        FacebookHelper $fbHelper,
+        UserHelper $userHelper
+    )
     {
         $this->fb = $fb;
         $this->fbHelper = $fbHelper;
+        $this->userHelper = $userHelper;
     }
 
     /**
@@ -40,13 +52,6 @@ class DashboardController extends BaseController
      */
     public function index()
     {
-        dump(session()->all());
-
-        /** @var string $fbToken */
-        $fbToken = $this->fbHelper->getToken();
-
-        $this->fb->setDefaultAccessToken($fbToken);
-
         /** @var FacebookResponse $response */
         $response = $this->fb->get('/me?fields=id,name,email');
 
@@ -73,7 +78,7 @@ class DashboardController extends BaseController
      * @return array
      */
     private function getWebsites(){
-        $websites = ['Nope'];
+        $websites = $this->userHelper->getWebsites();
 
         return $websites;
     }
