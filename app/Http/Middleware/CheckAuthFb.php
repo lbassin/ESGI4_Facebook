@@ -10,19 +10,18 @@ use Facebook\Authentication\AccessToken;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookResponse;
 use Illuminate\Http\Request;
-use Psr\Log\LoggerInterface;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 
+/**
+ * Class CheckAuthFb
+ * @package App\Http\Middleware
+ */
 class CheckAuthFb
 {
     /**
      * @var LaravelFacebookSdk
      */
     private $fb;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
     /**
      * @var FacebookHelper
      */
@@ -32,13 +31,11 @@ class CheckAuthFb
     /**
      * CheckAuthFb constructor.
      * @param LaravelFacebookSdk $fb
-     * @param LoggerInterface $logger
      * @param FacebookHelper $fbHelper
      */
-    public function __construct(LaravelFacebookSdk $fb, LoggerInterface $logger, FacebookHelper $fbHelper)
+    public function __construct(LaravelFacebookSdk $fb, FacebookHelper $fbHelper)
     {
         $this->fb = $fb;
-        $this->logger = $logger;
         $this->fbHelper = $fbHelper;
     }
 
@@ -46,11 +43,18 @@ class CheckAuthFb
      * @param $request
      * @param Closure $next
      * @return mixed
+     * @throws FacebookSDKException
      */
     public function handle(Request $request, Closure $next)
     {
         /** @var string $fbToken */
-        $fbToken = $this->getToken($request);
+        $fbToken = null;
+        try{
+            $fbToken = $this->getToken($request);
+        }catch (FacebookSDKException $exception){
+            $request->session()->flash('redirectTo', $request->path());
+            return redirect()->route('fbReAskPermissions');
+        }
 
         if (empty($fbToken)) {
             return redirect()->route('home');
@@ -68,29 +72,25 @@ class CheckAuthFb
             return redirect()->route('fbReAskPermissions');
         }
 
+        $request->session()->put(FacebookHelper::FB_TOKEN_KEY, $fbToken);
+
         return $next($request);
     }
 
     /**
      * @return bool
+     * @throws FacebookSDKException
      */
     private function checkScope(): bool
     {
-        /** @var array $response */
-        $permissions = [];
+        /** @var FacebookResponse $response */
+        $response = $this->fb->get('/me/permissions');
 
-        try {
-            /** @var FacebookResponse $response */
-            $response = $this->fb->get('/me/permissions');
-
-            if (empty($response->getDecodedBody()['data'])) {
-                return false;
-            }
-            $permissions = $response->getDecodedBody()['data'];
-        } catch (FacebookSDKException $ex) {
-            $this->logger->error('[FACEBOOK] CheckAuthFb : ' . $ex->getMessage());
-            abort(503);
+        if (empty($response->getDecodedBody()['data'])) {
+            return false;
         }
+        /** @var array $response */
+        $permissions = $response->getDecodedBody()['data'];
 
         $fbPermission = [];
         foreach ($permissions as $permission) {
@@ -113,6 +113,7 @@ class CheckAuthFb
     /**
      * @param Request $request
      * @return string
+     * @throws FacebookSDKException
      */
     private function getToken(Request $request): string
     {
@@ -131,19 +132,12 @@ class CheckAuthFb
             return $fbToken;
         }
 
-        try {
-            /** @var AccessToken $token */
-            $authToken = $this->fb->getJavaScriptHelper()->getAccessToken();
+        /** @var AccessToken $token */
+        $authToken = $this->fb->getJavaScriptHelper()->getAccessToken();
 
-            /** @var AccessToken $longLife */
-            $longLifeToken = $this->fb->getOAuth2Client()->getLongLivedAccessToken($authToken);
-            $fbToken = $longLifeToken->getValue();
-
-            $session->put(FacebookHelper::FB_TOKEN_KEY, $fbToken);
-        } catch (FacebookSDKException $ex) {
-            $this->logger->error('[FACEBOOK] CheckAuthFb : ' . $ex->getMessage());
-            abort(503);
-        }
+        /** @var AccessToken $longLife */
+        $longLifeToken = $this->fb->getOAuth2Client()->getLongLivedAccessToken($authToken);
+        $fbToken = $longLifeToken->getValue();
 
         return $fbToken;
     }
