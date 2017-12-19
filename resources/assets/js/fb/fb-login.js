@@ -14,8 +14,10 @@ function addFacebookLoginEvent() {
                     setTimeout(function () {
                         $("#spin").removeClass("processing");
                         $("#spin").addClass("done");
+                        setTimeout(function () {
+                            window.location.href = window.URLs.dashboard;
+                        }, 500);
                     }, 1500);
-                    window.location.href = window.URLs.dashboard;
                 } else {
                     $("#spin").removeClass("processing");
                     $("#spin").addClass("spin");

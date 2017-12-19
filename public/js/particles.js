@@ -60,20 +60,20 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 39);
+/******/ 	return __webpack_require__(__webpack_require__.s = 41);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 39:
+/***/ 41:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(40);
+module.exports = __webpack_require__(42);
 
 
 /***/ }),
 
-/***/ 40:
+/***/ 42:
 /***/ (function(module, exports) {
 
 particlesJS("particles-js", {
@@ -200,27 +200,26 @@ $(document).ready(function () {
     };
     requestAnimationFrame(_update);
 
+    $('.title').hide();
+
     $('.title').each(function () {
         $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
     });
 
-    anime.timeline({
-        loop: false
-    }).add({
-        targets: '.title .letter',
-        translateY: [100, 0],
-        translateZ: 0,
-        opacity: [0, 1],
-        easing: "easeOutExpo",
-        duration: 1400,
-        delay: function delay(el, i) {
-            return 700 + 30 * i;
-        }
-    });
-
-    $('.spin, .item').css('display', 'none');
     setTimeout(function () {
-        $('.spin, .item').fadeTo(1000, 1);
+        $('.title').show();
+        anime.timeline({
+            loop: false
+        }).add({
+            targets: '.title .letter',
+            opacity: [0, 1],
+            scale: [0, 1],
+            duration: 1500,
+            elasticity: 600,
+            delay: function delay(el, i) {
+                return 90 * (i + 1);
+            }
+        });
     }, 1500);
 });
 

@@ -1,0 +1,126 @@
+/*********************************************
+****************** APPEAR ********************
+*********************************************/
+
+@-webkit-keyframes appear {
+    0% {
+        -webkit-transform: translateY(10px);
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0px);
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes appear {
+    0% {
+        -webkit-transform: translateY(10px);
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0px);
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+
+/*********************************************
+*************** SPIN LOADER ******************
+*********************************************/
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotateZ(0);
+        transform: rotateZ(0);
+    }
+    100% {
+        -webkit-transform: rotateZ(720deg);
+        transform: rotateZ(720deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotateZ(0);
+        transform: rotateZ(0);
+    }
+    100% {
+        -webkit-transform: rotateZ(720deg);
+        transform: rotateZ(720deg);
+    }
+}
+
+
+/*********************************************
+*************** MOUSE BALL *******************
+*********************************************/
+
+@-webkit-keyframes m-4-ball {
+    50% {
+        opacity: 1;
+    }
+    47.5%,
+    52.5% {
+        -webkit-transform: translateY(10px);
+        transform: translateY(10px);
+    }
+    100% {
+        -webkit-transform: translateY(20px);
+        transform: translateY(20px);
+    }
+}
+
+@keyframes m-4-ball {
+    50% {
+        opacity: 1;
+    }
+    47.5%,
+    52.5% {
+        -webkit-transform: translateY(10px);
+        transform: translateY(10px);
+    }
+    100% {
+        -webkit-transform: translateY(20px);
+        transform: translateY(20px);
+    }
+}
+
+
+/*********************************************
+************** PULSE BUTTON ******************
+*********************************************/
+
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-box-shadow: 0 0 0 0 rgba(9, 9, 23, 0.7);
+        box-shadow: 0 0 0 0 rgba(9, 9, 23, 0.7);
+    }
+    70% {
+        -webkit-box-shadow: 0 0 0 10px rgba(9, 9, 23, 0);
+        box-shadow: 0 0 0 10px rgba(9, 9, 23, 0);
+    }
+    100% {
+        -webkit-box-shadow: 0 0 0 0 rgba(9, 9, 23, 0);
+        box-shadow: 0 0 0 0 rgba(9, 9, 23, 0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        -webkit-box-shadow: 0 0 0 0 rgba(9, 9, 23, 0.7);
+        box-shadow: 0 0 0 0 rgba(9, 9, 23, 0.7);
+    }
+    70% {
+        -webkit-box-shadow: 0 0 0 10px rgba(9, 9, 23, 0);
+        box-shadow: 0 0 0 10px rgba(9, 9, 23, 0);
+    }
+    100% {
+        -webkit-box-shadow: 0 0 0 0 rgba(9, 9, 23, 0);
+        box-shadow: 0 0 0 0 rgba(9, 9, 23, 0);
+    }
+}

@@ -60,20 +60,20 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 37);
+/******/ 	return __webpack_require__(__webpack_require__.s = 39);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 37:
+/***/ 39:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(38);
+module.exports = __webpack_require__(40);
 
 
 /***/ }),
 
-/***/ 38:
+/***/ 40:
 /***/ (function(module, exports) {
 
 window.fbLoaded = function () {
@@ -81,31 +81,13 @@ window.fbLoaded = function () {
 };
 
 function addFacebookLoginEvent() {
-    var _this = this;
-
-    $('#spin').click(function () {
-        var target = $(_this).attr("id");
-        if ($("#spin").hasClass("done")) {
-            // Do nothing
-        } else {
-            $("#spin").addClass("processing");
-            FB.login(function (result) {
-                if (result.status === 'connected') {
-                    setTimeout(function () {
-                        $("#spin").removeClass("processing");
-                        $("#spin").addClass("done");
-                        setTimeout(function () {
-                            window.location.href = window.URLs.dashboard;
-                        }, 500);
-                    }, 1500);
-                } else {
-                    $("#spin").removeClass("processing");
-                    $("#spin").addClass("spin");
-                }
-            }, {
-                scope: window.fbData.scope
-            });
-        }
+    $('#reAskPermissions').click(function () {
+        FB.login(function (result) {
+            window.location.href = redirectTo;
+        }, {
+            scope: window.fbData.scope,
+            auth_type: 'rerequest'
+        });
     });
 }
 
