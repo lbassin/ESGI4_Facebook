@@ -142,5 +142,4 @@ class FacebookHelper
 
         return $response['name'];
     }
-
 }

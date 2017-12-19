@@ -60,7 +60,9 @@ class DashboardController extends BaseController
         return view('dashboard', [
             'data' => $dataUser,
             'pages' => $this->getPages(),
-            'websites' => $this->getWebsites()
+            'websites' => $this->getWebsites(),
+            'userpic' => "https://graph.facebook.com/".$dataUser['id']."/picture",
+            'name' => $dataUser['name'],
         ]);
     }
 
