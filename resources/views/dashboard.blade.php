@@ -18,20 +18,77 @@
 
         <div class="select-dashboard">
             <div class="select-choice">
-                <h1>Choisissez votre site</h1>
-                <select class="">
-                    <option value="" data-display-text="Fruits">None</option>
-                    <option value="apples" disabled>Apples</option>
-                    <option value="bananas">Bananas</option>
-                    <option value="oranges">Oranges</option>
-                    <option value="oranges">Oranges</option>
-                    <option value="oranges">Oranges</option>
-                    <option value="oranges">Oranges</option>
-                    <option value="oranges">Oranges</option>
-                </select>
-                <div class="add-page">+</div>
+				<div class="select-title">
+                	<h1>Choisissez votre site</h1>
+				</div>
+				<div class="select-action">
+					<select class="">
+						<option value="" data-display-text="Fruits">None</option>
+						<option value="apples" disabled>Apples</option>
+						<option value="bananas">Bananas</option>
+						<option value="oranges">Oranges</option>
+						<option value="oranges">Oranges</option>
+						<option value="oranges">Oranges</option>
+						<option value="oranges">Oranges</option>
+						<option value="oranges">Oranges</option>
+					</select>
+					<div class="add-page">+</div>
+				</div>
             </div>
         </div>
+    </div>
+
+    <div class="md-modal md-effect-12">
+        <div class="md-content">
+			<h1>NOUVEAU SITE</h1>
+			<h2>Choisissez la page à synchroniser</h2>
+			<div class="flex-grid">
+				<div class="flex-grid-item">
+					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
+					<span>text</span>
+				</div>
+				<div class="flex-grid-item">
+					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
+					<span>text</span>
+				</div>
+				<div class="flex-grid-item">
+					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
+					<span>text</span>
+				</div>
+				<div class="flex-grid-item">
+					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
+					<span>text</span>
+				</div>
+				<div class="flex-grid-item">
+					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
+					<span>text</span>
+				</div>
+				<div class="flex-grid-item">
+					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
+					<span>text</span>
+				</div>
+				<div class="flex-grid-item">
+					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
+					<span>text</span>
+				</div>
+				<div class="flex-grid-item">
+					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
+					<span>text</span>
+				</div>
+				<div class="flex-grid-item">
+					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
+					<span>text</span>
+				</div>
+				<div class="flex-grid-item">
+					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
+					<span>text</span>
+				</div>
+			</div>
+        </div>
+    </div>
+
+    <div class="md-overlay">
+        <button class="md-close">x</button>
     </div>
 
 
@@ -122,6 +179,27 @@ $(document).on('keydown', '.dropdown', function(event) {
 
 $(document).ready(function() {
   create_custom_dropdowns();
+});
+
+
+////////
+////////
+////////
+////////
+
+
+
+
+$(function () {
+  
+  $('.add-page').on('click', function() {
+    $('.md-modal').addClass('md-show');
+  });
+  
+  $('.md-close').on('click', function() {
+    $('.md-modal').removeClass('md-show');
+  });
+  
 });
     </script>
 @endsection
