@@ -10,10 +10,31 @@
     </head>
     <body>
 
+    <h2>User : </h2>
     <ul>
         @foreach ($data as $tmp)
             <li>{{ $tmp }}</li>
         @endforeach
+    </ul>
+
+    <hr>
+
+    <h2>Available Pages</h2>
+    <ul>
+        @foreach ($pages as $tmp)
+            <li>{{ $tmp['name'] }} - {{ $tmp['id'] }}</li>
+        @endforeach
+    </ul>
+
+    <hr>
+
+    <h2>Website :</h2>
+    <ul>
+        @forelse ($websites as $tmp)
+            <li>{{ $tmp['name'] }} - {{ $tmp['source_id'] }}</li>
+        @empty
+            <p>No website found</p>
+        @endforelse
     </ul>
 
     </body>

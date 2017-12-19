@@ -167,7 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
-        SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
+        App\Providers\LaravelFacebookSdkServiceProvider::class,
 
         /*
          * Application Service Providers...
