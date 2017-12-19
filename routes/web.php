@@ -18,8 +18,6 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
 
 // Website viewer
 Route::domain('{subdomain}.' . $appHelper->getAppUrlWithoutHttp(false))->group(function () {
-    Route::get('/', function ($subdomain) {
-        die($subdomain);
-    });
+    Route::get('/', 'WebsiteController@indexAction');
 });
 
