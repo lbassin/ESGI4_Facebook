@@ -17,7 +17,7 @@ class CreateWebsiteTable extends Migration
             $table->increments(\App\Model\Website::ID);
             $table->bigInteger(\App\Model\Website::USER_ID);
             $table->bigInteger(\App\Model\Website::SOURCE_ID);
-            $table->text(\App\Model\Website::SUBDOMAIN);
+            $table->string(\App\Model\Website::SUBDOMAIN, 60)->unique();
             $table->timestamps();
         });
     }

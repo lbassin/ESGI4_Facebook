@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\UserHelper;
+use App\Http\Helpers\WebsiteHelper;
 use App\Model\Website;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookResponse;
@@ -38,6 +39,10 @@ class DashboardController extends BaseController
      * @var LoggerInterface
      */
     private $logger;
+    /**
+     * @var WebsiteHelper
+     */
+    private $websiteHelper;
 
     /**
      * DashboardController constructor.
@@ -45,18 +50,21 @@ class DashboardController extends BaseController
      * @param FacebookHelper $fbHelper
      * @param UserHelper $userHelper
      * @param LoggerInterface $logger
+     * @param WebsiteHelper $websiteHelper
      */
     public function __construct(
         LaravelFacebookSdk $fb,
         FacebookHelper $fbHelper,
         UserHelper $userHelper,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        WebsiteHelper $websiteHelper
     )
     {
         $this->fb = $fb;
         $this->fbHelper = $fbHelper;
         $this->userHelper = $userHelper;
         $this->logger = $logger;
+        $this->websiteHelper = $websiteHelper;
     }
 
     /**
@@ -96,26 +104,37 @@ class DashboardController extends BaseController
         }
 
         $website = new Website();
+
         $website->{Website::USER_ID} = $this->fbHelper->getUserId();
         $website->{Website::SOURCE_ID} = $id;
+        $website->{Website::SUBDOMAIN} = $this->websiteHelper->generateSubdomain($website);
 
+        /** @var array $errors */
+        $errors = [];
         try {
-            $website->save();
+            /** @var array|bool $result */
+            $result = $website->save();
+
+            if ($result !== true) {
+                $errors[] = $result;
+            }
         } catch (QueryException $ex) {
             $this->logger->error(__FILE__ . ':' . __LINE__ . ' - ' . $ex->getMessage());
 
-            /** @var array $response */
-            $response = [
+            $errors[] = [
                 'error' => true,
                 'message' => 'An error occurred'
             ];
+        }
 
-            return response()->json($response)->setStatusCode(403);
+        if (count($errors) > 0) {
+            return response()->json($errors)->setStatusCode(403);
         }
 
         /** @var array $response */
         $response = [
-            'success' => true
+            'success' => true,
+            'url' => $this->websiteHelper->getWebsiteFullUrl($website),
         ];
 
         return response()->json($response)->setStatusCode(200);
