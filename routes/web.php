@@ -21,5 +21,6 @@ Route::get('/fbAskPermission', 'FacebookController@reAskPermissions')->name('fbR
 
 Route::middleware(['AuthFb'])->group(function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('/dashboard/home', 'DashboardController@home');
 });
 

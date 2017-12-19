@@ -6,28 +6,18 @@
 @endsection
 
 @section('content')
-    <div class="image-gradient">
-    </div>
-    <div class="wrapper-dashboard">
-        <div class="head">
-            <div class="user-pic">
-                <img src="{{ $userpic }}" alt="">
-            </div>
-            <span class="user-name">{{ $name }}</span>
-        </div>
+    <div class="db-home-bg">
 
-        <div class="select-dashboard">
-            <div class="select-choice">
-                <h1>Choisissez votre site</h1>
-                <select name="sources" id="sources" class="custom-select sources" placeh\older="Source Type">
-                    <option value="profile">Profile</option>
-                    <option value="word">Word</option>
-                    <option value="hashtag">Hashtag</option>
-                    <option value="hashtag">Hashtag</option>
-                    <option value="hashtag">Hashtag</option>
-                </select>
-            </div>
+    </div>
+    <div class="head">
+        <div class="user-pic">
+            <img src="{{ $userpic }}" alt="">
         </div>
+        <span class="user-name">{{ $name }}</span>
+    </div>
+    <div class="container-home">
+
+
     </div>
 
 

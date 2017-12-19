@@ -66,6 +66,28 @@ class DashboardController extends BaseController
         ]);
     }
 
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws FacebookSDKException
+     */
+    public function home()
+    {
+        /** @var FacebookResponse $response */
+        $response = $this->fb->get('/me?fields=id,name,email');
+
+        $dataUser = $response->getGraphUser();
+
+        return view('dashboardhome', [
+            'data' => $dataUser,
+            'pages' => $this->getPages(),
+            'websites' => $this->getWebsites(),
+            'userpic' => "https://graph.facebook.com/".$dataUser['id']."/picture",
+            'name' => $dataUser['name'],
+        ]);
+    }
+
+
     /**
      * @return array
      * @throws FacebookSDKException
