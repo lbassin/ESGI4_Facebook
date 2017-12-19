@@ -51,6 +51,7 @@ class WebsiteHelper
         $name = str_replace(['é', 'è'], 'e', $name);
         $name = preg_replace('/[^a-zA-Z0-9-\]_]/', '', $name);
         $name = preg_replace('/-+/', '-', $name);
+        $name = trim($name, '-');
 
         return $name;
     }
