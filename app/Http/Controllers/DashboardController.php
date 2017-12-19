@@ -12,6 +12,7 @@ use Facebook\GraphNodes\GraphUser;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Session\Store;
 use Illuminate\View\View;
 use Psr\Log\LoggerInterface;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
@@ -43,6 +44,10 @@ class DashboardController extends BaseController
      * @var WebsiteHelper
      */
     private $websiteHelper;
+    /**
+     * @var Store
+     */
+    private $session;
 
     /**
      * DashboardController constructor.
@@ -51,13 +56,15 @@ class DashboardController extends BaseController
      * @param UserHelper $userHelper
      * @param LoggerInterface $logger
      * @param WebsiteHelper $websiteHelper
+     * @param Store $session
      */
     public function __construct(
         LaravelFacebookSdk $fb,
         FacebookHelper $fbHelper,
         UserHelper $userHelper,
         LoggerInterface $logger,
-        WebsiteHelper $websiteHelper
+        WebsiteHelper $websiteHelper,
+        Store $session
     )
     {
         $this->fb = $fb;
@@ -65,13 +72,14 @@ class DashboardController extends BaseController
         $this->userHelper = $userHelper;
         $this->logger = $logger;
         $this->websiteHelper = $websiteHelper;
+        $this->session = $session;
     }
 
     /**
      * @return View
      * @throws FacebookSDKException
      */
-    public function indexAction()
+    public function indexAction(): View
     {
         /** @var GraphUser $user */
         $user = $this->fbHelper->getBasicUserData();
@@ -89,7 +97,7 @@ class DashboardController extends BaseController
      * @return Response
      * @throws FacebookSDKException
      */
-    public function newAction(string $id)
+    public function newAction(string $id): Response
     {
         if (!$this->canUsePage($id)) {
             $this->logger->alert(__FILE__ . ':' . __LINE__ . ' - User is not allowed to use this page');
@@ -144,7 +152,7 @@ class DashboardController extends BaseController
      * @return array
      * @throws FacebookSDKException
      */
-    private function getPages()
+    private function getPages(): array
     {
         $pages = $this->fbHelper->getPages();
 
@@ -158,7 +166,7 @@ class DashboardController extends BaseController
      * @return bool
      * @throws FacebookSDKException
      */
-    private function canUsePage($id)
+    private function canUsePage($id): bool
     {
         /** @var array $pages */
         $pages = $this->fbHelper->getPages();
@@ -171,6 +179,21 @@ class DashboardController extends BaseController
         }
 
         return false;
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function permissionsAction(): View
+    {
+        /** @var string $redirectTo */
+        $redirectTo = $this->session->get('redirectTo') ?: route('dashboard');
+
+        $this->session->forget(FacebookHelper::FB_TOKEN_KEY);
+
+        return view('reAskPermissions', [
+            'redirectTo' => $redirectTo
+        ]);
     }
 
 }
