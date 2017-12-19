@@ -79,9 +79,22 @@ class DashboardController extends BaseController
     /**
      * @param string $id
      * @return Response
+     * @throws FacebookSDKException
      */
     public function newAction(string $id)
     {
+        if (!$this->canUsePage($id)) {
+            $this->logger->alert(__FILE__ . ':' . __LINE__ . ' - User is not allowed to use this page');
+
+            /** @var array $response */
+            $response = [
+                'error' => true,
+                'message' => 'You are not allowed to use this page'
+            ];
+
+            return response()->json($response)->setStatusCode(403);
+        }
+
         $website = new Website();
         $website->{Website::USER_ID} = $this->fbHelper->getUserId();
         $website->{Website::SOURCE_ID} = $id;
@@ -89,13 +102,13 @@ class DashboardController extends BaseController
         try {
             $website->save();
         } catch (QueryException $ex) {
+            $this->logger->error(__FILE__ . ':' . __LINE__ . ' - ' . $ex->getMessage());
+
             /** @var array $response */
             $response = [
                 'error' => true,
                 'message' => 'An error occurred'
             ];
-
-            $this->logger->error(__FILE__ . ':' . __LINE__ . ' - ' . $ex->getMessage());
 
             return response()->json($response)->setStatusCode(403);
         }
@@ -119,6 +132,26 @@ class DashboardController extends BaseController
         // TODO : Remove existing website from the list
 
         return $pages;
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     * @throws FacebookSDKException
+     */
+    private function canUsePage($id)
+    {
+        /** @var array $pages */
+        $pages = $this->fbHelper->getPages();
+
+        /** @var array $page */
+        foreach ($pages as $page) {
+            if ($page['id'] == $id) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
