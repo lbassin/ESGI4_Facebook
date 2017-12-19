@@ -25,6 +25,10 @@ class Website extends Model
      *
      */
     const SOURCE_ID = 'source_id';
+    /**
+     *
+     */
+    const SUBDOMAIN = 'subdomain';
 
     /**
      * @var string
