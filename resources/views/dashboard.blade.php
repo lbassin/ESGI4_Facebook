@@ -35,6 +35,14 @@
 					<div class="add-page">+</div>
 				</div>
             </div>
+
+
+            <div id="dev-laurent">
+                @forelse($pages as $page)
+                    <a href="{{ route('dashboard.new', ['id' => $page['id']]) }}">{{ $page['name'] }}</a>
+                @endforeach
+            </div>
+
         </div>
     </div>
 
