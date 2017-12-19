@@ -84,7 +84,7 @@ class DashboardController extends BaseController
         /** @var GraphUser $user */
         $user = $this->fbHelper->getBasicUserData();
 
-        return view('dashboard', [
+        return view('dashboard.index', [
             'pages' => $this->getPages(),
             'websites' => $this->userHelper->getWebsites(),
             'userpic' => $user->getPicture()->getUrl(),
@@ -191,7 +191,7 @@ class DashboardController extends BaseController
 
         $this->session->forget(FacebookHelper::FB_TOKEN_KEY);
 
-        return view('reAskPermissions', [
+        return view('dashboard.permissions', [
             'redirectTo' => $redirectTo
         ]);
     }
