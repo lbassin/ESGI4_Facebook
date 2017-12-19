@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Helpers\FacebookHelper;
-use App\Http\Middleware\CheckAuthFb;
+use App\Http\Helpers\UserHelper;
+use App\Model\Website;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookResponse;
-use Illuminate\Http\Request;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
+use Illuminate\Routing\Controller as BaseController;
 
 /**
  * Class DashboardController
  * @package App\Http\Controllers
  */
-class DashboardController extends Controller
+class DashboardController extends BaseController
 {
     /**
      * @var LaravelFacebookSdk
@@ -23,16 +24,26 @@ class DashboardController extends Controller
      * @var FacebookHelper
      */
     private $fbHelper;
+    /**
+     * @var UserHelper
+     */
+    private $userHelper;
 
     /**
      * DashboardController constructor.
      * @param LaravelFacebookSdk $fb
      * @param FacebookHelper $fbHelper
+     * @param UserHelper $userHelper
      */
-    public function __construct(LaravelFacebookSdk $fb, FacebookHelper $fbHelper)
+    public function __construct(
+        LaravelFacebookSdk $fb,
+        FacebookHelper $fbHelper,
+        UserHelper $userHelper
+    )
     {
         $this->fb = $fb;
         $this->fbHelper = $fbHelper;
+        $this->userHelper = $userHelper;
     }
 
     /**
@@ -41,24 +52,36 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        /** @var string $fbToken */
-        $fbToken = $this->fbHelper->getToken();
-
-        $this->fb->setDefaultAccessToken($fbToken);
-
-        try {
-            /** @var FacebookResponse $response */
-            $response = $this->fb->get('/me?fields=id,name,email');
-        } catch (FacebookSDKException $e) {
-            dd($e->getMessage());
-        }
+        /** @var FacebookResponse $response */
+        $response = $this->fb->get('/me?fields=id,name,email');
 
         $dataUser = $response->getGraphUser();
 
         return view('dashboard', [
+            'data' => $dataUser,
+            'pages' => $this->getPages(),
+            'websites' => $this->getWebsites(),
             'userpic' => "https://graph.facebook.com/".$dataUser['id']."/picture",
             'name' => $dataUser['name'],
-            'data' => $dataUser
         ]);
+    }
+
+    /**
+     * @return array
+     * @throws FacebookSDKException
+     */
+    private function getPages(){
+        $pages = $this->fbHelper->getPages();
+
+        return $pages;
+    }
+
+    /**
+     * @return array
+     */
+    private function getWebsites(){
+        $websites = $this->userHelper->getWebsites();
+
+        return $websites;
     }
 }

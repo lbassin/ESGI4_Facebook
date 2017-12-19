@@ -32,7 +32,7 @@
 
 
     <script>
-    
+
         $(".custom-select").each(function () {
             var classes = $(this).attr("class"),
                 id = $(this).attr("id"),
@@ -68,6 +68,6 @@
             $(this).parents(".custom-select").removeClass("opened");
             $(this).parents(".custom-select").find(".custom-select-trigger").text($(this).text());
         });
-    
+
     </script>
 @endsection

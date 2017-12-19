@@ -2,7 +2,7 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\CheckAuthFb;
+use App\Http\Middleware\AuthFb;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
@@ -60,6 +60,6 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'CheckAuthFb' => CheckAuthFb::class,
+        'AuthFb' => AuthFb::class,
     ];
 }
