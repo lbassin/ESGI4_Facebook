@@ -8,7 +8,6 @@
 
     <title>@yield('title')</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('header_scripts')

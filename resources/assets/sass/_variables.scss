@@ -1,38 +1,51 @@
+/*********************************************
+******************* COLOR ********************
+*********************************************/
 
-// Body
-$body-bg: #f5f8fa;
+$color1: #090917;
+$color2: #12121c;
 
-// Borders
-$laravel-border-color: darken($body-bg, 10%);
-$list-group-border: $laravel-border-color;
-$navbar-default-border: $laravel-border-color;
-$panel-default-border: $laravel-border-color;
-$panel-inner-border: $laravel-border-color;
+/*********************************************
+******************** FONT ********************
+*********************************************/
 
-// Brands
-$brand-primary: #3097D1;
-$brand-info: #8eb4cb;
-$brand-success: #2ab27b;
-$brand-warning: #cbb956;
-$brand-danger: #bf5329;
+@font-face {
+    font-family: 'raleway_thin';
+    src: url('https://fonts.gstatic.com/s/raleway/v12/RJMlAoFXXQEzZoMSUteGWJBw1xU1rKptJj_0jans920.woff2') format('woff2');
+}
 
-// Typography
-$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-$font-family-sans-serif: "Raleway", sans-serif;
-$font-size-base: 14px;
-$line-height-base: 1.6;
-$text-color: #636b6f;
+@font-face {
+    font-family: 'raleway_regular';
+    src: url('https://fonts.gstatic.com/s/raleway/v12/QAUlVt1jXOgQavlW5wEfxQLUuEpTyoUstqEm5AMlJo4.woff2') format('woff2');
+}
 
-// Navbar
-$navbar-default-bg: #fff;
+@font-face {
+    font-family: 'raleway_bold';
+    src: url('https://fonts.gstatic.com/s/raleway/v12/JbtMzqLaYbbbCL9X6EvaIwzyDMXhdD8sAj6OAJTFsBI.woff2') format('woff2');
+}
 
-// Buttons
-$btn-default-color: $text-color;
 
-// Inputs
-$input-border: lighten($text-color, 40%);
-$input-border-focus: lighten($brand-primary, 25%);
-$input-color-placeholder: lighten($text-color, 30%);
+/*********************************************
+**************** MEDIA SIZE ******************
+*********************************************/
 
-// Panels
-$panel-default-heading-bg: #fff;
+$S: 480px;
+$M: 768px;
+$L: 1170px;
+@mixin MQ($canvas) {
+    @if $canvas==S {
+        @media only screen and (max-width: $S) {
+            @content;
+        }
+    }
+    @else if $canvas==M {
+        @media only screen and (max-width: $M) {
+            @content;
+        }
+    }
+    @else if $canvas==L {
+        @media only screen and (max-width: $L) {
+            @content;
+        }
+    }
+}
