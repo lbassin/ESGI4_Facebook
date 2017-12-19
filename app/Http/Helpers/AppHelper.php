@@ -11,8 +11,18 @@ class AppHelper
     /**
      * @return string
      */
-    public function getAppUrlWithoutHttp(): string
+    public function getAppUrlWithoutHttp($withPort = true): string
     {
-        return preg_replace('/https?:\/\//', '', env('APP_URL'));
+        /** @var string $url */
+        $url = preg_replace('/https?:\/\//', '', env('APP_URL'));
+
+        if(!$withPort){
+            /** @var array $explodedUrl */
+            $explodedUrl = explode(':', $url);
+            array_pop($explodedUrl);
+            return implode($explodedUrl, ',');
+        }
+
+        return $url;
     }
 }
