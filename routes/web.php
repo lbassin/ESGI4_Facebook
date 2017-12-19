@@ -20,6 +20,7 @@ Route::get('/', function () {
 Route::get('/fbAskPermission', 'FacebookController@reAskPermissions')->name('fbReAskPermissions');
 
 Route::middleware(['AuthFb'])->group(function () {
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('/dashboard', 'DashboardController@indexAction')->name('dashboard');
+    Route::get('/dashboard/new/{id}', 'DashboardController@newAction')->name('dashboard.new');
 });
 

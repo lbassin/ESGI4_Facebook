@@ -7,6 +7,12 @@ use App\Http\Helpers\UserHelper;
 use App\Model\Website;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookResponse;
+use Facebook\GraphNodes\GraphUser;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
+use Psr\Log\LoggerInterface;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -28,60 +34,91 @@ class DashboardController extends BaseController
      * @var UserHelper
      */
     private $userHelper;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     /**
      * DashboardController constructor.
      * @param LaravelFacebookSdk $fb
      * @param FacebookHelper $fbHelper
      * @param UserHelper $userHelper
+     * @param LoggerInterface $logger
      */
     public function __construct(
         LaravelFacebookSdk $fb,
         FacebookHelper $fbHelper,
-        UserHelper $userHelper
+        UserHelper $userHelper,
+        LoggerInterface $logger
     )
     {
         $this->fb = $fb;
         $this->fbHelper = $fbHelper;
         $this->userHelper = $userHelper;
+        $this->logger = $logger;
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return View
      * @throws FacebookSDKException
      */
-    public function index()
+    public function indexAction()
     {
-        /** @var FacebookResponse $response */
-        $response = $this->fb->get('/me?fields=id,name,email');
-
-        $dataUser = $response->getGraphUser();
+        /** @var GraphUser $user */
+        $user = $this->fbHelper->getBasicUserData();
 
         return view('dashboard', [
-            'data' => $dataUser,
             'pages' => $this->getPages(),
-            'websites' => $this->getWebsites(),
-            'userpic' => "https://graph.facebook.com/".$dataUser['id']."/picture",
-            'name' => $dataUser['name'],
+            'websites' => $this->userHelper->getWebsites(),
+            'userpic' => $user->getPicture()->getUrl(),
+            'name' => $user->getName(),
         ]);
     }
 
     /**
-     * @return array
-     * @throws FacebookSDKException
+     * @param string $id
+     * @return Response
      */
-    private function getPages(){
-        $pages = $this->fbHelper->getPages();
+    public function newAction(string $id)
+    {
+        $website = new Website();
+        $website->{Website::USER_ID} = $this->fbHelper->getUserId();
+        $website->{Website::SOURCE_ID} = $id;
 
-        return $pages;
+        try {
+            $website->save();
+        } catch (QueryException $ex) {
+            /** @var array $response */
+            $response = [
+                'error' => true,
+                'message' => 'An error occurred'
+            ];
+
+            $this->logger->error(__FILE__ . ':' . __LINE__ . ' - ' . $ex->getMessage());
+
+            return response()->json($response)->setStatusCode(403);
+        }
+
+        /** @var array $response */
+        $response = [
+            'success' => true
+        ];
+
+        return response()->json($response)->setStatusCode(200);
     }
 
     /**
      * @return array
+     * @throws FacebookSDKException
      */
-    private function getWebsites(){
-        $websites = $this->userHelper->getWebsites();
+    private function getPages()
+    {
+        $pages = $this->fbHelper->getPages();
 
-        return $websites;
+        // TODO : Remove existing website from the list
+
+        return $pages;
     }
+
 }
