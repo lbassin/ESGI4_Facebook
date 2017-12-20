@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Helpers\AlbumHelper;
 use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\WebsiteHelper;
+use App\Http\Helpers\UserHelper;
 use App\Model\Website;
 use Facebook\GraphNodes\GraphAlbum;
 use Facebook\GraphNodes\GraphNode;
@@ -30,6 +31,10 @@ class WebsiteController extends BaseController
      * @var AlbumHelper
      */
     private $albumHelper;
+    /**
+     * @var UserHelper
+     */
+    private $userHelper;
 
     /**
      * WebsiteController constructor.
@@ -42,9 +47,11 @@ class WebsiteController extends BaseController
         WebsiteHelper $websiteHelper,
         AlbumHelper $albumHelper
     )
+    public function __construct(FacebookHelper $fbHelper, WebsiteHelper $websiteHelper, UserHelper $userHelper)
     {
         $this->fbHelper = $fbHelper;
         $this->websiteHelper = $websiteHelper;
+        $this->userHelper = $userHelper;
         $this->albumHelper = $albumHelper;
     }
 
@@ -79,6 +86,9 @@ class WebsiteController extends BaseController
      */
     public function albumsAction(): View
     {
+        /** @var GraphUser $user */
+        $user = $this->fbHelper->getBasicUserData();
+
         /** @var Website $website */
         $website = $this->websiteHelper->getCurrentWebsite();
 
@@ -91,6 +101,8 @@ class WebsiteController extends BaseController
         }
 
         return view('dashboard.website.albums', [
+            'userpic' => $user->getPicture()->getUrl(),
+            'name' => $user->getName(),
             'albums' => $albums
         ]);
     }
