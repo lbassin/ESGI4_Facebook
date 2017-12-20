@@ -1016,3 +1016,27 @@ a {
         }
     }
 }
+
+
+/*********************************************
+*************** PERMISSION *******************
+*********************************************/
+
+.wrapper {
+    .title-permission {
+        font-family: 'raleway_regular';
+        font-size: 40px;
+        position: absolute;
+        margin-top: 25vh;
+        color: white;
+        text-align: center;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        @include MQ(M) {
+            font-size: 35px;
+        }
+        @include MQ(S) {
+            font-size: 20px;
+        }
+    }
+}

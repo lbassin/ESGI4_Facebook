@@ -1263,3 +1263,30 @@ a:hover {
   color: #090917;
 }
 
+/*********************************************
+*************** PERMISSION *******************
+*********************************************/
+
+.wrapper .title-permission {
+  font-family: 'raleway_regular';
+  font-size: 40px;
+  position: absolute;
+  margin-top: 25vh;
+  color: white;
+  text-align: center;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+@media only screen and (max-width: 768px) {
+  .wrapper .title-permission {
+    font-size: 35px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .wrapper .title-permission {
+    font-size: 20px;
+  }
+}
+
