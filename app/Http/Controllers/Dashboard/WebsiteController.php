@@ -52,26 +52,41 @@ class WebsiteController extends BaseController
         ]);
     }
 
+    /**
+     * @return View
+     */
     public function homeAction(): View
     {
         return view('dashboard.website.home');
     }
 
+    /**
+     * @return View
+     */
     public function albumsAction(): View
     {
         return view('dashboard.website.albums');
     }
 
+    /**
+     * @return View
+     */
     public function articlesAction(): View
     {
         return view('dashboard.website.articles');
     }
 
+    /**
+     * @return View
+     */
     public function eventsAction(): View
     {
         return view('dashboard.website.events');
     }
 
+    /**
+     * @return View
+     */
     public function reviewsAction(): View
     {
         return view('dashboard.website.reviews');
