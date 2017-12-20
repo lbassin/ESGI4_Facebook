@@ -48,6 +48,7 @@ class WebsiteController extends BaseController
         $albums = $this->fbHelper->getAlbums($website->getSourceId());
 
         return view('dashboard.website.index', [
+            'subdomain' => $website->getSubDomain(),
             'albums' => $albums
         ]);
     }

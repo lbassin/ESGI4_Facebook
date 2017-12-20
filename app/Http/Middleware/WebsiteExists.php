@@ -41,11 +41,11 @@ class WebsiteExists
         /** @var Website $website */
         $website = Website::where(Website::SUBDOMAIN, $subdomain)->first();
 
-        $this->websiteHelper->setCurrentWebsite($website);
-
         if (empty($website)) {
             abort(404);
         }
+
+        $this->websiteHelper->setCurrentWebsite($website);
 
         return $next($request);
     }

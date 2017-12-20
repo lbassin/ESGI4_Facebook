@@ -196,6 +196,34 @@ table {
 }
 
 /*********************************************
+************** REAJUST APPEAR ****************
+*********************************************/
+
+@-webkit-keyframes reajust-appear-bg {
+  0% {
+    height: calc(100vh - 10px);
+  }
+
+  100% {
+    height: 100vh;
+  }
+}
+
+@keyframes appear {
+  0% {
+    -webkit-transform: translateY(10px);
+    transform: translateY(10px);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+/*********************************************
 *************** SPIN LOADER ******************
 *********************************************/
 
@@ -328,7 +356,7 @@ body {
 *********************************************/
 
 .wrapper {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -743,8 +771,8 @@ section {
   height: 100vh;
   position: absolute;
   width: 100vw;
-  -webkit-animation: appear 1s ease;
-  animation: appear 1s ease;
+  -webkit-animation: appear 1s ease, reajust-appear-bg 1s ease;
+  animation: appear 1s ease, reajust-appear-bg 1s ease;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
@@ -754,6 +782,7 @@ section {
   background: -webkit-gradient(linear, left top, right top, from(#090917), color-stop(57%, rgba(18, 18, 28, 0.97)), to(rgba(18, 18, 28, 0.8)));
   background: linear-gradient(to right, #090917 0%, rgba(18, 18, 28, 0.97) 57%, rgba(18, 18, 28, 0.8) 100%);
   position: absolute;
+  height: 100%;
 }
 
 .head {
@@ -819,9 +848,11 @@ section {
 }
 
 .select-dashboard {
-  height: calc(100vh - 80px);
-  width: 100vw;
-  position: relative;
+  height: calc(100vh - 10px);
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
   -webkit-animation: appear 2s ease;
   animation: appear 2s ease;
   -webkit-animation-fill-mode: forwards;
