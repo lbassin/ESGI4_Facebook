@@ -103,7 +103,7 @@ class FacebookHelper
     public function getPages(): array
     {
         /** @var string $query */
-        $query = 'me/?fields=accounts{name}';
+        $query = 'me/?fields=accounts{name,picture{url}}';
 
         /** @var FacebookResponse $response */
         $response = $this->fb->get($query, $this->getToken());
@@ -147,7 +147,7 @@ class FacebookHelper
      * @return string
      * @throws FacebookSDKException
      */
-    public function getUserPhoto()
+    public function getUserPhoto(): string
     {
         /** @var FacebookResponse $response */
         $response = $this->fb->get('/me/picture?fields=url&redirect=false')->getDecodedBody();
