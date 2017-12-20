@@ -172,7 +172,6 @@ $(function () {
 	$('.md-close').on('click', function() {
 		$('.md-modal').removeClass('md-show');
 	});
-  
 });
     </script>
 @endsection

@@ -862,20 +862,22 @@ a {
 
 .md-modal {
     margin: auto;
-    position: fixed;
+    position: absolute;
     top: 100px;
     left: 0;
     right: 0;
     width: 75%;
-    height: auto;
+    height: 0;
     z-index: 2000;
     visibility: hidden;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    overflow-y: auto;
 }
 
 .md-show {
     visibility: visible;
+    height: auto;
 }
 
 .md-overlay {
@@ -906,15 +908,10 @@ a {
     transition: all 0.3s ease;
 }
 
-.md-show.md-effect-12~.md-overlay {
-    background-color: #e4f0e3;
-}
-
 .md-effect-12 .md-content {
     h3 {
         background: transparent;
     }
-    background: transparent;
 }
 
 .md-show.md-effect-12 .md-content {
