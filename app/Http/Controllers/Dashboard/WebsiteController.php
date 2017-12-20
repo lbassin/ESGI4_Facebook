@@ -56,4 +56,9 @@ class WebsiteController extends BaseController
     {
         return view('dashboard.website.home');
     }
+
+    public function albumsAction(): View
+    {
+        return view('dashboard.website.albums');
+    }
 }
