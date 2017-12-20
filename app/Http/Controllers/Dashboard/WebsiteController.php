@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Helpers\AlbumHelper;
 use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\WebsiteHelper;
 use App\Http\Helpers\UserHelper;
 use App\Model\Website;
 use Facebook\GraphNodes\GraphAlbum;
+use Facebook\GraphNodes\GraphNode;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
 
@@ -26,6 +28,10 @@ class WebsiteController extends BaseController
      */
     private $websiteHelper;
     /**
+     * @var AlbumHelper
+     */
+    private $albumHelper;
+    /**
      * @var UserHelper
      */
     private $userHelper;
@@ -34,11 +40,18 @@ class WebsiteController extends BaseController
      * WebsiteController constructor.
      * @param FacebookHelper $fbHelper
      * @param WebsiteHelper $websiteHelper
+     * @param AlbumHelper $albumHelper
+     * @param UserHelper $userHelper
      */
-    public function __construct(FacebookHelper $fbHelper, WebsiteHelper $websiteHelper, UserHelper $userHelper)
+    public function __construct(
+        FacebookHelper $fbHelper,
+        WebsiteHelper $websiteHelper,
+        AlbumHelper $albumHelper,
+        UserHelper $userHelper)
     {
         $this->fbHelper = $fbHelper;
         $this->websiteHelper = $websiteHelper;
+        $this->albumHelper = $albumHelper;
         $this->userHelper = $userHelper;
     }
 
@@ -54,6 +67,7 @@ class WebsiteController extends BaseController
         $albums = $this->fbHelper->getAlbums($website->getSourceId());
 
         return view('dashboard.website.index', [
+            'subdomain' => $website->getSubDomain(),
             'albums' => $albums
         ]);
     }
@@ -68,15 +82,28 @@ class WebsiteController extends BaseController
 
     /**
      * @return View
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function albumsAction(): View
     {
         /** @var GraphUser $user */
         $user = $this->fbHelper->getBasicUserData();
 
+        /** @var Website $website */
+        $website = $this->websiteHelper->getCurrentWebsite();
+
+        /** @var array $albums */
+        $albums = $this->fbHelper->getAlbums($website->getSourceId());
+
+        /** @var GraphNode $album */
+        foreach ($albums as $album) {
+            $album['preview'] = $this->albumHelper->getRandomPicturesOfAlbum($album);
+        }
+
         return view('dashboard.website.albums', [
             'userpic' => $user->getPicture()->getUrl(),
-            'name' => $user->getName()
+            'name' => $user->getName(),
+            'albums' => $albums
         ]);
     }
 
