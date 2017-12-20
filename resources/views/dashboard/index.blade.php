@@ -35,14 +35,6 @@
 					<div class="add-page">+</div>
 				</div>
             </div>
-
-
-            <div id="dev-laurent">
-                @forelse($pages as $page)
-                    <a href="{{ route('dashboard.new', ['id' => $page['id']]) }}">{{ $page['name'] }}</a>
-                @endforeach
-            </div>
-
         </div>
     </div>
 
@@ -50,48 +42,18 @@
         <div class="md-content">
 			<h1>NOUVEAU SITE</h1>
 			<h2>Choisissez la page à synchroniser</h2>
-			<div class="flex-grid">
-				<div class="flex-grid-item">
-					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
-					<span>text</span>
-				</div>
-				<div class="flex-grid-item">
-					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
-					<span>text</span>
-				</div>
-				<div class="flex-grid-item">
-					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
-					<span>text</span>
-				</div>
-				<div class="flex-grid-item">
-					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
-					<span>text</span>
-				</div>
-				<div class="flex-grid-item">
-					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
-					<span>text</span>
-				</div>
-				<div class="flex-grid-item">
-					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
-					<span>text</span>
-				</div>
-				<div class="flex-grid-item">
-					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
-					<span>text</span>
-				</div>
-				<div class="flex-grid-item">
-					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
-					<span>text</span>
-				</div>
-				<div class="flex-grid-item">
-					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
-					<span>text</span>
-				</div>
-				<div class="flex-grid-item">
-					<img src="https://phraseculte.files.wordpress.com/2017/06/south-park-cartman-0107.png?w=241&h=183" alt="">
-					<span>text</span>
-				</div>
-			</div>
+			<ul>
+				@foreach($pages as $page)
+					<li>
+						<a href="{{ route('dashboard.new', ['id' => $page['id']]) }}">
+						<div>
+							<img src="{{ $page['picture']['data']['url'] }}" alt="">
+							<span>{{ $page['name'] }}</span>
+						</div>
+						</a>
+					</li>
+				@endforeach
+			</ul>
         </div>
     </div>
 
@@ -195,19 +157,20 @@ $(document).ready(function() {
 ////////
 ////////
 
-
-
-
 $(function () {
   
-  $('.add-page').on('click', function() {
-    $('.md-modal').addClass('md-show');
-  });
-  
-  $('.md-close').on('click', function() {
-    $('.md-modal').removeClass('md-show');
-  });
-  
+	$('.add-page').on('click', function() {
+		$('.md-modal').addClass('md-show');
+	});
+
+	$(document).on('keydown', function(event) {
+		if (event.keyCode == 27) {
+			$('.md-modal').removeClass('md-show');
+		}
+	});
+	$('.md-close').on('click', function() {
+		$('.md-modal').removeClass('md-show');
+	});
 });
     </script>
 @endsection
