@@ -61,4 +61,9 @@ class WebsiteController extends BaseController
     {
         return view('dashboard.website.albums');
     }
+
+    public function articlesAction(): View
+    {
+        return view('dashboard.website.articles');
+    }
 }
