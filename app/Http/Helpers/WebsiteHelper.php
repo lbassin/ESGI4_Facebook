@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Helpers;
 
 use App\Model\Website;
+use Illuminate\Session\Store;
 
 /**
  * Class WebsiteHelper
@@ -13,6 +14,10 @@ use App\Model\Website;
 class WebsiteHelper
 {
     /**
+     *
+     */
+    const WEBSITE_KEY = 'website';
+    /**
      * @var FacebookHelper
      */
     private $fbHelper;
@@ -20,16 +25,26 @@ class WebsiteHelper
      * @var AppHelper
      */
     private $appHelper;
+    /**
+     * @var Store
+     */
+    private $session;
 
     /**
      * WebsiteHelper constructor.
      * @param FacebookHelper $fbHelper
      * @param AppHelper $appHelper
+     * @param Store $session
      */
-    public function __construct(FacebookHelper $fbHelper, AppHelper $appHelper)
+    public function __construct(
+        FacebookHelper $fbHelper,
+        AppHelper $appHelper,
+        Store $session
+    )
     {
         $this->fbHelper = $fbHelper;
         $this->appHelper = $appHelper;
+        $this->session = $session;
     }
 
     /**
@@ -66,6 +81,22 @@ class WebsiteHelper
         $url = '//' . $website->getSubDomain() . '.' . $this->appHelper->getAppUrlWithoutHttp();
 
         return $url;
+    }
+
+    /**
+     * @return Website
+     */
+    public function getCurrentWebsite()
+    {
+        return $this->session->get(self::WEBSITE_KEY);
+    }
+
+    /**
+     * @param Website $website
+     */
+    public function setCurrentWebsite(Website $website)
+    {
+        $this->session->put(self::WEBSITE_KEY, $website);
     }
 
 }
