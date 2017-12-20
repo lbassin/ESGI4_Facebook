@@ -7,11 +7,9 @@ use App\Http\Helpers\UserHelper;
 use App\Http\Helpers\WebsiteHelper;
 use App\Model\Website;
 use Facebook\Exceptions\FacebookSDKException;
-use Facebook\FacebookResponse;
 use Facebook\GraphNodes\GraphUser;
 use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Session\Store;
 use Illuminate\View\View;
 use Psr\Log\LoggerInterface;
@@ -94,10 +92,10 @@ class DashboardController extends BaseController
 
     /**
      * @param string $id
-     * @return Response
+     * @return JsonResponse
      * @throws FacebookSDKException
      */
-    public function newAction(string $id): Response
+    public function newAction(string $id): JsonResponse
     {
         if (!$this->canUsePage($id)) {
             $this->logger->alert(__FILE__ . ':' . __LINE__ . ' - User is not allowed to use this page');
