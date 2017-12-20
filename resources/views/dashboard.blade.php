@@ -187,18 +187,21 @@ $(document).ready(function() {
 ////////
 ////////
 
-
-
-
 $(function () {
   
-  $('.add-page').on('click', function() {
-    $('.md-modal').addClass('md-show');
-  });
-  
-  $('.md-close').on('click', function() {
-    $('.md-modal').removeClass('md-show');
-  });
+	$('.add-page').on('click', function() {
+		$('.md-modal').addClass('md-show');
+	});
+
+	$(document).on('keydown', function(event) {
+		if (event.keyCode == 27) {
+			console.log('esc');
+			$('.md-modal').removeClass('md-show');
+		}
+	});
+	$('.md-close').on('click', function() {
+		$('.md-modal').removeClass('md-show');
+	});
   
 });
     </script>
