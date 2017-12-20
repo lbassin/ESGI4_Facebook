@@ -165,7 +165,6 @@ $(function () {
 
 	$(document).on('keydown', function(event) {
 		if (event.keyCode == 27) {
-			console.log('esc');
 			$('.md-modal').removeClass('md-show');
 		}
 	});

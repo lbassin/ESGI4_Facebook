@@ -1136,6 +1136,10 @@ a:hover {
   transition: all 0.3s ease;
 }
 
+.md-effect-12 .md-content {
+  background: transparent;
+}
+
 .md-effect-12 .md-content h3 {
   background: transparent;
 }
