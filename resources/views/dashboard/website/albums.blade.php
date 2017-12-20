@@ -28,9 +28,6 @@
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 </span>
             </div>
-            <div class="album-pictures">
-
-            </div>
         </div>
 
         <div class="wrapper-pictures">
