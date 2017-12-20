@@ -555,8 +555,8 @@ section {
     height: 100vh;
     position: absolute;
     width: 100vw;
-    -webkit-animation: appear 1s ease;
-    animation: appear 1s ease;
+    -webkit-animation: appear 1s ease, reajust-appear-bg 1s ease;
+    animation: appear 1s ease, reajust-appear-bg 1s ease;
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
 }
@@ -566,6 +566,7 @@ section {
     background: -webkit-gradient(linear, left top, right top, from($color1), color-stop(57%, rgba(18, 18, 28, 0.97)), to(rgba(18, 18, 28, 0.8)));
     background: linear-gradient(to right, $color1 0%, rgba(18, 18, 28, 0.97) 57%, rgba(18, 18, 28, 0.8) 100%);
     position: absolute;
+    height:100%;
 }
 
 .head {
@@ -619,9 +620,11 @@ section {
 }
 
 .select-dashboard {
-    height: calc(100vh - 80px);
-    width: 100vw;
-    position: relative;
+    height: calc(100vh - 10px);
+    width: 100%;
+    position: absolute;
+    top:0;
+    left: 0;
     -webkit-animation: appear 2s ease;
     animation: appear 2s ease;
     -webkit-animation-fill-mode: forwards;

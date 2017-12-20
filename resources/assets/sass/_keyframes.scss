@@ -28,6 +28,32 @@
     }
 }
 
+/*********************************************
+************** REAJUST APPEAR ****************
+*********************************************/
+
+@-webkit-keyframes reajust-appear-bg {
+    0% {
+        height: calc(100vh - 10px);
+    }
+    100% {
+        height: 100vh;
+    }
+}
+
+@keyframes appear {
+    0% {
+        -webkit-transform: translateY(10px);
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0px);
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
 
 /*********************************************
 *************** SPIN LOADER ******************
