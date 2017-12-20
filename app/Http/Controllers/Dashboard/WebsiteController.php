@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Helpers\AlbumHelper;
 use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\WebsiteHelper;
 use App\Model\Website;
 use Facebook\GraphNodes\GraphAlbum;
+use Facebook\GraphNodes\GraphNode;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
 
@@ -24,16 +26,26 @@ class WebsiteController extends BaseController
      * @var WebsiteHelper
      */
     private $websiteHelper;
+    /**
+     * @var AlbumHelper
+     */
+    private $albumHelper;
 
     /**
      * WebsiteController constructor.
      * @param FacebookHelper $fbHelper
      * @param WebsiteHelper $websiteHelper
+     * @param AlbumHelper $albumHelper
      */
-    public function __construct(FacebookHelper $fbHelper, WebsiteHelper $websiteHelper)
+    public function __construct(
+        FacebookHelper $fbHelper,
+        WebsiteHelper $websiteHelper,
+        AlbumHelper $albumHelper
+    )
     {
         $this->fbHelper = $fbHelper;
         $this->websiteHelper = $websiteHelper;
+        $this->albumHelper = $albumHelper;
     }
 
     /**
@@ -63,10 +75,24 @@ class WebsiteController extends BaseController
 
     /**
      * @return View
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function albumsAction(): View
     {
-        return view('dashboard.website.albums');
+        /** @var Website $website */
+        $website = $this->websiteHelper->getCurrentWebsite();
+
+        /** @var array $albums */
+        $albums = $this->fbHelper->getAlbums($website->getSourceId());
+
+        /** @var GraphNode $album */
+        foreach ($albums as $album) {
+            $album['preview'] = $this->albumHelper->getRandomPicturesOfAlbum($album);
+        }
+
+        return view('dashboard.website.albums', [
+            'albums' => $albums
+        ]);
     }
 
     /**
