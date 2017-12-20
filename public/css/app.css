@@ -1332,3 +1332,116 @@ a:hover {
   }
 }
 
+/*********************************************
+****************** ALBUMS ********************
+*********************************************/
+
+.wrapper-albums {
+  width: 80%;
+  text-align: center;
+  position: relative;
+  margin-top: 10vh;
+  margin-bottom: 25px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.wrapper-albums .albums-back {
+  color: white;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.wrapper-albums .albums-back i {
+  margin-right: 10px;
+}
+
+.wrapper-albums .albums-title {
+  color: white;
+  font-size: 25px;
+  position: relative;
+  -webkit-transform: translateY(0px);
+  transform: translateY(0px);
+  display: inline-block;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.wrapper-albums .albums-create {
+  color: white;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.wrapper-albums .albums-create i {
+  margin-left: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  .wrapper-albums .albums-back {
+    position: absolute;
+    padding-right: 20px;
+    left: 50%;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+
+  .wrapper-albums .albums-back i {
+    margin-right: 10px;
+  }
+
+  .wrapper-albums .albums-title {
+    display: block;
+    -webkit-transform: translateY(-55px);
+    transform: translateY(-55px);
+  }
+
+  .wrapper-albums .albums-create {
+    position: absolute;
+    padding-left: 20px;
+    right: 50%;
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+
+  .wrapper-albums .albums-create i {
+    margin-left: 10px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .wrapper-albums {
+    margin-top: 15vh;
+  }
+
+  .wrapper-albums .albums-back span {
+    display: none;
+  }
+
+  .wrapper-albums .albums-back i {
+    font-size: 30px;
+  }
+
+  .wrapper-albums .albums-create span {
+    display: none;
+  }
+
+  .wrapper-albums .albums-create i {
+    font-size: 30px;
+  }
+}
+
+.wrapper-pictures {
+  width: 80%;
+  height: 400px;
+  background: red;
+}
+

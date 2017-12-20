@@ -1049,3 +1049,104 @@ a {
         }
     }
 }
+
+
+/*********************************************
+****************** ALBUMS ********************
+*********************************************/
+
+.wrapper-albums {
+    width: 80%;
+    text-align: center;
+    position: relative;
+    margin-top: 10vh;
+    margin-bottom: 25px;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    .albums-back {
+        color: white;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        cursor: pointer;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        i {
+            margin-right: 10px;
+        }
+    }
+    .albums-title {
+        color: white;
+        font-size: 25px;
+        position: relative;
+        -webkit-transform: translateY(0px);
+        transform: translateY(0px);
+        display: inline-block;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+    }
+    .albums-create {
+        color: white;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        cursor: pointer;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        i {
+            margin-left: 10px;
+        }
+    }
+    @include MQ(M) {
+        .albums-back {
+            position: absolute;
+            padding-right: 20px;
+            left: 50%;
+            -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+            i {
+                margin-right: 10px;
+            }
+        }
+        .albums-title {
+            display: block;
+            -webkit-transform: translateY(-55px);
+            transform: translateY(-55px);
+        }
+        .albums-create {
+            position: absolute;
+            padding-left: 20px;
+            right: 50%;
+            -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+            i {
+                margin-left: 10px;
+            }
+        }
+    }
+    @include MQ(S) {
+        margin-top: 15vh;
+        .albums-back {
+            span {
+                display: none;
+            }
+            i {
+                font-size: 30px;
+            }
+        }
+        .albums-create {
+            span {
+                display: none;
+            }
+            i {
+                font-size: 30px;
+            }
+        }
+    }
+}
+
+.wrapper-pictures {
+    width: 80%;
+    height: 400px;
+    background: red;
+}
