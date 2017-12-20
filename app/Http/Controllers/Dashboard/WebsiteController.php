@@ -66,4 +66,9 @@ class WebsiteController extends BaseController
     {
         return view('dashboard.website.articles');
     }
+
+    public function eventsAction(): View
+    {
+        return view('dashboard.website.events');
+    }
 }
