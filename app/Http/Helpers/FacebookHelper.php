@@ -142,4 +142,32 @@ class FacebookHelper
 
         return $response['name'];
     }
+
+    /**
+     * @return string
+     * @throws FacebookSDKException
+     */
+    public function getUserPhoto()
+    {
+        /** @var FacebookResponse $response */
+        $response = $this->fb->get('/me/picture?fields=url&redirect=false')->getDecodedBody();
+
+        if (!isset($response['data']['url'])) {
+            return '';
+        }
+
+        return $response['data']['url'];
+    }
+
+    /**
+     * @return \Facebook\GraphNodes\GraphUser
+     * @throws FacebookSDKException
+     */
+    public function getBasicUserData()
+    {
+        /** @var FacebookResponse $response */
+        $response = $this->fb->get('/me?fields=id,name,email,picture{url}');
+
+        return $response->getGraphUser();
+    }
 }
