@@ -32,7 +32,9 @@
 						<option value="oranges">Oranges</option>
 						<option value="oranges">Oranges</option>
 					</select>
-					<div class="add-page">+</div>
+					<div class="add-page">
+						<i class="fa fa-plus" aria-hidden="true"></i>
+					</div>
 				</div>
             </div>
         </div>
@@ -53,12 +55,14 @@
 						</a>
 					</li>
 				@endforeach
-			</ul>
+      		</ul>
         </div>
     </div>
 
     <div class="md-overlay">
-        <button class="md-close">x</button>
+        <button class="md-close">
+			<i class="fa fa-times" aria-hidden="true"></i>
+		</button>
     </div>
 
 
