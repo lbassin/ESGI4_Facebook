@@ -41,18 +41,18 @@ class WebsiteController extends BaseController
      * @param FacebookHelper $fbHelper
      * @param WebsiteHelper $websiteHelper
      * @param AlbumHelper $albumHelper
+     * @param UserHelper $userHelper
      */
     public function __construct(
         FacebookHelper $fbHelper,
         WebsiteHelper $websiteHelper,
-        AlbumHelper $albumHelper
-    )
-    public function __construct(FacebookHelper $fbHelper, WebsiteHelper $websiteHelper, UserHelper $userHelper)
+        AlbumHelper $albumHelper,
+        UserHelper $userHelper)
     {
         $this->fbHelper = $fbHelper;
         $this->websiteHelper = $websiteHelper;
-        $this->userHelper = $userHelper;
         $this->albumHelper = $albumHelper;
+        $this->userHelper = $userHelper;
     }
 
     /**

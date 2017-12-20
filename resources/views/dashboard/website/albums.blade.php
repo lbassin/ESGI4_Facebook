@@ -5,6 +5,8 @@
 @section('header_scripts')
 @endsection
 
+<?php /** @var array $albums */ ?>
+
 @section('content')
     <div class="wrapper">
         <div class="head">
@@ -32,7 +34,12 @@
         </div>
 
         <div class="wrapper-pictures">
-
+            <?php /** @var \Facebook\GraphNodes\GraphNode $album */ ?>
+            @foreach($albums as $album)
+                <h2>{{ $album->getField('name') }}</h2>
+                <img src="{{ $album->getField('cover_photo')->getField('picture') }}" alt="">
+                <?php dump($album->getField('preview')); ?>
+            @endforeach
         </div>
     </div>
 
