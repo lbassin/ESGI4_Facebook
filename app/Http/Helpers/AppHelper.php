@@ -9,6 +9,7 @@ namespace App\Http\Helpers;
 class AppHelper
 {
     /**
+     * @param bool $withPort
      * @return string
      */
     public function getAppUrlWithoutHttp($withPort = true): string

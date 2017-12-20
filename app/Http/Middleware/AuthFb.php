@@ -64,7 +64,7 @@ class AuthFb
             $fbToken = $this->getToken($request);
         } catch (FacebookSDKException $exception) {
             $request->session()->flash('redirectTo', $request->path());
-            return redirect()->route('fbReAskPermissions');
+            return redirect()->route('dashboard.permissions');
         }
 
         if (empty($fbToken)) {
@@ -73,14 +73,14 @@ class AuthFb
 
         if (!$this->fbHelper->tokenIsValid($fbToken)) {
             $request->session()->flash('redirectTo', $request->path());
-            return redirect()->route('fbReAskPermissions');
+            return redirect()->route('dashboard.permissions');
         }
 
         $this->fb->setDefaultAccessToken($fbToken);
 
         if (!$this->checkScope()) {
             $request->session()->flash('redirectTo', $request->path());
-            return redirect()->route('fbReAskPermissions');
+            return redirect()->route('dashboard.permissions');
         }
 
         $this->setSessionData();

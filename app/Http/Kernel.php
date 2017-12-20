@@ -7,6 +7,7 @@ use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\VerifyCsrfToken;
+use App\Http\Middleware\WebsiteExists;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode;
@@ -61,5 +62,6 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'AuthFb' => AuthFb::class,
+        'WebsiteExists' => WebsiteExists::class
     ];
 }
