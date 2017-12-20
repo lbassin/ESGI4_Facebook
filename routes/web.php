@@ -35,6 +35,9 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
 
             Route::get('/dashboard/website/{subdomain}/events', 'Dashboard\WebsiteController@eventsAction')
                 ->name('dashboard.website.events');
+
+            Route::get('/dashboard/website/{subdomain}/reviews', 'Dashboard\WebsiteController@reviewsAction')
+                ->name('dashboard.website.reviews');
         });
     });
 });
