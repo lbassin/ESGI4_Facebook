@@ -15,6 +15,10 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))
             Route::get('/dashboard', 'DashboardController@indexAction')->name('dashboard');
             Route::get('/dashboard/new/{id}', 'DashboardController@newAction')->name('dashboard.new');
         });
+
+        Route::get('/dashboard/website/{subdomain}', 'Dashboard\WebsiteController@indexAction')
+            ->name('dashboard.website')
+            ->middleware(['WebsiteExists']);
     });
 
 // Website viewer
