@@ -6,6 +6,7 @@ namespace App\Http\Helpers;
 
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookResponse;
+use Facebook\GraphNodes\GraphAlbum;
 use Illuminate\Session\Store;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 
@@ -26,7 +27,7 @@ class FacebookHelper
     /**
      *
      */
-    const FB_SCOPES = 'public_profile,email,manage_pages';
+    const FB_SCOPES = 'public_profile,email,manage_pages,user_photos';
 
     /**
      * @var Store
@@ -169,5 +170,27 @@ class FacebookHelper
         $response = $this->fb->get('/me?fields=id,name,email,picture{url}');
 
         return $response->getGraphUser();
+    }
+
+    /**
+     * @param string $id
+     * @return array
+     * @throws FacebookSDKException
+     */
+    public function getAlbums($id = 'me')
+    {
+        /** @var array $albums */
+        $albums = [];
+        /** @var string $query */
+        $albumQuery = $id . '?fields=albums{id,name,updated_time,cover_photo{picture},photos{id,name,picture}}';
+        /** @var array $albums */
+        $response = $this->fb->get($albumQuery)->getDecodedBody();
+
+        /** @var array $albumData */
+        foreach ($response['albums']['data'] as $albumData) {
+            $albums[] = new GraphAlbum($albumData);
+        }
+
+        return $albums;
     }
 }

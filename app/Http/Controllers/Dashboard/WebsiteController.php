@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Helpers\FacebookHelper;
+use App\Http\Helpers\WebsiteHelper;
+use App\Model\Website;
+use Facebook\GraphNodes\GraphAlbum;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
 
@@ -11,11 +15,40 @@ use Illuminate\View\View;
  */
 class WebsiteController extends BaseController
 {
+
+    /**
+     * @var FacebookHelper
+     */
+    private $fbHelper;
+    /**
+     * @var WebsiteHelper
+     */
+    private $websiteHelper;
+
+    /**
+     * WebsiteController constructor.
+     * @param FacebookHelper $fbHelper
+     * @param WebsiteHelper $websiteHelper
+     */
+    public function __construct(FacebookHelper $fbHelper, WebsiteHelper $websiteHelper)
+    {
+        $this->fbHelper = $fbHelper;
+        $this->websiteHelper = $websiteHelper;
+    }
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function indexAction(): View
     {
-        return view('dashboard.website.index');
+        /** @var Website $website */
+        $website = $this->websiteHelper->getCurrentWebsite();
+        /** @var GraphAlbum $albums */
+        $albums = $this->fbHelper->getAlbums($website->getSourceId());
+
+        return view('dashboard.website.index', [
+            'albums' => $albums
+        ]);
     }
 }
