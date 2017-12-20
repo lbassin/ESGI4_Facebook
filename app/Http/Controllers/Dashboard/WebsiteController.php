@@ -51,4 +51,9 @@ class WebsiteController extends BaseController
             'albums' => $albums
         ]);
     }
+
+    public function homeAction(): View
+    {
+        return view('dashboard.website.home');
+    }
 }
