@@ -25,7 +25,7 @@
                     <select id="website-select">
                         <option value="" disabled selected>Website !</option>
                         @foreach($websites as $website)
-                            <option value="{{ $website['id'] }}">{{ $website['name'] }}</option>
+                            <option value="{{ $website['subdomain'] }}">{{ $website['name'] }}</option>
                         @endforeach
                     </select>
                     <div class="add-page">
@@ -82,7 +82,7 @@
                 option = $(option);
 
                 let listItem = $('<li>').addClass('option');
-                listItem.val(option.val());
+                listItem.attr('data-value', option.val());
                 listItem.text(option.text());
 
                 if (option.is(':selected')) {
@@ -133,7 +133,9 @@
                 selected.addClass('selected');
 
                 dropdown.find('.current').text(selected.text());
-                dropdown.prev('select').val(selected.data('value')).trigger('change');
+                dropdown.prev('select').val(selected.val()).trigger('change');
+
+                window.location.href = window.URLs.websiteAdmin + '/' + selected.data('value');
             });
 
             dropdown.on('keydown', function (event) {

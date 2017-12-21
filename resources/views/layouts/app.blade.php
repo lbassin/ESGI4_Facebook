@@ -25,7 +25,8 @@
         };
 
         window.URLs = {
-            dashboard: '{{ route('dashboard') }}'
+            dashboard: '{{ route('dashboard') }}',
+            websiteAdmin: '{{ route('dashboard.website', ['subdomain' => '/']) }}'
         }
     </script>
 
