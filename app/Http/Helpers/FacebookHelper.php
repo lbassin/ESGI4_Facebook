@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Helpers;
 
 use App\Http\Api\Album;
+use App\Model\Website;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookRequest;
 use Facebook\FacebookResponse;
@@ -31,7 +32,7 @@ class FacebookHelper
     /**
      *
      */
-    const FB_SCOPES = 'public_profile,email,manage_pages,user_photos,publish_actions';
+    const FB_SCOPES = 'public_profile,email,manage_pages,user_photos,publish_pages';
 
     /**
      * @var Store
@@ -87,28 +88,17 @@ class FacebookHelper
      */
     public function tokenIsValid(string $token): bool
     {
-        /** @var string $fbAppId */
-        $fbAppId = env('FACEBOOK_APP_ID');
-        /** @var string $fbAppSecret */
-        $fbAppSecret = env('FACEBOOK_APP_SECRET');
-
-        $this->fb->setDefaultAccessToken($fbAppId . '|' . $fbAppSecret);
+        /** @var string $appToken */
+        $appToken = env('FACEBOOK_APP_ID') . '|' . env('FACEBOOK_APP_SECRET');
 
         /** @var FacebookResponse $response */
-        $response = $this->fb->get('debug_token?input_token=' . $token);
+        $response = $this->fb->get('debug_token?input_token=' . $token, $appToken);
 
         if (!isset($response->getDecodedBody()['data']['is_valid'])) {
             return false;
         }
 
-        /** @var bool $isValid */
-        $isValid = $response->getDecodedBody()['data']['is_valid'] !== false;
-
-        if (!$isValid) {
-            $this->session->forget(FacebookHelper::FB_TOKEN_KEY);
-        }
-
-        return $isValid;
+        return $response->getDecodedBody()['data']['is_valid'] !== false;
     }
 
     /**
@@ -210,10 +200,10 @@ class FacebookHelper
 
     /**
      * @param string $name
-     * @param string $id
+     * @param Website $website
      * @throws FacebookSDKException
      */
-    public function createAlbum(string $name, string $id = 'me'): void
+    public function createAlbum(string $name, Website $website): void
     {
         /** @var array $albumData */
         $albumData = [
@@ -221,7 +211,7 @@ class FacebookHelper
         ];
 
         /** @var FacebookRequest $request */
-        $request = $this->fb->request('post', $id . '/albums', $albumData);
+        $request = $this->fb->request('post', 'me/albums', $albumData, $website->getAccessToken());
 
         $this->fb->getClient()->sendRequest($request);
 

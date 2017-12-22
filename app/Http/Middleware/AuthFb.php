@@ -72,6 +72,7 @@ class AuthFb
         }
 
         if (!$this->fbHelper->tokenIsValid($fbToken)) {
+            $this->session->forget(FacebookHelper::FB_TOKEN_KEY);
             $request->session()->flash('redirectTo', $request->path());
             return redirect()->route('dashboard.permissions');
         }

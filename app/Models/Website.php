@@ -128,4 +128,12 @@ class Website extends Model
         return $this->{self::ACCESS_TOKEN};
     }
 
+    /**
+     * @param $accessToken
+     */
+    public function setAccessToken($accessToken)
+    {
+        $this->{self::ACCESS_TOKEN} = $accessToken;
+    }
+
 }
