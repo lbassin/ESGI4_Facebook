@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\WebsiteHelper;
 use App\Model\Website;
 use Closure;
@@ -19,14 +20,23 @@ class WebsiteExists
      * @var WebsiteHelper
      */
     private $websiteHelper;
+    /**
+     * @var FacebookHelper
+     */
+    private $fbHelper;
 
     /**
      * WebsiteExists constructor.
      * @param WebsiteHelper $websiteHelper
+     * @param FacebookHelper $fbHelper
      */
-    public function __construct(WebsiteHelper $websiteHelper)
+    public function __construct(
+        WebsiteHelper $websiteHelper,
+        FacebookHelper $fbHelper
+    )
     {
         $this->websiteHelper = $websiteHelper;
+        $this->fbHelper = $fbHelper;
     }
 
     /**
@@ -44,6 +54,10 @@ class WebsiteExists
         if (empty($website)) {
             abort(404);
         }
+
+//        if (!$this->fbHelper->tokenIsValid($website->getAccessToken())) {
+//            $this->websiteHelper->refreshToken($website);
+//        }
 
         $this->websiteHelper->setCurrentWebsite($website);
 

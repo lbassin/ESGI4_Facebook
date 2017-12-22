@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Helpers;
 
 use App\Model\Website;
+use Facebook\Exceptions\FacebookSDKException;
 use Illuminate\Session\Store;
+use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 
 /**
  * Class WebsiteHelper
@@ -29,22 +31,29 @@ class WebsiteHelper
      * @var Store
      */
     private $session;
+    /**
+     * @var LaravelFacebookSdk
+     */
+    private $fb;
 
     /**
      * WebsiteHelper constructor.
      * @param FacebookHelper $fbHelper
      * @param AppHelper $appHelper
      * @param Store $session
+     * @param LaravelFacebookSdk $fb
      */
     public function __construct(
         FacebookHelper $fbHelper,
         AppHelper $appHelper,
-        Store $session
+        Store $session,
+        LaravelFacebookSdk $fb
     )
     {
         $this->fbHelper = $fbHelper;
         $this->appHelper = $appHelper;
         $this->session = $session;
+        $this->fb = $fb;
     }
 
     /**
@@ -88,7 +97,7 @@ class WebsiteHelper
      */
     public function getCurrentWebsite()
     {
-        return $this->session->get(self::WEBSITE_KEY);
+        return $this->session->get(self::WEBSITE_KEY) ?: new Website();
     }
 
     /**
@@ -97,6 +106,14 @@ class WebsiteHelper
     public function setCurrentWebsite(Website $website)
     {
         $this->session->put(self::WEBSITE_KEY, $website);
+    }
+
+    /**
+     * @param Website $website
+     */
+    public function refreshToken(Website $website): void
+    {
+
     }
 
 }

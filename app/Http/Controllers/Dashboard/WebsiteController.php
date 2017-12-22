@@ -8,7 +8,7 @@ use App\Http\Helpers\WebsiteHelper;
 use App\Http\Helpers\UserHelper;
 use App\Model\Website;
 use Facebook\GraphNodes\GraphAlbum;
-use Facebook\GraphNodes\GraphNode;
+use Facebook\GraphNodes\GraphUser;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
 
@@ -95,15 +95,11 @@ class WebsiteController extends BaseController
         /** @var array $albums */
         $albums = $this->fbHelper->getAlbums($website->getSourceId());
 
-        /** @var GraphNode $album */
-        foreach ($albums as $album) {
-            $album['preview'] = $this->albumHelper->getRandomPicturesOfAlbum($album);
-        }
-
         return view('dashboard.website.albums', [
             'userpic' => $user->getPicture()->getUrl(),
             'name' => $user->getName(),
-            'albums' => $albums
+            'albums' => $albums,
+            'subdomain' => $website->getSubDomain(),
         ]);
     }
 

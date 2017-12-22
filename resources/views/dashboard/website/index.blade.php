@@ -6,7 +6,6 @@
 <?php /** @var \Facebook\GraphNodes\GraphNode $album */ ?>
 @foreach($albums as $album)
     <h2>{{ $album->getField('name') }}</h2>
-    <img src="{{ $album->getField('cover_photo')->getField('picture') }}" alt="{{ $album->getField('name') }}">
 @endforeach
 
 <ul>
