@@ -165,6 +165,22 @@ class FacebookHelper
     }
 
     /**
+     * @return string
+     * @throws FacebookSDKException
+     */
+    public function getUserName(): string
+    {
+        /** @var FacebookResponse $response */
+        $response = $this->fb->get('/me?fields=name')->getDecodedBody();
+
+        if (!isset($response['name'])) {
+            return '';
+        }
+
+        return $response['name'];
+    }
+
+    /**
      * @return \Facebook\GraphNodes\GraphUser
      * @throws FacebookSDKException
      */

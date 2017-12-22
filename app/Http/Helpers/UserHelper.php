@@ -46,4 +46,22 @@ class UserHelper
         return $output;
     }
 
+    /**
+     * @return string
+     * @throws \Facebook\Exceptions\FacebookSDKException
+     */
+    public function getPicture(): string
+    {
+        return $this->fbHelper->getUserPhoto();
+    }
+
+    /**
+     * @return string
+     * @throws \Facebook\Exceptions\FacebookSDKException
+     */
+    public function getName(): string
+    {
+        return $this->fbHelper->getUserName();
+    }
+
 }

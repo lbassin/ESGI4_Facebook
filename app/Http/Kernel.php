@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AddViewData;
 use App\Http\Middleware\AuthFb;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\TrimStrings;
@@ -62,6 +63,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'AuthFb' => AuthFb::class,
-        'WebsiteExists' => WebsiteExists::class
+        'WebsiteExists' => WebsiteExists::class,
+        'AddViewData' => AddViewData::class
     ];
 }

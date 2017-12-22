@@ -33,6 +33,10 @@ class Album
         /** @var  $photos */
         $photosApi = $this->graphNode->getField('photos');
 
+        if(empty($photosApi)){
+            return [];
+        }
+
         $photos = [];
         foreach ($photosApi as $photo){
             $photos[] = new Photo($photo);
