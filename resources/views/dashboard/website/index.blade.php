@@ -3,10 +3,10 @@
 /** @var string $subdomain */
 ?>
 
-<?php /** @var \Facebook\GraphNodes\GraphAlbum $album */ ?>
+<?php /** @var \Facebook\GraphNodes\GraphNode $album */ ?>
 @foreach($albums as $album)
-    <h2>{{ $album->getName() }}</h2>
-    <img src="{{ $album->getCoverPhoto()['picture'] }}" alt="{{ $album->getName()    }}">
+    <h2>{{ $album->getField('name') }}</h2>
+    <img src="{{ $album->getField('cover_photo')->getField('picture') }}" alt="{{ $album->getField('name') }}">
 @endforeach
 
 <ul>
