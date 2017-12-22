@@ -98,4 +98,12 @@ class Album
         return $photos;
     }
 
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->graphNode->getField('name');
+    }
+
 }
