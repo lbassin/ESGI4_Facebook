@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Helpers;
 
+use App\Http\Api\Album;
 use Facebook\Exceptions\FacebookSDKException;
+use Facebook\FacebookRequest;
 use Facebook\FacebookResponse;
 use Facebook\GraphNodes\GraphAlbum;
 use Facebook\GraphNodes\GraphEdge;
-use Facebook\GraphNodes\GraphNode;
-use Facebook\GraphNodes\GraphUser;
+use Facebook\GraphNodes\GraphNodeFactory;
 use Illuminate\Session\Store;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 
@@ -30,7 +31,7 @@ class FacebookHelper
     /**
      *
      */
-    const FB_SCOPES = 'public_profile,email,manage_pages,user_photos';
+    const FB_SCOPES = 'public_profile,email,manage_pages,user_photos,publish_actions';
 
     /**
      * @var Store
@@ -41,16 +42,26 @@ class FacebookHelper
      * @var LaravelFacebookSdk
      */
     private $fb;
+    /**
+     * @var GraphNodeFactory
+     */
+    private $nodeFactory;
 
     /**
      * FacebookHelper constructor.
      * @param Store $session
      * @param LaravelFacebookSdk $fb
+     * @param GraphNodeFactory $nodeFactory
      */
-    function __construct(Store $session, LaravelFacebookSdk $fb)
+    function __construct(
+        Store $session,
+        LaravelFacebookSdk $fb,
+        GraphNodeFactory $nodeFactory
+    )
     {
         $this->session = $session;
         $this->fb = $fb;
+        $this->nodeFactory = $nodeFactory;
     }
 
     /**
@@ -180,15 +191,40 @@ class FacebookHelper
      * @return array
      * @throws FacebookSDKException
      */
-    public function getAlbums($id = 'me')
+    public function getAlbums($id = 'me'): array
     {
         /** @var string $query */
-        $albumQuery = $id . '/albums?fields=id,name,updated_time,cover_photo{picture},photos{id,name,picture}';
+        $albumQuery = $id . '/albums?fields=id,name,updated_time,cover_photo{picture},photos{id,name,images}';
         /** @var GraphEdge $albums */
         $response = $this->fb->get($albumQuery)->getGraphEdge();
+
         /** @var array $albums */
-        $albums = $response->all();
+        $albums = [];
+        /** @var GraphAlbum $album */
+        foreach ($response->all() as $album) {
+            $albums[] = new Album($album);
+        }
 
         return $albums;
+    }
+
+    /**
+     * @param string $name
+     * @param string $id
+     * @throws FacebookSDKException
+     */
+    public function createAlbum(string $name, string $id = 'me'): void
+    {
+        /** @var array $albumData */
+        $albumData = [
+            'name' => $name
+        ];
+
+        /** @var FacebookRequest $request */
+        $request = $this->fb->request('post', $id . '/albums', $albumData);
+
+        $this->fb->getClient()->sendRequest($request);
+
+        dd($request);
     }
 }

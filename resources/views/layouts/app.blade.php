@@ -14,23 +14,34 @@
     @yield('header_scripts')
 </head>
 <body>
-    <?php
-        /** @var \App\Http\Helpers\FacebookHelper $fbHelper */
-        $fbHelper = resolve('App\Http\Helpers\FacebookHelper');
-    ?>
-    <script>
-        window.fbData = {
-            appId: '{{ env('FACEBOOK_APP_ID') }}',
-            scope: '{{ $fbHelper->getScopes() }}'
-        };
+<?php
+/** @var \App\Http\Helpers\FacebookHelper $fbHelper */
+$fbHelper = resolve('App\Http\Helpers\FacebookHelper');
+/** @var \App\Http\Helpers\WebsiteHelper $websiteHelper */
+$websiteHelper = resolve('App\Http\Helpers\WebsiteHelper');
+?>
+<script>
+    window.fbData = {
+        appId: '{{ env('FACEBOOK_APP_ID') }}',
+        scope: '{{ $fbHelper->getScopes() }}'
+    };
 
-        window.URLs = {
-            dashboard: '{{ route('dashboard') }}',
-            websiteAdmin: '{{ route('dashboard.website', ['subdomain' => '/']) }}'
+    window.URLs = {
+        dashboard: '{{ route('dashboard') }}',
+        websiteAdmin: '{{ route('dashboard.website', ['subdomain' => $websiteHelper->getCurrentWebsite()->getSubDomain()]) }}',
+        albums: {
+            create: '{{ route('dashboard.website.albums.create', ['subdomain' => $websiteHelper->getCurrentWebsite()->getSubDomain() ]) }}'
         }
-    </script>
+    };
 
-    @yield('content')
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+
+@yield('content')
 
 </body>
 </html>

@@ -18,10 +18,12 @@
 
         <div class="wrapper-albums">
             <div class="albums-nav">
-                <span class="albums-back">
+                <a href="{{ route('dashboard.website', ['subdomain' => $subdomain]) }}">
+                    <span class="albums-back">
                     <i class="fa fa-chevron-left" aria-hidden="true"></i>
                     <span>Retour à l'accueil</span>
                 </span>
+                </a>
                 <span class="albums-title">Gérer les albums</span>
                 <span class="albums-create">
                     <span>Créer un album</span>
@@ -31,13 +33,21 @@
         </div>
 
         <div class="wrapper-pictures">
-            <?php /** @var \Facebook\GraphNodes\GraphNode $album */ ?>
+            <?php /** @var \App\Http\Api\Album $album */ ?>
             @foreach($albums as $album)
-                <h2>{{ $album->getField('name') }}</h2>
-                <img src="{{ $album->getField('cover_photo')->getField('picture') }}" alt="">
-                <?php dump($album->getField('preview')); ?>
+                <?php dump($album->getPreview(\App\Http\Api\Photo::SIZE_SMALL)); ?>
             @endforeach
         </div>
     </div>
+
+    <script>
+        $('.albums-create').on('click', function () {
+            let name = prompt('Nom de l\'album ?');
+
+            $.post(window.URLs.albums.create, { name: name }, function(){
+                alert('Created');
+            });
+        });
+    </script>
 
 @endsection

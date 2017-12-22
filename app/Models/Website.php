@@ -29,6 +29,10 @@ class Website extends Model
      *
      */
     const SUBDOMAIN = 'subdomain';
+    /**
+     *
+     */
+    const ACCESS_TOKEN = 'access_token';
 
     /**
      * @var string
@@ -114,6 +118,14 @@ class Website extends Model
     public function getSubDomain()
     {
         return $this->{self::SUBDOMAIN};
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAccessToken()
+    {
+        return $this->{self::ACCESS_TOKEN};
     }
 
 }
