@@ -5,8 +5,6 @@
 @section('header_scripts')
 @endsection
 
-<?php /** @var array $albums */ ?>
-
 @section('content')
     <div class="wrapper">
         <div class="head">
