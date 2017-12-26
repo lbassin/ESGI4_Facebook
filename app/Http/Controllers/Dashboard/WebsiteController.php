@@ -109,7 +109,15 @@ class WebsiteController extends BaseController
      */
     public function eventsAction(): View
     {
-        return view('dashboard.website.events');
+        /** @var Website $website */
+        $website = $this->websiteHelper->getCurrentWebsite();
+
+        /** @var array $events */
+        $events = $this->fbHelper->getEvents($website->getSourceId());
+
+        return view('dashboard.website.events',[
+            'events' => $events
+        ]);
     }
 
     /**

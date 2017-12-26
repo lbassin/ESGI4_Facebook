@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Http\Helpers;
 
 use App\Http\Api\Album;
+use App\Http\Api\Event;
 use App\Model\Website;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookRequest;
 use Facebook\FacebookResponse;
 use Facebook\GraphNodes\GraphAlbum;
 use Facebook\GraphNodes\GraphEdge;
+use Facebook\GraphNodes\GraphEvent;
 use Facebook\GraphNodes\GraphNodeFactory;
 use Illuminate\Session\Store;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
@@ -199,7 +201,7 @@ class FacebookHelper
      */
     public function getAlbums($id = 'me'): array
     {
-        /** @var string $query */
+        /** @var string $albumQuery */
         $albumQuery = $id . '/albums?fields=id,name,updated_time,cover_photo{picture},photos{id,name,images}';
         /** @var GraphEdge $albums */
         $response = $this->fb->get($albumQuery)->getGraphEdge();
@@ -232,5 +234,27 @@ class FacebookHelper
         $this->fb->getClient()->sendRequest($request);
 
         dd($request);
+    }
+
+    /**
+     * @param string $id
+     * @return array
+     * @throws FacebookSDKException
+     */
+    public function getEvents($id = 'me'): array
+    {
+        /** @var string $eventQuery */
+        $eventQuery = $id . '/events?fields=cover{source},start_time,end_time,name,place{name}';
+        /** @var GraphEdge $albums */
+        $response = $this->fb->get($eventQuery)->getGraphEdge();
+
+        /** @var array $events */
+        $events = [];
+        /** @var GraphEvent $album */
+        foreach ($response->all() as $event) {
+            $events[] = new Event($event);
+        }
+
+        return $events;
     }
 }
