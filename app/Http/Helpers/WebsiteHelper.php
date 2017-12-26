@@ -6,6 +6,7 @@ namespace App\Http\Helpers;
 
 use App\Model\Website;
 use Facebook\Exceptions\FacebookSDKException;
+use Facebook\FacebookResponse;
 use Illuminate\Session\Store;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 
@@ -110,10 +111,40 @@ class WebsiteHelper
 
     /**
      * @param Website $website
+     * @throws FacebookSDKException
      */
     public function refreshToken(Website $website): void
     {
+        $website->setAccessToken($this->getAccessToken($website));
+        $website->save();
+    }
 
+    /**
+     * @param Website $website
+     * @return string
+     * @throws FacebookSDKException
+     */
+    public function getAccessToken(Website $website): string
+    {
+        /** @var FacebookResponse $response */
+        $response = $this->fb->get('/me/accounts');
+
+        if (empty($response->getDecodedBody()['data'])) {
+            return '';
+        }
+
+        /** @var array $account */
+        foreach ($response->getDecodedBody()['data'] as $account) {
+            if (empty($account['id']) || empty($account['access_token'])) {
+                continue;
+            }
+
+            if($account['id'] == $website->getSourceId()){
+                return $account['access_token'];
+            }
+        }
+
+        return '';
     }
 
 }

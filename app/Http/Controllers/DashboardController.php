@@ -79,14 +79,9 @@ class DashboardController extends BaseController
      */
     public function indexAction(): View
     {
-        /** @var GraphUser $user */
-        $user = $this->fbHelper->getBasicUserData();
-
         return view('dashboard.index', [
             'pages' => $this->getPages(),
             'websites' => $this->userHelper->getWebsites(),
-            'userpic' => $user->getPicture()->getUrl(),
-            'name' => $user->getName(),
         ]);
     }
 

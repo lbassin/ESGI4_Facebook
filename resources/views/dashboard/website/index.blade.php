@@ -3,9 +3,9 @@
 /** @var string $subdomain */
 ?>
 
-<?php /** @var \Facebook\GraphNodes\GraphNode $album */ ?>
+<?php /** @var \App\Http\Api\Album $album */ ?>
 @foreach($albums as $album)
-    <h2>{{ $album->getField('name') }}</h2>
+    <h2>{{ $album->getName() }}</h2>
 @endforeach
 
 <ul>

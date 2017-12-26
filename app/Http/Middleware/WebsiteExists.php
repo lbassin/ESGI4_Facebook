@@ -43,6 +43,7 @@ class WebsiteExists
      * @param $request
      * @param Closure $next
      * @return mixed
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function handle(Request $request, Closure $next)
     {
@@ -55,9 +56,9 @@ class WebsiteExists
             abort(404);
         }
 
-//        if (!$this->fbHelper->tokenIsValid($website->getAccessToken())) {
-//            $this->websiteHelper->refreshToken($website);
-//        }
+        if (!$this->fbHelper->tokenIsValid($website->getAccessToken())) {
+            $this->websiteHelper->refreshToken($website);
+        }
 
         $this->websiteHelper->setCurrentWebsite($website);
 

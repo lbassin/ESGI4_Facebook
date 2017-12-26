@@ -5,15 +5,13 @@
 @section('header_scripts')
 @endsection
 
-<?php /** @var array $albums */ ?>
-
 @section('content')
     <div class="wrapper">
         <div class="head">
             <div class="user-pic">
-                <img src="{{ $userpic }}" alt="">
+                <img src="{{ $userHelper->getPicture() }}" alt="">
             </div>
-            <span class="user-name">{{ $name }}</span>
+            <span class="user-name">{{ $userHelper->getName() }}</span>
         </div>
 
         <div class="wrapper-albums">

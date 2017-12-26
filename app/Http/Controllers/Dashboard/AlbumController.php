@@ -50,7 +50,7 @@ class AlbumController extends BaseController
         /** @var Website $website */
         $website = $this->websiteHelper->getCurrentWebsite();
 
-        $this->fbHelper->createAlbum($name, $website->getSourceId());
+        $this->fbHelper->createAlbum($name, $website);
 
         die('end');
     }

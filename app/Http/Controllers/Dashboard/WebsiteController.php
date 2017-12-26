@@ -67,7 +67,6 @@ class WebsiteController extends BaseController
         $albums = $this->fbHelper->getAlbums($website->getSourceId());
 
         return view('dashboard.website.index', [
-            'subdomain' => $website->getSubDomain(),
             'albums' => $albums
         ]);
     }
@@ -86,9 +85,6 @@ class WebsiteController extends BaseController
      */
     public function albumsAction(): View
     {
-        /** @var GraphUser $user */
-        $user = $this->fbHelper->getBasicUserData();
-
         /** @var Website $website */
         $website = $this->websiteHelper->getCurrentWebsite();
 
@@ -96,10 +92,7 @@ class WebsiteController extends BaseController
         $albums = $this->fbHelper->getAlbums($website->getSourceId());
 
         return view('dashboard.website.albums', [
-            'userpic' => $user->getPicture()->getUrl(),
-            'name' => $user->getName(),
             'albums' => $albums,
-            'subdomain' => $website->getSubDomain(),
         ]);
     }
 
