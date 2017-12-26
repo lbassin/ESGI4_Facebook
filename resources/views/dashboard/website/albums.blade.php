@@ -33,11 +33,21 @@
         </div>
 
         <div class="wrapper-pictures">
-            <?php /** @var \App\Http\Api\Album $album */ ?>
-            @foreach($albums as $album)
-                <?php dump($album->getPreview(\App\Http\Api\Photo::SIZE_SMALL)); ?>
-            @endforeach
+            <div class="grid">
+                <?php /** @var \Facebook\GraphNodes\GraphNode $album */ ?>
+                @foreach($albums as $album)
+                <article class="module desktop-4 tablet-6" style="background: url('{{ $album->getPreview(\App\Http\Api\Photo::SIZE_LARGE)[0] }}');background-repeat: no-repeat;background-position: center center;background-size: cover;">
+                    <figure class="front">
+                        <div class="caption">
+                            <h2>Nom album</h2>
+                            <p>JBlablabla baladqksjdh qksjdlqskj qlskdj qlskj dkl</p>
+                        </div>
+                    </figure>
+                </article>
+                @endforeach
+            </div>
         </div>
+
     </div>
 
     <script>
