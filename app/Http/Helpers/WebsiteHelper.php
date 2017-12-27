@@ -20,6 +20,7 @@ class WebsiteHelper
      *
      */
     const WEBSITE_KEY = 'website';
+    const DATE_FORMAT = 'd/m/Y - H:i';
     /**
      * @var FacebookHelper
      */

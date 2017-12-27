@@ -2,6 +2,7 @@
 
 namespace App\Http\Api;
 
+use App\Http\Helpers\WebsiteHelper;
 use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphNode;
 
@@ -78,7 +79,7 @@ class Review
         /** @var \DateTime $date */
         $date = $this->graphNode->getField('created_time', '');
 
-        return $date->format('d/m/Y - H:i');
+        return $date->format(WebsiteHelper::DATE_FORMAT);
     }
 
 }

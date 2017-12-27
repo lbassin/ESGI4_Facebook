@@ -7,9 +7,13 @@
 
 @section('content')
     <?php dump($events); /** @var array $events */?>
-    <ul>
         @foreach($events as $event) <?php /** @var \App\Http\Api\Event $event */ ?>
-        <li>{{ $event->getName() }}</li>
+        <ul>
+            <li>{{ $event->getName() }}</li>
+            <li>{{ $event->getStartDate() }} -> {{ $event->getEndDate() }}</li>
+            <li>{{ $event->getPlaceName() }}</li>
+            <li><img src="{{ $event->getCover() }}" alt=""></li>
+        </ul>
+        <hr>
         @endforeach
-    </ul>
 @endsection
