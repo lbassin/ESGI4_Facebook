@@ -122,9 +122,18 @@ class WebsiteController extends BaseController
 
     /**
      * @return View
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function reviewsAction(): View
     {
-        return view('dashboard.website.reviews');
+        /** @var Website $website */
+        $website = $this->websiteHelper->getCurrentWebsite();
+
+        /** @var array $reviews */
+        $reviews = $this->fbHelper->getReviews($website);
+
+        return view('dashboard.website.reviews', [
+            'reviews' => $reviews
+        ]);
     }
 }

@@ -6,6 +6,7 @@ namespace App\Http\Helpers;
 
 use App\Http\Api\Album;
 use App\Http\Api\Event;
+use App\Http\Api\Review;
 use App\Model\Website;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookRequest;
@@ -241,7 +242,7 @@ class FacebookHelper
      * @return array
      * @throws FacebookSDKException
      */
-    public function getEvents($id = 'me'): array
+    public function getEvents(string $id = 'me'): array
     {
         /** @var string $eventQuery */
         $eventQuery = $id . '/events?fields=cover{source},start_time,end_time,name,place{name}';
@@ -256,5 +257,25 @@ class FacebookHelper
         }
 
         return $events;
+    }
+
+    /**
+     * @param Website $website
+     * @return array
+     * @throws FacebookSDKException
+     */
+    public function getReviews(Website $website): array
+    {
+        /** @var string $reviewQuery */
+        $reviewQuery = $website->getSourceId() . '/ratings?fields=review_text,reviewer{name, picture{url}},rating,created_time';
+        /** @var GraphEdge $response */
+        $response = $this->fb->get($reviewQuery, $website->getAccessToken())->getGraphEdge();
+
+        $reviews = [];
+        foreach ($response->all() as $review) {
+            $reviews[] = new Review($review);
+        }
+
+        return $reviews;
     }
 }
