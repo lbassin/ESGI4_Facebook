@@ -34,7 +34,7 @@
             <div class="grid">
                 <?php /** @var \Facebook\GraphNodes\GraphNode $album */ ?>
                 @foreach($albums as $album)
-                <article class="module desktop-4 tablet-6" style="background: url('{{ $album->getPreview(\App\Http\Api\Photo::SIZE_LARGE)[0] }}');background-repeat: no-repeat;background-position: center center;background-size: cover;">
+                <article class="module desktop-4 tablet-6" style="background: url('{{ $album->getCover() }}');background-repeat: no-repeat;background-position: center center;background-size: cover;">
                     <figure class="front">
                         <div class="caption">
                             <h2>Nom album</h2>

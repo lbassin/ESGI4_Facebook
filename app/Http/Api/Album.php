@@ -2,6 +2,7 @@
 
 namespace App\Http\Api;
 
+use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphNode;
 
 class Album
@@ -33,12 +34,12 @@ class Album
         /** @var  $photos */
         $photosApi = $this->graphNode->getField('photos');
 
-        if(empty($photosApi)){
+        if (empty($photosApi)) {
             return [];
         }
 
         $photos = [];
-        foreach ($photosApi as $photo){
+        foreach ($photosApi as $photo) {
             $photos[] = new Photo($photo);
         }
 
@@ -108,6 +109,45 @@ class Album
     public function getName(): string
     {
         return $this->graphNode->getField('name');
+    }
+
+    /**
+     * @return string
+     */
+    public function getCover(): string
+    {
+        /** @var GraphEdge $cover */
+        $cover = $this->graphNode->getField('cover_photo');
+
+        if (empty($cover)) {
+            return '';
+        }
+
+        /** @var GraphEdge $images */
+        $coverImages = $cover->getField('images');
+
+        if (empty($coverImages)) {
+            return '';
+        }
+
+        /** @var array $images */
+        $images = $coverImages->asArray();
+
+        usort($images, function ($image1, $image2) {
+            if (!isset($image1['width']) || !isset($image2['width'])) {
+                return 0;
+            }
+
+            return $image1['width'] - $image2['width'];
+        });
+
+        $image = end($images);
+
+        if (!isset($image['source'])) {
+            return '';
+        }
+
+        return $image['source'];
     }
 
 }
