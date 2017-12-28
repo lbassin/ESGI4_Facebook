@@ -31,8 +31,11 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
         Route::get('/dashboard/website/{subdomain}/albums', 'Dashboard\WebsiteController@albumsAction')
             ->name('dashboard.website.albums');
 
-        Route::any('/dashboard/website/{subdomain}/albums/new', 'Dashboard\AlbumController@createAction')
+        Route::post('/dashboard/website/{subdomain}/albums/new', 'Dashboard\AlbumController@createAction')
             ->name('dashboard.website.albums.create');
+
+        Route::get('/dashboard/website/{subdomain}/albums/{id}', 'Dashboard\AlbumController@editAction')
+            ->name('dashboard.website.albums.edit');
 
         Route::get('/dashboard/website/{subdomain}/articles', 'Dashboard\WebsiteController@articlesAction')
             ->name('dashboard.website.articles');

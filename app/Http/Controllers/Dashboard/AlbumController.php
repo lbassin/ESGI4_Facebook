@@ -54,4 +54,21 @@ class AlbumController extends BaseController
 
         die('end');
     }
+
+    /**
+     * @param string $subdomain
+     * @param string $id
+     * @return View
+     */
+    public function editAction(string $subdomain, string $id): View
+    {
+        // Todo : Check if album exists and if user is allows to access it
+
+        print_r([
+            $subdomain,
+            $id
+        ]);
+
+        die('Gestion album');
+    }
 }
