@@ -114,6 +114,14 @@ class Album
     /**
      * @return string
      */
+    public function getDescription(): string
+    {
+        return $this->graphNode->getField('description', '');
+    }
+
+    /**
+     * @return string
+     */
     public function getCover(): string
     {
         /** @var GraphEdge $cover */

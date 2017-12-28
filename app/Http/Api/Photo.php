@@ -63,7 +63,16 @@ class Photo
         }
 
         if($size == Photo::SIZE_MEDIUM){
-            throw new \Exception('Not implemented yet');
+            if(count($availableHeight) <= 2){
+                return end($availableHeight);
+            }
+
+            /** @var int $imageIndex */
+            $imageIndex = (int) ceil(count($availableHeight) / 2);
+            /** @var array $mediumImage */
+            $mediumImage = array_slice($availableHeight, $imageIndex, 1);
+
+            return reset($mediumImage);
         }
 
         if($size == Photo::SIZE_LARGE){
