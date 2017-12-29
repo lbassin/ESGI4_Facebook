@@ -56,7 +56,7 @@ class WebsiteExists
             abort(404);
         }
 
-        if (!$this->fbHelper->tokenIsValid($website->getAccessToken())) {
+        if (!$website->getAccessToken() || !$this->fbHelper->tokenIsValid($website->getAccessToken())) {
             $this->websiteHelper->refreshToken($website);
         }
 
