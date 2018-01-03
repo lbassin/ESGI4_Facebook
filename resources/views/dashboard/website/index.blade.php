@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-<?php /** @var \App\Http\Api\Album $album */ ?>
+<?php /** @var array $album */ ?>
 
 <div class="wrapper">
     <div class="head">
@@ -36,8 +36,7 @@
             <div class="menu-albums-title">
                 <h2>Mes Derniers Albums</h2>
             </div>
-            <?php $albums_sliced = array_slice($albums,0,6); ?>
-            @foreach($albums_sliced as $album)
+            @foreach($albums as $album)
                 <div class="album">
                     <div class="title">
                         <div class="inner">
@@ -47,7 +46,7 @@
                     </div>
                     <div class="image">
                         <?php ?>
-                        <img src="<?php echo $album->getPreview(\App\Http\Api\Photo::SIZE_LARGE)[0]?>" alt="">
+                        <img src="{{ $album->getCover() }}" alt="">
                     </div>
                 </div>
 

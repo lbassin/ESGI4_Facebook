@@ -63,11 +63,11 @@ class WebsiteController extends BaseController
     {
         /** @var Website $website */
         $website = $this->websiteHelper->getCurrentWebsite();
-        /** @var GraphAlbum $albums */
+        /** @var array $albums */
         $albums = $this->fbHelper->getAlbums($website->getSourceId());
 
         return view('dashboard.website.index', [
-            'albums' => $albums
+            'albums' => array_slice($albums,0,6)
         ]);
     }
 
