@@ -33,19 +33,16 @@
         <div class="wrapper-pictures">
             <div class="grid">
                 <?php /** @var \App\Http\Api\Album $album */ ?>
-                @foreach($albums as $album)
-                    <a href="{{ route('dashboard.website.albums.edit', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}">
-                        <article class="module desktop-4 tablet-6"
-                                 style="background: url('{{ $album->getCover() }}');background-repeat: no-repeat;background-position: center center;background-size: cover;">
-                            <figure class="front">
-                                <div class="caption">
-                                    <h2>{{ $album->getName() }}</h2>
-                                    <p>{{ $album->getDescription() }}</p>
-                                </div>
-                            </figure>
+                    @foreach($albums as $album)
+                        <article class="module desktop-4 tablet-6">
+                            <div class="album-image" style="background: url('{{ $album->getCover() }}');background-repeat: no-repeat;background-position: center center;background-size: cover;">
+
+                            </div>
+                            <div class="album-name">
+                                <span>{{ $album->getName() }}</span>
+                            </div>
                         </article>
-                    </a>
-                @endforeach
+                    @endforeach
             </div>
         </div>
 
