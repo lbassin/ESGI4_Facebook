@@ -145,12 +145,12 @@
                 dropdown.find('.current').text(selected.text());
                 dropdown.prev('select').val(selected.val()).trigger('change');
 
-                $(".loading-overlay").fadeIn();
+                /*$(".loading-overlay").fadeIn();
                 $( ".loading-overlay" ).animate({
                     opacity: 1
-                }, 100, function() {
+                }, 100, function() {*/
                     window.location.href = window.URLs.websiteAdmin + '/' + selected.data('value');
-                });
+                /*});*/
             });
 
             dropdown.on('keydown', function (event) {
