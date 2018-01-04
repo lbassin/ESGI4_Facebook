@@ -17,7 +17,7 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
         Route::get('/dashboard', 'DashboardController@indexAction')
             ->name('dashboard');
 
-        Route::get('/dashboard/new/{id}', 'DashboardController@newAction')
+        Route::post('/dashboard/new', 'DashboardController@newAction')
             ->name('dashboard.new');
     });
 

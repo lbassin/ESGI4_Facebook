@@ -101,6 +101,8 @@ class Website extends Model
             ];
         }
 
+        $this->{self::SUBDOMAIN} = strtolower($this->getSubDomain());
+
         return parent::save($options);
     }
 

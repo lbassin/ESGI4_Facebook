@@ -37,21 +37,43 @@
     </div>
 
     <div class="md-modal md-effect-12">
-        <div class="md-content">
+        <div class="md-content list">
             <h1>NOUVEAU SITE</h1>
             <h2>Choisissez la page à synchroniser</h2>
-            <ul>
+            <ul id="pages">
                 @foreach($pages as $page)
-                    <li>
-                        <a href="{{ route('dashboard.new', ['id' => $page['id']]) }}">
-                            <div>
-                                <img src="{{ $page['picture']['data']['url'] }}" alt="">
-                                <span>{{ $page['name'] }}</span>
-                            </div>
-                        </a>
+                    <li class="page" data-id="{{ $page['id'] }}">
+                        <div>
+                            <img src="{{ $page['picture']['data']['url'] }}" alt="">
+                            <span>{{ $page['name'] }}</span>
+                        </div>
                     </li>
                 @endforeach
             </ul>
+        </div>
+        <div class="md-content config" style="opacity: 0;">
+            <h1>Choix de l'url</h1>
+            <form action="{{ route('dashboard.new') }}">
+                <p>
+                    https://<input title="Website URL" type="text" style="text-align: center" name="new-page-url">.foliobook.fr/
+                </p>
+                <input type="hidden" name="new-page-id" value="">
+
+                <div>
+                    <button id="submit-new-page">
+                        Créer mon site
+                    </button>
+                </div>
+            </form>
+
+            <div id="messages">
+                <div class="success">
+                    <ul></ul>
+                </div>
+                <div class="errors">
+                    <ul></ul>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -63,11 +85,21 @@
 
     <div class="loading-overlay">
         <div class="loading">
-            <div class="animation"><div class="circle one"></div></div>
-            <div class="animation"><div class="circle two"></div></div>
-            <div class="animation"><div class="circle three"></div></div>
-            <div class="animation"><div class="circle four"></div></div>
-            <div class="animation"><div class="circle five"></div></div>
+            <div class="animation">
+                <div class="circle one"></div>
+            </div>
+            <div class="animation">
+                <div class="circle two"></div>
+            </div>
+            <div class="animation">
+                <div class="circle three"></div>
+            </div>
+            <div class="animation">
+                <div class="circle four"></div>
+            </div>
+            <div class="animation">
+                <div class="circle five"></div>
+            </div>
         </div>
     </div>
 
@@ -187,6 +219,59 @@
             });
         }
 
+        function initNewPage() {
+            let pages = $('#pages .page');
+            let listModal = $('.md-modal .md-content.list');
+            let configModal = $('.md-modal .md-content.config');
+            let submitNewPage = $('#submit-new-page');
+
+            pages.click(function () {
+                $('input[name="new-page-id"]').val($(this).attr('data-id'));
+
+                listModal.css({opacity: 0});
+                setTimeout(function () {
+                    listModal.hide();
+                    configModal.animate({opacity: 1}, 250);
+                }, 300);
+            });
+
+            submitNewPage.click(function (event) {
+                event.preventDefault();
+
+                let id = this.form['new-page-id'].value;
+                let url = this.form['new-page-url'].value;
+
+                $.post(this.form.action, {id: id, url: url}).done(
+                    function (response) {
+                        if(response.error){
+                            console.log(response);
+                            addError(response.message);
+                            return;
+                        }
+
+                        addSuccess(response.url);
+                    }).fail(
+                    function (response) {
+                        addError(response.responseJSON.message);
+                    }
+                );
+            });
+        }
+
+        function addSuccess(message) {
+            let wrapper = $('#messages .success ul');
+
+            let success = $('<li>').text(message);
+            wrapper.append(success);
+        }
+
+        function addError(message) {
+            let wrapper = $('#messages .errors ul');
+
+            let error = $('<li>').text(message);
+            wrapper.append(error);
+        }
+
         $(function () {
             $('.add-page').on('click', function () {
                 $('.md-modal').addClass('md-show');
@@ -203,6 +288,8 @@
             });
 
             initDropdown();
+            initNewPage();
         });
     </script>
+
 @endsection

@@ -1423,26 +1423,26 @@ a:hover {
   transition: all 0.3s ease;
 }
 
-.md-content li > a > div {
+.md-content li > div {
   display: table;
   width: 100%;
   height: 100%;
   padding: 10px;
 }
 
-.md-content li > a > div img,
-.md-content li > a > div span {
+.md-content li > div img,
+.md-content li > div span {
   display: table-cell;
   vertical-align: middle;
 }
 
-.md-content li > a > div img {
+.md-content li > div img {
   -webkit-transform: translateY(calc(50% - 10px));
   transform: translateY(calc(50% - 10px));
   border-radius: 50%;
 }
 
-.md-content li > a > div span {
+.md-content li > div span {
   color: white;
   width: 100%;
   padding: 0px 10px;

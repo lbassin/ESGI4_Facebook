@@ -10,6 +10,7 @@ use Facebook\Exceptions\FacebookSDKException;
 use Facebook\GraphNodes\GraphUser;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Session\Store;
 use Illuminate\View\View;
 use Psr\Log\LoggerInterface;
@@ -86,12 +87,32 @@ class DashboardController extends BaseController
     }
 
     /**
-     * @param string $id
+     * @param Request $request
      * @return JsonResponse
      * @throws FacebookSDKException
      */
-    public function newAction(string $id): JsonResponse
+    public function suggestedUrlAction(Request $request): JsonResponse
     {
+        /** @var string $id */
+        $id = $request->post('id');
+        /** @var string $url */
+        $url = $this->websiteHelper->generateSubdomain($id);
+
+        return response()->json(['url' => $url]);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws FacebookSDKException
+     */
+    public function newAction(Request $request): JsonResponse
+    {
+        /** @var string $id */
+        $id = $request->post('id');
+        /** @var string $url */
+        $url = $request->post('url') ?: '';
+
         if (!$this->canUsePage($id)) {
             $this->logger->alert(__FILE__ . ':' . __LINE__ . ' - User is not allowed to use this page');
 
@@ -101,35 +122,45 @@ class DashboardController extends BaseController
                 'message' => 'You are not allowed to use this page'
             ];
 
-            return response()->json($response)->setStatusCode(403);
+            return response()->json($response);
+        }
+
+        if (!$this->websiteHelper->isValidUrl($url)) {
+            /** @var array $response */
+            $response = [
+                'error' => true,
+                'message' => 'Url is not valid'
+            ];
+
+            return response()->json($response);
         }
 
         $website = new Website();
 
         $website->{Website::USER_ID} = $this->fbHelper->getUserId();
         $website->{Website::SOURCE_ID} = $id;
-        $website->{Website::SUBDOMAIN} = $this->websiteHelper->generateSubdomain($website);
+        $website->{Website::SUBDOMAIN} = $url;
 
-        /** @var array $errors */
-        $errors = [];
+        /** @var array $error */
+        $error = null;
         try {
             /** @var array|bool $result */
             $result = $website->save();
 
             if ($result !== true) {
-                $errors[] = $result;
+                $error = $result;
             }
         } catch (QueryException $ex) {
             $this->logger->error(__FILE__ . ':' . __LINE__ . ' - ' . $ex->getMessage());
 
-            $errors[] = [
+            $error = [
                 'error' => true,
-                'message' => 'An error occurred'
+                'message' => 'Url is already taken'
             ];
         }
 
-        if (count($errors) > 0) {
-            return response()->json($errors)->setStatusCode(403);
+        if (!empty($error)) {
+            return response()->json($error);
         }
 
         /** @var array $response */
@@ -138,7 +169,7 @@ class DashboardController extends BaseController
             'url' => $this->websiteHelper->getWebsiteFullUrl($website),
         ];
 
-        return response()->json($response)->setStatusCode(200);
+        return response()->json($response);
     }
 
     /**

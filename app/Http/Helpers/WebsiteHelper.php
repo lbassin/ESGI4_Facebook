@@ -62,18 +62,14 @@ class WebsiteHelper
     }
 
     /**
-     * @param Website $website
+     * @param string $sourceId
      * @return string
-     * @throws \Facebook\Exceptions\FacebookSDKException
+     * @throws FacebookSDKException
      */
-    public function generateSubdomain(Website $website): string
+    public function generateSubdomain(string $sourceId): string
     {
-        if (empty($website->getSourceId())) {
-            return '';
-        }
-
         /** @var string $name */
-        $name = $this->fbHelper->getPageName($website->getSourceId());
+        $name = $this->fbHelper->getPageName($sourceId);
 
         $name = strtolower($name);
         $name = str_replace(' ', '-', $name);
@@ -143,12 +139,21 @@ class WebsiteHelper
                 continue;
             }
 
-            if($account['id'] == $website->getSourceId()){
+            if ($account['id'] == $website->getSourceId()) {
                 return $account['access_token'];
             }
         }
 
         return '';
+    }
+
+    /**
+     * @param string $url
+     * @return bool
+     */
+    public function isValidUrl(string $url): bool
+    {
+        return empty($url) || !preg_match('/[^a-zA-Z0-9\-_]/', $url);
     }
 
 }
