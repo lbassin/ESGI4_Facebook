@@ -1402,7 +1402,7 @@ a:hover {
   }
 }
 
-.md-content ul {
+.md-content.list ul {
   -webkit-column-width: 200px;
   column-width: 200px;
   -webkit-column-gap: 20px;
@@ -1410,7 +1410,7 @@ a:hover {
   padding: 20px;
 }
 
-.md-content li {
+.md-content.list li {
   display: inline-block;
   width: 100%;
   height: 100px;
@@ -1423,37 +1423,45 @@ a:hover {
   transition: all 0.3s ease;
 }
 
-.md-content li > div {
+.md-content.list li > div {
   display: table;
   width: 100%;
   height: 100%;
   padding: 10px;
 }
 
-.md-content li > div img,
-.md-content li > div span {
+.md-content.list li > div img,
+.md-content.list li > div span {
   display: table-cell;
   vertical-align: middle;
 }
 
-.md-content li > div img {
+.md-content.list li > div img {
   -webkit-transform: translateY(calc(50% - 10px));
   transform: translateY(calc(50% - 10px));
   border-radius: 50%;
 }
 
-.md-content li > div span {
+.md-content.list li > div span {
   color: white;
   width: 100%;
   padding: 0px 10px;
 }
 
-.md-content li:hover {
+.md-content.list li:hover {
   background: white;
 }
 
-.md-content li:hover > a > div span {
+.md-content.list li:hover > a > div span {
   color: #090917;
+}
+
+.md-content.config .errors {
+  color: red;
+}
+
+.md-content.config .success {
+  color: green;
 }
 
 /*********************************************
@@ -1952,7 +1960,7 @@ nav ul li a:hover {
   background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(100%, rgba(0, 0, 0, 0.9)), to(rgba(0, 0, 0, 0.9)));
   background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.9) 100%, rgba(0, 0, 0, 0.9) 100%);
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#d6000000',GradientType=0 );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#d6000000', GradientType=0);
   /* IE6-9 */
   -webkit-transition: all ease 0.2s;
   transition: all ease 0.2s;
