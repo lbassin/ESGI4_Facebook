@@ -156,4 +156,16 @@ class WebsiteHelper
         return empty($url) || !preg_match('/[^a-zA-Z0-9\-_]/', $url);
     }
 
+    /**
+     * @param string $sourceId
+     * @return bool
+     */
+    public function isCreated(string $sourceId): bool
+    {
+        /** @var int $websiteCount */
+        $websiteCount = Website::where(Website::SOURCE_ID, $sourceId)->count();
+
+        return $websiteCount != 0;
+    }
+
 }

@@ -81,7 +81,7 @@ class DashboardController extends BaseController
     public function indexAction(): View
     {
         return view('dashboard.index', [
-            'pages' => $this->getPages(),
+            'pages' => $this->userHelper->getAvailablePages(),
             'websites' => $this->userHelper->getWebsites(),
         ]);
     }
@@ -170,19 +170,6 @@ class DashboardController extends BaseController
         ];
 
         return response()->json($response);
-    }
-
-    /**
-     * @return array
-     * @throws FacebookSDKException
-     */
-    private function getPages(): array
-    {
-        $pages = $this->fbHelper->getPages();
-
-        // TODO : Remove existing website from the list
-
-        return $pages;
     }
 
     /**
