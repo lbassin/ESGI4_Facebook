@@ -226,13 +226,23 @@
             let submitNewPage = $('#submit-new-page');
 
             pages.click(function () {
-                $('input[name="new-page-id"]').val($(this).attr('data-id'));
+                let sourceId = $(this).attr('data-id');
+                $('input[name="new-page-id"]').val(sourceId);
 
-                listModal.css({opacity: 0});
-                setTimeout(function () {
-                    listModal.hide();
-                    configModal.animate({opacity: 1}, 250);
-                }, 300);
+                $.post('{{ route('dashboard.suggest.url') }}', {id: sourceId}).done(
+                    function (response) {
+                        $('input[name="new-page-url"]').val(response.url);
+                    }
+                ).always(
+                    function () {
+                        listModal.css({opacity: 0});
+                        setTimeout(function () {
+                            listModal.hide();
+                            configModal.animate({opacity: 1}, 250);
+                        }, 300);
+                    }
+                );
+
             });
 
             submitNewPage.click(function (event) {
@@ -243,7 +253,7 @@
 
                 $.post(this.form.action, {id: id, url: url}).done(
                     function (response) {
-                        if(response.error){
+                        if (response.error) {
                             console.log(response);
                             addError(response.message);
                             return;

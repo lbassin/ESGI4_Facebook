@@ -91,7 +91,7 @@ class DashboardController extends BaseController
      * @return JsonResponse
      * @throws FacebookSDKException
      */
-    public function suggestedUrlAction(Request $request): JsonResponse
+    public function suggestUrlAction(Request $request): JsonResponse
     {
         /** @var string $id */
         $id = $request->post('id');

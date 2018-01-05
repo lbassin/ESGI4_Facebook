@@ -19,6 +19,9 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
 
         Route::post('/dashboard/new', 'DashboardController@newAction')
             ->name('dashboard.new');
+
+        Route::post('/dashboard/suggest/url', 'DashboardController@suggestUrlAction')
+            ->name('dashboard.suggest.url');
     });
 
     Route::middleware(['AuthFb', 'WebsiteExists', 'AddViewData'])->group(function () {
