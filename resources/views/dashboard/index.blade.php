@@ -259,7 +259,10 @@
                             return;
                         }
 
-                        addSuccess(response.url);
+                        addSuccess("Website created");
+                        setTimeout(function(){
+                            window.location.href = response.url;
+                        }, 750);
                     }).fail(
                     function (response) {
                         addError(response.responseJSON.message);

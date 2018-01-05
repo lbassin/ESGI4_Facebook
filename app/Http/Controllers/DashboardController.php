@@ -166,7 +166,7 @@ class DashboardController extends BaseController
         /** @var array $response */
         $response = [
             'success' => true,
-            'url' => $this->websiteHelper->getWebsiteFullUrl($website),
+            'url' => route('dashboard.website', ['subdomain' => $website->getSubDomain()]),
         ];
 
         return response()->json($response);
