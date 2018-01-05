@@ -233,16 +233,13 @@
                     function (response) {
                         $('input[name="new-page-url"]').val(response.url);
                     }
-                ).always(
-                    function () {
-                        listModal.css({opacity: 0});
-                        setTimeout(function () {
-                            listModal.hide();
-                            configModal.animate({opacity: 1}, 250);
-                        }, 300);
-                    }
-                );
+                ).always();
 
+                listModal.css({opacity: 0});
+                setTimeout(function () {
+                    listModal.hide();
+                    configModal.animate({opacity: 1}, 250);
+                }, 300);
             });
 
             submitNewPage.click(function (event) {
@@ -260,7 +257,7 @@
                         }
 
                         addSuccess("Website created");
-                        setTimeout(function(){
+                        setTimeout(function () {
                             window.location.href = response.url;
                         }, 750);
                     }).fail(
@@ -285,6 +282,19 @@
             wrapper.append(error);
         }
 
+        function hideModal() {
+            let listModal = $('.md-modal .md-content.list');
+            let configModal = $('.md-modal .md-content.config');
+
+            $('.md-modal').removeClass('md-show');
+
+            listModal.css({opacity: 1});
+            listModal.show();
+            configModal.css({opacity: 0});
+
+            $('input[name="new-page-url"]').val('');
+        }
+
         $(function () {
             $('.add-page').on('click', function () {
                 $('.md-modal').addClass('md-show');
@@ -292,12 +302,12 @@
 
             $(document).on('keydown', function (event) {
                 if (event.keyCode === 27) {
-                    $('.md-modal').removeClass('md-show');
+                    hideModal();
                 }
             });
 
             $('.md-close').on('click', function () {
-                $('.md-modal').removeClass('md-show');
+                hideModal();
             });
 
             initDropdown();
