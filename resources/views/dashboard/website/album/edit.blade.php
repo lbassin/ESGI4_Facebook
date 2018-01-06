@@ -14,53 +14,41 @@
             <span class="user-name">{{ $userHelper->getName() }}</span>
         </div>
 
-        <div class="container album-edit">
-            <div class="nav-button-mobile">
-                <h2>menu</h2>
-            </div>
-            <nav class="album-edit-nav">
-                <button class="md-close">
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                </button>
+        <div class="container">
+            <nav>
                 <ul>
-                    <li id="menu-templates"><a class="active">Choix du template</a></li>
-                    <li id="menu-images"><a>Selection des images</a></li>
-                    <li id="menu-options"><a>Options</a></li>
+                    <li id="menu-templates" class="active">Choix du template</li>
+                    <li id="menu-images">Selection des images</li>
+                    <li id="menu-options">Options</li>
                 </ul>
             </nav>
-            <div class="album-edit-content step-1">
-                <div class="album-edit-content-title">
-                    <h2>Mes templates</h2>
-                </div>
-                @foreach($templates as $template) <?php /** @var \App\Model\Template $template */ ?>
-                <div class="preview template" data-target="modal-preview" data-id="{{ $template->getId() }}">
-                    <div class="title">
-                        <div class="inner">
-                        </div>
-                        <div class="gradient"></div>
-                    </div>
-                    <div class="image">
+            <div class="step-1">
+                <h2>Mes templates</h2>
+                <div id="templates">
+                    @foreach($templates as $template) <?php /** @var \App\Model\Template $template */ ?>
+                    <div class="preview" data-target="modal-preview" data-id="{{ $template->getId() }}">
                         <img src="{{ $template->getDesktopPreview() }}" alt="">
                     </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
-            <div class="album-edit-content step-2" style="display: none;">
-                <div class="album-edit-content-title">
-                    <h2>Mes images</h2>
-                </div>
-                @foreach($album->getPhotos() as $photo) <?php /** @var \App\Http\Api\Photo $photo */ ?>
-                    <div class="preview image" data-target="modal-preview" data-id="1">
-                        <div class="title">
-                            <div class="inner">
-                            </div>
-                            <div class="gradient"></div>
-                        </div>
-                        <div class="image">
-                            <img src="{{ $photo->getLink(\App\Http\Api\Photo::SIZE_MEDIUM) }}" alt="">
-                        </div>
+
+            <div class="step-2" style="display: none;">
+                <h2>Mes images</h2>
+                <div id="images">
+                    @foreach($album->getPhotos() as $photo) <?php /** @var \App\Http\Api\Photo $photo */ ?>
+                    <div class="preview" data-target="modal-preview" data-id="1">
+                        <img src="{{ $photo->getLink(\App\Http\Api\Photo::SIZE_MEDIUM) }}" alt="">
                     </div>
-                @endforeach
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="step-3" style="display: none;">
+                <h2>Options</h2>
+                <div>
+                    //
+                </div>
             </div>
         </div>
     </div>
@@ -89,68 +77,10 @@
         </button>
     </div>
 
-    <script> // Responsive
-        let mobileNav = false;
-        let desktopNav = false;
-        let websiteNavExp = 'nav.album-edit-nav';
-
-        function isMediumWidth() {
-            return window.innerWidth <= 768;
-        }
-
-        $('nav button.md-close').click(function () {
-            if (isMediumWidth()) {
-                if ($(websiteNavExp).hasClass('m-open')) {
-                    $(websiteNavExp).removeClass('m-open');
-                }
-            }
-        });
-
-        $('div.nav-button-mobile').click(function () {
-            if (isMediumWidth()) {
-                if (!$(websiteNavExp).hasClass('m-open')) {
-                    $(websiteNavExp).addClass('m-open');
-                }
-            }
-        });
-
-        function moveNavTo(position) {
-            switch (position) {
-                case 'desktop':
-                    if (!$(websiteNavExp).parent().hasClass('album-edit')) {
-                        $(websiteNavExp).insertAfter('.nav-button-mobile')
-                    }
-                    break;
-                case 'mobile':
-                    if ($(websiteNavExp).parent().hasClass('album-edit')) {
-                        $(websiteNavExp).insertAfter('.head');
-                    }
-                    break;
-            }
-        }
-
-        function checkNavState() {
-            if (isMediumWidth() && !mobileNav) {
-                moveNavTo('mobile');
-                mobileNav = true;
-                desktopNav = false;
-            }
-
-            if (!isMediumWidth() && !desktopNav) {
-                moveNavTo('desktop');
-                desktopNav = true;
-                mobileNav = false;
-            }
-        }
-
-        $(window).resize(checkNavState);
-        $(document).ready(checkNavState);
-    </script>
-
     <script> // Specific
         let templateId = null;
 
-        $('.template').click(function () {
+        $('#templates .preview').click(function () {
             let target = $(this).data('target');
             templateId = $(this).data('id');
 
@@ -176,8 +106,8 @@
 
         $('#template-submit').click(function () {
             let nav = $('nav ul');
-            nav.find('li a.active').removeClass('active');
-            $(nav.find('li a')[1]).addClass('active');
+            nav.find('li.active').removeClass('active');
+            $(nav.find('li')[1]).addClass('active');
 
             showImages();
 
@@ -189,8 +119,8 @@
             $('.step-2').hide();
             $('.step-3').hide();
 
-            $('nav ul li a').removeClass('active');
-            $('nav ul #menu-templates > a').addClass('active');
+            $('nav ul li').removeClass('active');
+            $('nav ul #menu-templates').addClass('active');
         }
 
         function showImages() {
@@ -198,8 +128,8 @@
             $('.step-2').show();
             $('.step-3').hide();
 
-            $('nav ul li a').removeClass('active');
-            $('nav ul #menu-images > a').addClass('active');
+            $('nav ul li').removeClass('active');
+            $('nav ul #menu-images').addClass('active');
         }
 
         function showOptions() {
@@ -207,8 +137,8 @@
             $('.step-2').hide();
             $('.step-3').show();
 
-            $('nav ul li a').removeClass('active');
-            $('nav ul #menu-options > a').addClass('active');
+            $('nav ul li').removeClass('active');
+            $('nav ul #menu-options').addClass('active');
         }
 
         $("#menu-templates").click(showTemplates);
