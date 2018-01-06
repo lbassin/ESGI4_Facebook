@@ -223,7 +223,6 @@
             let pages = $('#pages .page');
             let listModal = $('.md-modal .md-content.list');
             let configModal = $('.md-modal .md-content.config');
-            let submitNewPage = $('#submit-new-page');
 
             pages.click(function () {
                 let sourceId = $(this).attr('data-id');
@@ -242,13 +241,13 @@
                 }, 300);
             });
 
-            submitNewPage.click(function (event) {
+            $('.md-content.config form').on('submit', function (event) {
                 event.preventDefault();
 
-                let id = this.form['new-page-id'].value;
-                let url = this.form['new-page-url'].value;
+                let id = this['new-page-id'].value;
+                let url = this['new-page-url'].value;
 
-                $.post(this.form.action, {id: id, url: url}).done(
+                $.post(this.action, {id: id, url: url}).done(
                     function (response) {
                         if (response.error) {
                             console.log(response);
