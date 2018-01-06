@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <div class="wrapper">
+    <div id="album-edit" class="wrapper">
         <div class="head">
             <div class="user-pic">
                 <img src="{{ $userHelper->getPicture() }}" alt="">
@@ -14,11 +14,11 @@
             <span class="user-name">{{ $userHelper->getName() }}</span>
         </div>
 
-        <div class="container website-home">
+        <div class="container album-edit">
             <div class="nav-button-mobile">
                 <h2>menu</h2>
             </div>
-            <nav class="website-home-nav">
+            <nav class="album-edit-nav">
                 <button class="md-close">
                     <i class="fa fa-times" aria-hidden="true"></i>
                 </button>
@@ -28,12 +28,12 @@
                     <li><a>Options</a></li>
                 </ul>
             </nav>
-            <div class="menu-albums">
-                <div class="menu-albums-title">
+            <div class="album-edit-content">
+                <div class="album-edit-content-title">
                     <h2>Mes templates</h2>
                 </div>
                 @for($i = 0; $i < 5; $i++)
-                    <div class="album" data-target="modal-preview" data-id="1">
+                    <div class="template" data-target="modal-preview" data-id="1">
                         <div class="title">
                             <div class="inner">
                             </div>
@@ -72,10 +72,10 @@
         </button>
     </div>
 
-    <script>
+    <script> // Responsive
         let mobileNav = false;
         let desktopNav = false;
-        let websiteNavExp = 'nav.website-home-nav';
+        let websiteNavExp = 'nav.album-edit-nav';
 
         function isMediumWidth() {
             return window.innerWidth <= 768;
@@ -100,12 +100,12 @@
         function moveNavTo(position) {
             switch (position) {
                 case 'desktop':
-                    if (!$(websiteNavExp).parent().hasClass('website-home')) {
+                    if (!$(websiteNavExp).parent().hasClass('album-edit')) {
                         $(websiteNavExp).insertAfter('.nav-button-mobile')
                     }
                     break;
                 case 'mobile':
-                    if ($(websiteNavExp).parent().hasClass('website-home')) {
+                    if ($(websiteNavExp).parent().hasClass('album-edit')) {
                         $(websiteNavExp).insertAfter('.head');
                     }
                     break;
@@ -130,8 +130,8 @@
         $(document).ready(checkNavState);
     </script>
 
-    <script>
-        $('.album').click(function () {
+    <script> // Specific
+        $('.template').click(function () {
             let target = $(this).data('target');
             let templateId = $(this).data('id');
 
@@ -151,7 +151,7 @@
         });
     </script>
 
-    <script>
+    <script> // Global
         function showModal(target) {
             $('#' + target).addClass('md-show');
         }

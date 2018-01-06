@@ -8,7 +8,7 @@
 @section('content')
 <?php /** @var array $album */ ?>
 
-<div class="wrapper">
+<div id="website-home" class="wrapper">
     <div class="head">
         <div class="user-pic">
             <img src="{{ $userHelper->getPicture() }}" alt="">
