@@ -4,9 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Helpers;
 
+use App\Http\Api\Album;
+use App\Http\Api\Event;
+use App\Http\Api\Review;
+use App\Model\Website;
 use Facebook\Exceptions\FacebookSDKException;
+use Facebook\FacebookRequest;
 use Facebook\FacebookResponse;
 use Facebook\GraphNodes\GraphAlbum;
+use Facebook\GraphNodes\GraphEdge;
+use Facebook\GraphNodes\GraphEvent;
+use Facebook\GraphNodes\GraphNodeFactory;
 use Illuminate\Session\Store;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 
@@ -27,7 +35,7 @@ class FacebookHelper
     /**
      *
      */
-    const FB_SCOPES = 'public_profile,email,manage_pages,user_photos';
+    const FB_SCOPES = 'public_profile,email,manage_pages,user_photos,publish_pages';
 
     /**
      * @var Store
@@ -38,16 +46,26 @@ class FacebookHelper
      * @var LaravelFacebookSdk
      */
     private $fb;
+    /**
+     * @var GraphNodeFactory
+     */
+    private $nodeFactory;
 
     /**
      * FacebookHelper constructor.
      * @param Store $session
      * @param LaravelFacebookSdk $fb
+     * @param GraphNodeFactory $nodeFactory
      */
-    function __construct(Store $session, LaravelFacebookSdk $fb)
+    function __construct(
+        Store $session,
+        LaravelFacebookSdk $fb,
+        GraphNodeFactory $nodeFactory
+    )
     {
         $this->session = $session;
         $this->fb = $fb;
+        $this->nodeFactory = $nodeFactory;
     }
 
     /**
@@ -73,28 +91,17 @@ class FacebookHelper
      */
     public function tokenIsValid(string $token): bool
     {
-        /** @var string $fbAppId */
-        $fbAppId = env('FACEBOOK_APP_ID');
-        /** @var string $fbAppSecret */
-        $fbAppSecret = env('FACEBOOK_APP_SECRET');
-
-        $this->fb->setDefaultAccessToken($fbAppId . '|' . $fbAppSecret);
+        /** @var string $appToken */
+        $appToken = env('FACEBOOK_APP_ID') . '|' . env('FACEBOOK_APP_SECRET');
 
         /** @var FacebookResponse $response */
-        $response = $this->fb->get('debug_token?input_token=' . $token);
+        $response = $this->fb->get('debug_token?input_token=' . $token, $appToken);
 
         if (!isset($response->getDecodedBody()['data']['is_valid'])) {
             return false;
         }
 
-        /** @var bool $isValid */
-        $isValid = $response->getDecodedBody()['data']['is_valid'] !== false;
-
-        if (!$isValid) {
-            $this->session->forget(FacebookHelper::FB_TOKEN_KEY);
-        }
-
-        return $isValid;
+        return $response->getDecodedBody()['data']['is_valid'] !== false;
     }
 
     /**
@@ -161,6 +168,22 @@ class FacebookHelper
     }
 
     /**
+     * @return string
+     * @throws FacebookSDKException
+     */
+    public function getUserName(): string
+    {
+        /** @var FacebookResponse $response */
+        $response = $this->fb->get('/me?fields=name')->getDecodedBody();
+
+        if (!isset($response['name'])) {
+            return '';
+        }
+
+        return $response['name'];
+    }
+
+    /**
      * @return \Facebook\GraphNodes\GraphUser
      * @throws FacebookSDKException
      */
@@ -177,20 +200,82 @@ class FacebookHelper
      * @return array
      * @throws FacebookSDKException
      */
-    public function getAlbums($id = 'me')
+    public function getAlbums($id = 'me'): array
     {
+        /** @var string $albumQuery */
+        $albumQuery = $id . '/albums?fields=id,name,description,updated_time,cover_photo{images},photos{id,name,images}';
+        /** @var GraphEdge $albums */
+        $response = $this->fb->get($albumQuery)->getGraphEdge();
+
         /** @var array $albums */
         $albums = [];
-        /** @var string $query */
-        $albumQuery = $id . '?fields=albums{id,name,updated_time,cover_photo{picture},photos{id,name,picture}}';
-        /** @var array $albums */
-        $response = $this->fb->get($albumQuery)->getDecodedBody();
-
-        /** @var array $albumData */
-        foreach ($response['albums']['data'] as $albumData) {
-            $albums[] = new GraphAlbum($albumData);
+        /** @var GraphAlbum $album */
+        foreach ($response->all() as $album) {
+            $albums[] = new Album($album);
         }
 
         return $albums;
+    }
+
+    /**
+     * @param string $name
+     * @param Website $website
+     * @throws FacebookSDKException
+     */
+    public function createAlbum(string $name, Website $website): void
+    {
+        /** @var array $albumData */
+        $albumData = [
+            'name' => $name
+        ];
+
+        /** @var FacebookRequest $request */
+        $request = $this->fb->request('post', 'me/albums', $albumData, $website->getAccessToken());
+
+        $this->fb->getClient()->sendRequest($request);
+
+        dd($request);
+    }
+
+    /**
+     * @param string $id
+     * @return array
+     * @throws FacebookSDKException
+     */
+    public function getEvents(string $id = 'me'): array
+    {
+        /** @var string $eventQuery */
+        $eventQuery = $id . '/events?fields=cover{source},start_time,end_time,name,place{name}';
+        /** @var GraphEdge $albums */
+        $response = $this->fb->get($eventQuery)->getGraphEdge();
+
+        /** @var array $events */
+        $events = [];
+        /** @var GraphEvent $album */
+        foreach ($response->all() as $event) {
+            $events[] = new Event($event);
+        }
+
+        return $events;
+    }
+
+    /**
+     * @param Website $website
+     * @return array
+     * @throws FacebookSDKException
+     */
+    public function getReviews(Website $website): array
+    {
+        /** @var string $reviewQuery */
+        $reviewQuery = $website->getSourceId() . '/ratings?fields=review_text,reviewer{name, picture{url}},rating,created_time';
+        /** @var GraphEdge $response */
+        $response = $this->fb->get($reviewQuery, $website->getAccessToken())->getGraphEdge();
+
+        $reviews = [];
+        foreach ($response->all() as $review) {
+            $reviews[] = new Review($review);
+        }
+
+        return $reviews;
     }
 }

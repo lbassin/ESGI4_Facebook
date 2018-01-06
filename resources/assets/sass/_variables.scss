@@ -6,26 +6,6 @@ $color1: #090917;
 $color2: #12121c;
 
 /*********************************************
-******************** FONT ********************
-*********************************************/
-
-@font-face {
-    font-family: 'raleway_thin';
-    src: url('https://fonts.gstatic.com/s/raleway/v12/RJMlAoFXXQEzZoMSUteGWJBw1xU1rKptJj_0jans920.woff2') format('woff2');
-}
-
-@font-face {
-    font-family: 'raleway_regular';
-    src: url('https://fonts.gstatic.com/s/raleway/v12/QAUlVt1jXOgQavlW5wEfxQLUuEpTyoUstqEm5AMlJo4.woff2') format('woff2');
-}
-
-@font-face {
-    font-family: 'raleway_bold';
-    src: url('https://fonts.gstatic.com/s/raleway/v12/JbtMzqLaYbbbCL9X6EvaIwzyDMXhdD8sAj6OAJTFsBI.woff2') format('woff2');
-}
-
-
-/*********************************************
 **************** MEDIA SIZE ******************
 *********************************************/
 
@@ -48,4 +28,24 @@ $L: 1170px;
             @content;
         }
     }
+}
+
+
+/*********************************************
+******************** FONT ********************
+*********************************************/
+
+@font-face {
+    font-family: 'raleway_thin';
+    src: url('https://fonts.gstatic.com/s/raleway/v12/RJMlAoFXXQEzZoMSUteGWJBw1xU1rKptJj_0jans920.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'raleway_regular';
+    src: url('https://fonts.gstatic.com/s/raleway/v12/QAUlVt1jXOgQavlW5wEfxQLUuEpTyoUstqEm5AMlJo4.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'raleway_bold';
+    src: url('https://fonts.gstatic.com/s/raleway/v12/JbtMzqLaYbbbCL9X6EvaIwzyDMXhdD8sAj6OAJTFsBI.woff2') format('woff2');
 }

@@ -29,6 +29,10 @@ class Website extends Model
      *
      */
     const SUBDOMAIN = 'subdomain';
+    /**
+     *
+     */
+    const ACCESS_TOKEN = 'access_token';
 
     /**
      * @var string
@@ -97,6 +101,8 @@ class Website extends Model
             ];
         }
 
+        $this->{self::SUBDOMAIN} = strtolower($this->getSubDomain());
+
         return parent::save($options);
     }
 
@@ -114,6 +120,22 @@ class Website extends Model
     public function getSubDomain()
     {
         return $this->{self::SUBDOMAIN};
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAccessToken()
+    {
+        return $this->{self::ACCESS_TOKEN};
+    }
+
+    /**
+     * @param $accessToken
+     */
+    public function setAccessToken($accessToken)
+    {
+        $this->{self::ACCESS_TOKEN} = $accessToken;
     }
 
 }

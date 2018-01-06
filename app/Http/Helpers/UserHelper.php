@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Helpers;
 
 use App\Model\Website;
+use Facebook\Exceptions\FacebookSDKException;
 use Illuminate\Support\Collection;
 
 /**
@@ -17,14 +18,20 @@ class UserHelper
      * @var FacebookHelper
      */
     private $fbHelper;
+    private $websiteHelper;
 
     /**
      * UserHelper constructor.
      * @param FacebookHelper $fbHelper
+     * @param WebsiteHelper $websiteHelper
      */
-    public function __construct(FacebookHelper $fbHelper)
+    public function __construct(
+        FacebookHelper $fbHelper,
+        WebsiteHelper $websiteHelper
+    )
     {
         $this->fbHelper = $fbHelper;
+        $this->websiteHelper = $websiteHelper;
     }
 
     /**
@@ -45,5 +52,46 @@ class UserHelper
 
         return $output;
     }
+
+    /**
+     * @return string
+     * @throws \Facebook\Exceptions\FacebookSDKException
+     */
+    public function getPicture(): string
+    {
+        return $this->fbHelper->getUserPhoto();
+    }
+
+    /**
+     * @return string
+     * @throws \Facebook\Exceptions\FacebookSDKException
+     */
+    public function getName(): string
+    {
+        return $this->fbHelper->getUserName();
+    }
+
+    /**
+     * @return array
+     * @throws FacebookSDKException
+     */
+    public function getAvailablePages(): array
+    {
+        $pages = $this->fbHelper->getPages();
+
+        $availablePages = [];
+        foreach ($pages as $page) {
+            if(!isset($page['id'])){
+                continue;
+            }
+
+            if(!$this->websiteHelper->isCreated($page['id'])){
+                $availablePages[] = $page;
+            }
+        }
+
+        return $availablePages;
+    }
+
 
 }

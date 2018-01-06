@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Helpers\AlbumHelper;
 use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\WebsiteHelper;
+use App\Http\Helpers\UserHelper;
 use App\Model\Website;
 use Facebook\GraphNodes\GraphAlbum;
+use Facebook\GraphNodes\GraphUser;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
 
@@ -24,16 +27,32 @@ class WebsiteController extends BaseController
      * @var WebsiteHelper
      */
     private $websiteHelper;
+    /**
+     * @var AlbumHelper
+     */
+    private $albumHelper;
+    /**
+     * @var UserHelper
+     */
+    private $userHelper;
 
     /**
      * WebsiteController constructor.
      * @param FacebookHelper $fbHelper
      * @param WebsiteHelper $websiteHelper
+     * @param AlbumHelper $albumHelper
+     * @param UserHelper $userHelper
      */
-    public function __construct(FacebookHelper $fbHelper, WebsiteHelper $websiteHelper)
+    public function __construct(
+        FacebookHelper $fbHelper,
+        WebsiteHelper $websiteHelper,
+        AlbumHelper $albumHelper,
+        UserHelper $userHelper)
     {
         $this->fbHelper = $fbHelper;
         $this->websiteHelper = $websiteHelper;
+        $this->albumHelper = $albumHelper;
+        $this->userHelper = $userHelper;
     }
 
     /**
@@ -44,11 +63,11 @@ class WebsiteController extends BaseController
     {
         /** @var Website $website */
         $website = $this->websiteHelper->getCurrentWebsite();
-        /** @var GraphAlbum $albums */
+        /** @var array $albums */
         $albums = $this->fbHelper->getAlbums($website->getSourceId());
 
         return view('dashboard.website.index', [
-            'albums' => $albums
+            'albums' => array_slice($albums,0,6)
         ]);
     }
 
@@ -62,10 +81,19 @@ class WebsiteController extends BaseController
 
     /**
      * @return View
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function albumsAction(): View
     {
-        return view('dashboard.website.albums');
+        /** @var Website $website */
+        $website = $this->websiteHelper->getCurrentWebsite();
+
+        /** @var array $albums */
+        $albums = $this->fbHelper->getAlbums($website->getSourceId());
+
+        return view('dashboard.website.albums', [
+            'albums' => $albums,
+        ]);
     }
 
     /**
@@ -81,14 +109,31 @@ class WebsiteController extends BaseController
      */
     public function eventsAction(): View
     {
-        return view('dashboard.website.events');
+        /** @var Website $website */
+        $website = $this->websiteHelper->getCurrentWebsite();
+
+        /** @var array $events */
+        $events = $this->fbHelper->getEvents($website->getSourceId());
+
+        return view('dashboard.website.events',[
+            'events' => $events
+        ]);
     }
 
     /**
      * @return View
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function reviewsAction(): View
     {
-        return view('dashboard.website.reviews');
+        /** @var Website $website */
+        $website = $this->websiteHelper->getCurrentWebsite();
+
+        /** @var array $reviews */
+        $reviews = $this->fbHelper->getReviews($website);
+
+        return view('dashboard.website.reviews', [
+            'reviews' => $reviews
+        ]);
     }
 }
