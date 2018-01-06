@@ -2028,3 +2028,46 @@ a:hover {
   }
 }
 
+#album-edit .container {
+  width: 100%;
+}
+
+#album-edit nav {
+  margin-left: 2%;
+  width: 15%;
+  float: left;
+  text-align: right;
+  margin-top: 2.5rem;
+}
+
+#album-edit nav li {
+  font-size: 1rem;
+  padding: 0.8rem 0 0.5rem;
+  border-bottom: solid 1px #383448;
+  color: #57555f;
+  font-weight: 300;
+  display: block;
+  width: 100%;
+  translate: all ease 0.5s;
+}
+
+#album-edit nav li:hover,
+#album-edit nav li.active {
+  padding-right: 0.4rem;
+  color: #aeaebb;
+  border-color: #aeaebb;
+}
+
+#album-edit #steps {
+  margin-left: 18%;
+  width: 80%;
+}
+
+#album-edit #steps h2 {
+  font-family: 'raleway_thin', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+

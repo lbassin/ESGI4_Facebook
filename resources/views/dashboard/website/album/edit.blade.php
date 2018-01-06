@@ -22,35 +22,38 @@
                     <li id="menu-options">Options</li>
                 </ul>
             </nav>
-            <div class="step-1">
-                <h2>Mes templates</h2>
-                <div id="templates">
-                    @foreach($templates as $template) <?php /** @var \App\Model\Template $template */ ?>
-                    <div class="preview" data-target="modal-preview" data-id="{{ $template->getId() }}">
-                        <img src="{{ $template->getDesktopPreview() }}" alt="">
-                    </div>
-                    @endforeach
-                </div>
-            </div>
 
-            <div class="step-2" style="display: none;">
-                <h2>Mes images</h2>
-                <div id="images">
-                    @foreach($album->getPhotos() as $photo) <?php /** @var \App\Http\Api\Photo $photo */ ?>
-                    <div class="preview" data-target="modal-preview" data-id="1">
-                        <img src="{{ $photo->getLink(\App\Http\Api\Photo::SIZE_MEDIUM) }}" alt="">
+            <div id="steps">
+                <div class="step-1">
+                    <h2>Mes templates</h2>
+                    <div id="preview-grid templates">
+                        @foreach($templates as $template) <?php /** @var \App\Model\Template $template */ ?>
+                        <div class="preview" data-target="modal-preview" data-id="{{ $template->getId() }}">
+                            <img src="{{ $template->getDesktopPreview() }}" alt="">
+                        </div>
+                        @endforeach
                     </div>
-                    @endforeach
                 </div>
-            </div>
 
-            <div class="step-3" style="display: none;">
-                <h2>Options</h2>
-                <div>
-                    //
+                <div class="step-2" style="display: none;">
+                    <h2>Mes images</h2>
+                    <div id="images">
+                        @foreach($album->getPhotos() as $photo) <?php /** @var \App\Http\Api\Photo $photo */ ?>
+                        <div class="preview" data-target="modal-preview" data-id="1">
+                            <img src="{{ $photo->getLink(\App\Http\Api\Photo::SIZE_MEDIUM) }}" alt="">
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="step-3" style="display: none;">
+                    <h2>Options</h2>
+                    <div>
+                        //
+                    </div>
                 </div>
             </div>
-        </div>
+            </div>
     </div>
 
     <div id="modal-preview" class="md-modal md-effect-12">
