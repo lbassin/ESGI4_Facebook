@@ -9,6 +9,11 @@
     float: left;
     text-align: right;
     margin-top: 2.5rem;
+    transition: all 0.5s ease;
+
+    @include MQ(M){
+      margin-left: -15%;
+    }
 
     li {
       font-size: 1rem;
@@ -29,8 +34,15 @@
   }
 
   #steps {
-    margin-left: 18%;
     width: 80%;
+    transition: all 0.5s ease;
+    margin-top: 12px;
+
+    margin-left: 18%;
+    @include MQ(M){
+      width: 98%;
+      margin-left: 1%;
+    }
 
     h2 {
       font-family: 'raleway_thin', sans-serif;
@@ -38,8 +50,41 @@
       font-weight: 300;
       color: #ffffff;
       margin-bottom: 1rem;
+      transition: all 0.5s ease;
+
+      @include MQ(S){
+        text-align: center;
+        font-size: 16px;
+      }
     }
 
+    .preview-grid {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      align-content: flex-start;
+
+      .preview {
+        margin-bottom: 12px;
+        width: 31%;
+        min-width: 250px;
+        transition: all 0.5s ease;
+
+        @include MQ(M){
+          width: 47%;
+        }
+
+        @include MQ(S){
+          width: 98%;
+        }
+
+        img{
+          width: 100%;
+        }
+      }
+    }
   }
 
 }

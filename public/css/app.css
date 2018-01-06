@@ -2038,6 +2038,14 @@ a:hover {
   float: left;
   text-align: right;
   margin-top: 2.5rem;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+@media only screen and (max-width: 768px) {
+  #album-edit nav {
+    margin-left: -15%;
+  }
 }
 
 #album-edit nav li {
@@ -2059,8 +2067,18 @@ a:hover {
 }
 
 #album-edit #steps {
-  margin-left: 18%;
   width: 80%;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  margin-top: 12px;
+  margin-left: 18%;
+}
+
+@media only screen and (max-width: 768px) {
+  #album-edit #steps {
+    width: 98%;
+    margin-left: 1%;
+  }
 }
 
 #album-edit #steps h2 {
@@ -2069,5 +2087,57 @@ a:hover {
   font-weight: 300;
   color: #ffffff;
   margin-bottom: 1rem;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+@media only screen and (max-width: 480px) {
+  #album-edit #steps h2 {
+    text-align: center;
+    font-size: 16px;
+  }
+}
+
+#album-edit #steps .preview-grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+}
+
+#album-edit #steps .preview-grid .preview {
+  margin-bottom: 12px;
+  width: 31%;
+  min-width: 250px;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+@media only screen and (max-width: 768px) {
+  #album-edit #steps .preview-grid .preview {
+    width: 47%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  #album-edit #steps .preview-grid .preview {
+    width: 98%;
+  }
+}
+
+#album-edit #steps .preview-grid .preview img {
+  width: 100%;
 }
 
