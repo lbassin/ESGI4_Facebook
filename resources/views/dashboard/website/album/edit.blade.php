@@ -28,12 +28,29 @@
                     <li><a>Options</a></li>
                 </ul>
             </nav>
-            <div class="album-edit-content">
+            <div class="album-edit-content step-1">
                 <div class="album-edit-content-title">
                     <h2>Mes templates</h2>
                 </div>
+                @foreach($templates as $template)
+                    <div class="preview template" data-target="modal-preview" data-id="{{ $template['id'] }}">
+                        <div class="title">
+                            <div class="inner">
+                            </div>
+                            <div class="gradient"></div>
+                        </div>
+                        <div class="image">
+                            <img src="{{ $template['image'] }}" alt="">
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="album-edit-content step-2" style="display: none;">
+                <div class="album-edit-content-title">
+                    <h2>Mes images</h2>
+                </div>
                 @for($i = 0; $i < 5; $i++)
-                    <div class="template" data-target="modal-preview" data-id="1">
+                    <div class="preview image" data-target="modal-preview" data-id="1">
                         <div class="title">
                             <div class="inner">
                             </div>
@@ -131,6 +148,8 @@
     </script>
 
     <script> // Specific
+        let step = 1;
+
         $('.template').click(function () {
             let target = $(this).data('target');
             let templateId = $(this).data('id');
@@ -142,13 +161,21 @@
             $('.md-close').trigger('click');
         });
 
-        $('#template-submit').click(function() {
+        $('#template-submit').click(function () {
             let nav = $('nav ul');
             nav.find('li a.active').removeClass('active');
             $(nav.find('li a')[1]).addClass('active');
 
+            step += 1;
+            updateStep();
+
             $('.md-close').trigger('click');
         });
+
+        function updateStep() {
+            $('.step-' + (step - 1)).hide();
+            $('.step-' + step).show();
+        }
     </script>
 
     <script> // Global

@@ -2184,7 +2184,7 @@ a:hover {
   margin-bottom: 1rem;
 }
 
-#album-edit .container.album-edit .album-edit-content .template {
+#album-edit .container.album-edit .album-edit-content .preview {
   width: 49.7%;
   height: 100%;
   max-height: 150px;
@@ -2192,17 +2192,17 @@ a:hover {
   margin-bottom: 0;
 }
 
-#album-edit .container.album-edit .album-edit-content .template:nth-last-of-type(n+3) {
+#album-edit .container.album-edit .album-edit-content .preview:nth-last-of-type(n+3) {
   margin-bottom: 0.2rem;
 }
 
-#album-edit .container.album-edit .album-edit-content .template .image {
+#album-edit .container.album-edit .album-edit-content .preview .image {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-#album-edit .container.album-edit .album-edit-content .template .image img {
+#album-edit .container.album-edit .album-edit-content .preview .image img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
@@ -2213,7 +2213,7 @@ a:hover {
           transform: scale(1);
 }
 
-#album-edit .container.album-edit .album-edit-content .template .title {
+#album-edit .container.album-edit .album-edit-content .preview .title {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -2232,7 +2232,7 @@ a:hover {
   transition: all ease 0.2s;
 }
 
-#album-edit .container.album-edit .album-edit-content .template .title .inner {
+#album-edit .container.album-edit .album-edit-content .preview .title .inner {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -2244,7 +2244,7 @@ a:hover {
   padding-right: 1rem;
 }
 
-#album-edit .container.album-edit .album-edit-content .template .title .inner h2 {
+#album-edit .container.album-edit .album-edit-content .preview .title .inner h2 {
   font-size: 1.15rem;
   color: #ffffff;
   text-shadow: 0 2px 1px rgba(0, 0, 0, 0.8);
@@ -2254,29 +2254,29 @@ a:hover {
   text-align: center;
 }
 
-#album-edit .container.album-edit .album-edit-content .template:hover {
+#album-edit .container.album-edit .album-edit-content .preview:hover {
   cursor: pointer;
 }
 
-#album-edit .container.album-edit .album-edit-content .template:hover .image img {
+#album-edit .container.album-edit .album-edit-content .preview:hover .image img {
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
 }
 
-#album-edit .container.album-edit .album-edit-content .template:hover .title {
+#album-edit .container.album-edit .album-edit-content .preview:hover .title {
   height: 40%;
 }
 
-#album-edit .container.album-edit .album-edit-content .template:hover .title .inner {
+#album-edit .container.album-edit .album-edit-content .preview:hover .title .inner {
   padding-bottom: 0.7rem;
 }
 
-#album-edit .container.album-edit .album-edit-content .template:hover .title .inner h2 {
+#album-edit .container.album-edit .album-edit-content .preview:hover .title .inner h2 {
   text-shadow: 0 4px 2px rgba(0, 0, 0, 0.8);
 }
 
 @media only screen and (max-width: 1170px) {
-  #album-edit .container.album-edit .album-edit-content .template .title .inner {
+  #album-edit .container.album-edit .album-edit-content .preview .title .inner {
     right: 50%;
     -webkit-transform: translateX(50%);
             transform: translateX(50%);

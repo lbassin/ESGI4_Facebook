@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Api\Album;
+use App\Http\Helpers\AlbumHelper;
 use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\WebsiteHelper;
 use App\Model\Website;
@@ -26,19 +27,26 @@ class AlbumController extends BaseController
      * @var WebsiteHelper
      */
     private $websiteHelper;
+    /**
+     * @var AlbumHelper
+     */
+    private $albumHelper;
 
     /**
      * AlbumController constructor.
      * @param FacebookHelper $fbHelper
      * @param WebsiteHelper $websiteHelper
+     * @param AlbumHelper $albumHelper
      */
     public function __construct(
         FacebookHelper $fbHelper,
-        WebsiteHelper $websiteHelper
+        WebsiteHelper $websiteHelper,
+        AlbumHelper $albumHelper
     )
     {
         $this->fbHelper = $fbHelper;
         $this->websiteHelper = $websiteHelper;
+        $this->albumHelper = $albumHelper;
     }
 
     /**
@@ -83,6 +91,10 @@ class AlbumController extends BaseController
     {
         // Todo : Check if album exists and if user is allows to access it
 
-        return view('dashboard.website.album.edit');
+        $templates = $this->albumHelper->getTemplates();
+
+        return view('dashboard.website.album.edit', [
+            'templates' => $templates
+        ]);
     }
 }
