@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Api\Album;
 use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\WebsiteHelper;
 use App\Model\Website;
+use Facebook\Exceptions\FacebookSDKException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
@@ -40,19 +43,35 @@ class AlbumController extends BaseController
 
     /**
      * @param Request $request
-     * @return View
-     * @throws \Facebook\Exceptions\FacebookSDKException
+     * @return JsonResponse
      */
-    public function createAction(Request $request): View
+    public function createAction(Request $request): JsonResponse
     {
         /** @var string $name */
         $name = $request->input('name');
         /** @var Website $website */
         $website = $this->websiteHelper->getCurrentWebsite();
+        /** @var Album $album */
+        $album = null;
 
-        $this->fbHelper->createAlbum($name, $website);
+        try {
+            $album = $this->fbHelper->createAlbum($name, $website);
+        } catch (\Exception $e) {
+            $response = [
+                'error' => true,
+                'message' => 'An error occured'
+            ];
 
-        die('end');
+            return response()->json($response);
+        }
+
+        /** @var array $routeParams */
+        $routeParams = [
+            'subdomain' => $website->getSubDomain(),
+            'id' => $album->getId()
+        ];
+
+        return response()->json(['url' => route('dashboard.website.albums.edit', $routeParams)]);
     }
 
     /**
