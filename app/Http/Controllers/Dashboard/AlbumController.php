@@ -83,11 +83,6 @@ class AlbumController extends BaseController
     {
         // Todo : Check if album exists and if user is allows to access it
 
-        print_r([
-            $subdomain,
-            $id
-        ]);
-
-        die('Gestion album');
+        return view('dashboard.website.album.edit');
     }
 }
