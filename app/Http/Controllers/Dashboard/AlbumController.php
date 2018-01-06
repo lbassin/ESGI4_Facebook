@@ -6,8 +6,8 @@ use App\Http\Api\Album;
 use App\Http\Helpers\AlbumHelper;
 use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\WebsiteHelper;
+use App\Model\Template;
 use App\Model\Website;
-use Facebook\Exceptions\FacebookSDKException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -96,5 +96,19 @@ class AlbumController extends BaseController
         return view('dashboard.website.album.edit', [
             'templates' => $templates
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function templateAction(Request $request): JsonResponse
+    {
+        /** @var string $id */
+        $id = $request->post('id');
+        /** @var Template $template */
+        $template = Template::where(Template::ID, $id)->select(Template::DESKTOP_PREVIEW, Template::MOBILE_PREVIEW)->first();
+
+        return response()->json($template);
     }
 }

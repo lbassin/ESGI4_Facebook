@@ -23,26 +23,26 @@
                     <i class="fa fa-times" aria-hidden="true"></i>
                 </button>
                 <ul>
-                    <li><a class="active">Choix du template</a></li>
-                    <li><a>Selection des images</a></li>
-                    <li><a>Options</a></li>
+                    <li id="menu-templates"><a class="active">Choix du template</a></li>
+                    <li id="menu-images"><a>Selection des images</a></li>
+                    <li id="menu-options"><a>Options</a></li>
                 </ul>
             </nav>
             <div class="album-edit-content step-1">
                 <div class="album-edit-content-title">
                     <h2>Mes templates</h2>
                 </div>
-                @foreach($templates as $template)
-                    <div class="preview template" data-target="modal-preview" data-id="{{ $template['id'] }}">
-                        <div class="title">
-                            <div class="inner">
-                            </div>
-                            <div class="gradient"></div>
+                @foreach($templates as $template) <?php /** @var \App\Model\Template $template */ ?>
+                <div class="preview template" data-target="modal-preview" data-id="{{ $template->getId() }}">
+                    <div class="title">
+                        <div class="inner">
                         </div>
-                        <div class="image">
-                            <img src="{{ $template['image'] }}" alt="">
-                        </div>
+                        <div class="gradient"></div>
                     </div>
+                    <div class="image">
+                        <img src="{{ $template->getDesktopPreview() }}" alt="">
+                    </div>
+                </div>
                 @endforeach
             </div>
             <div class="album-edit-content step-2" style="display: none;">
@@ -70,11 +70,11 @@
             <h1>Mise en page</h1>
             <div>
                 <h2>Ordinateur</h2>
-                <img src="{{ asset('templates/1/desktop.png') }}" alt="" style="width: 50%">
+                <img class="desktop-preview" src="" alt="" style="width: 50%">
             </div>
             <div>
                 <h2>Mobile</h2>
-                <img src="{{ asset('templates/1/mobile.png') }}" alt="" style="height: 50%">
+                <img class="mobile-preview" src="" alt="" style="height: 50%">
             </div>
             <div>
                 <button id="template-cancel">Cancel</button>
@@ -148,11 +148,22 @@
     </script>
 
     <script> // Specific
-        let step = 1;
-
         $('.template').click(function () {
             let target = $(this).data('target');
             let templateId = $(this).data('id');
+
+            $.post('{{ route('dashboard.website.albums.template', ['subdomain' => $subdomain]) }}', {id: templateId}).done(
+                function (response) {
+                    let modal = $('#modal-preview');
+
+                    modal.find('.desktop-preview').attr('src', response.desktop_preview);
+                    modal.find('.mobile-preview').attr('src', response.mobile_preview);
+                }
+            ).fail(
+                function () {
+                    alert('An error occurred');
+                }
+            );
 
             showModal(target);
         });
@@ -166,22 +177,53 @@
             nav.find('li a.active').removeClass('active');
             $(nav.find('li a')[1]).addClass('active');
 
-            step += 1;
-            updateStep();
+            showImages();
 
             $('.md-close').trigger('click');
         });
 
-        function updateStep() {
-            $('.step-' + (step - 1)).hide();
-            $('.step-' + step).show();
+        function showTemplates() {
+            $('.step-1').show();
+            $('.step-2').hide();
+            $('.step-3').hide();
+
+            $('nav ul li a').removeClass('active');
+            $('nav ul #menu-templates > a').addClass('active');
         }
+
+        function showImages() {
+            $('.step-1').hide();
+            $('.step-2').show();
+            $('.step-3').hide();
+
+            $('nav ul li a').removeClass('active');
+            $('nav ul #menu-images > a').addClass('active');
+        }
+
+        function showOptions() {
+            $('.step-1').hide();
+            $('.step-2').hide();
+            $('.step-3').show();
+
+            $('nav ul li a').removeClass('active');
+            $('nav ul #menu-options > a').addClass('active');
+        }
+
+        $("#menu-templates").click(showTemplates);
+        $("#menu-images").click(showImages);
+        $("#menu-options").click(showOptions);
     </script>
 
     <script> // Global
         function showModal(target) {
             $('#' + target).addClass('md-show');
         }
+
+        $(document).on('keydown', function (event) {
+            if (event.keyCode === 27) {
+                $('.md-close').trigger('click');
+            }
+        });
 
         function hideModal(target) {
             $('#' + target).removeClass('md-show');

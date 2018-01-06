@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Helpers;
 
+use App\Model\Template;
+use Illuminate\Support\Collection;
+
 /**
  * Class AlbumHelper
  *
@@ -13,23 +16,13 @@ class AlbumHelper
 {
 
     /**
-     * @return array
+     * @return Collection
      */
-    public function getTemplates()
+    public function getTemplates(): Collection
     {
-        return [
-            [
-                'id' => 1,
-                'image' => 'http://via.placeholder.com/350x150'
-            ],
-            [
-                'id' => 2,
-                'image' => 'http://via.placeholder.com/350x150'
-            ],
-            [
-                'id' => 3,
-                'image' => 'http://via.placeholder.com/350x150'
-            ]
-        ];
+        /** @var Collection $templates */
+        $templates = Template::all();
+
+        return $templates;
     }
 }
