@@ -218,11 +218,29 @@ class FacebookHelper
     }
 
     /**
-     * @param string $name
-     * @param Website $website
+     * @param string $id
+     * @return Album
      * @throws FacebookSDKException
      */
-    public function createAlbum(string $name, Website $website): void
+    private function getAlbum(string $id): Album
+    {
+        /** @var string $query */
+        $query = $id . '?fields=id,name,description,updated_time,cover_photo{images},photos{id,name,images}';
+
+        /** @var GraphAlbum $response */
+        $response = $this->fb->get($query)->getGraphAlbum();
+
+        return new Album($response);
+    }
+
+    /**
+     * @param string $name
+     * @param Website $website
+     * @return Album
+     * @throws FacebookSDKException
+     * @throws \Exception
+     */
+    public function createAlbum(string $name, Website $website): Album
     {
         /** @var array $albumData */
         $albumData = [
@@ -232,9 +250,17 @@ class FacebookHelper
         /** @var FacebookRequest $request */
         $request = $this->fb->request('post', 'me/albums', $albumData, $website->getAccessToken());
 
-        $this->fb->getClient()->sendRequest($request);
+        /** @var FacebookResponse $response */
+        $response = $this->fb->getClient()->sendRequest($request)->getDecodedBody();
 
-        dd($request);
+        if (empty($response['id'])) {
+            throw new \Exception('An error occured');
+        }
+
+        /** @var string $albumId */
+        $albumId = $response['id'];
+
+        return $this->getAlbum($albumId);
     }
 
     /**
