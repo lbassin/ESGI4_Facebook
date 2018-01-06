@@ -1,22 +1,24 @@
 # Back  
 ## Dashboard  
 
-- Ajout modal à la creation d'un site après clique sur le nom de la page (Avec input pour url)
-- Supprimer les pages deja créés de la liste pour la creation
+- ~~Ajout modal à la creation d'un site après clique sur le nom de la page (Avec input pour url)~~
+- ~~Supprimer les pages deja créés de la liste pour la creation~~
 
 ## Dashboard Website  
 
-- Grossir le menu 
+- ~~Grossir le menu~~
 
 ## Gestion de l'accueil  
 
+- To do
+
 ## Gestion des albums  
 
-- Ajout modal pour saisir le nom de l'album a créer + Redirection vers page de config de l'album un fois créé
+[ ] Ajout modal pour saisir le nom de l'album a créer + Redirection vers page de config de l'album un fois créé
 
 ### Configuration d'un album
 
-- Ajouter le configurateur :
+[ ] Ajouter le configurateur :  
 1) Afficher une preview des templates disponibles
 2) Gestion des image  
 Affichage de toutes les images, au survol 2 icones visible sur l'image. (Afficher/Masquer et Config)  

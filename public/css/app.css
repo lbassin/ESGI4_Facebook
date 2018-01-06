@@ -1781,7 +1781,7 @@ a:hover {
 }
 
 .nav-button-mobile h2 {
-  font-size: 1rem;
+  font-size: 1.2rem;
   text-transform: uppercase;
 }
 
@@ -1811,7 +1811,7 @@ nav .md-close {
 }
 
 nav ul li a {
-  font-size: 0.8rem;
+  font-size: 1rem;
   padding: 0.8rem 0 0.5rem;
   border-bottom: solid 1px #383448;
   color: #57555f;
@@ -1912,7 +1912,7 @@ nav ul li a:hover {
 
 .container.website-home .menu-albums .menu-albums-title h2 {
   font-family: 'raleway_thin';
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 300;
   color: #ffffff;
   margin-bottom: 1rem;
@@ -1960,7 +1960,7 @@ nav ul li a:hover {
   background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(100%, rgba(0, 0, 0, 0.9)), to(rgba(0, 0, 0, 0.9)));
   background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.9) 100%, rgba(0, 0, 0, 0.9) 100%);
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#d6000000', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#d6000000',GradientType=0 );
   /* IE6-9 */
   -webkit-transition: all ease 0.2s;
   transition: all ease 0.2s;
@@ -1979,7 +1979,7 @@ nav ul li a:hover {
 }
 
 .container.website-home .menu-albums .album .title .inner h2 {
-  font-size: 1rem;
+  font-size: 1.15rem;
   color: #ffffff;
   text-shadow: 0 2px 1px rgba(0, 0, 0, 0.8);
   -webkit-transition: all ease 0.2s;
