@@ -49,7 +49,7 @@
                 <div class="album-edit-content-title">
                     <h2>Mes images</h2>
                 </div>
-                @for($i = 0; $i < 5; $i++)
+                @foreach($album->getPhotos() as $photo) <?php /** @var \App\Http\Api\Photo $photo */ ?>
                     <div class="preview image" data-target="modal-preview" data-id="1">
                         <div class="title">
                             <div class="inner">
@@ -57,10 +57,10 @@
                             <div class="gradient"></div>
                         </div>
                         <div class="image">
-                            <img src="http://via.placeholder.com/350x150" alt="">
+                            <img src="{{ $photo->getLink(\App\Http\Api\Photo::SIZE_MEDIUM) }}" alt="">
                         </div>
                     </div>
-                @endfor
+                @endforeach
             </div>
         </div>
     </div>
@@ -148,9 +148,11 @@
     </script>
 
     <script> // Specific
+        let templateId = null;
+
         $('.template').click(function () {
             let target = $(this).data('target');
-            let templateId = $(this).data('id');
+            templateId = $(this).data('id');
 
             $.post('{{ route('dashboard.website.albums.template', ['subdomain' => $subdomain]) }}', {id: templateId}).done(
                 function (response) {

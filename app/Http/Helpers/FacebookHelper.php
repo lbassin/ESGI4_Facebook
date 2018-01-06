@@ -222,7 +222,7 @@ class FacebookHelper
      * @return Album
      * @throws FacebookSDKException
      */
-    private function getAlbum(string $id): Album
+    public function getAlbum(string $id): Album
     {
         /** @var string $query */
         $query = $id . '?fields=id,name,description,updated_time,cover_photo{images},photos{id,name,images}';

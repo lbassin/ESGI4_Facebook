@@ -86,15 +86,20 @@ class AlbumController extends BaseController
      * @param string $subdomain
      * @param string $id
      * @return View
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function editAction(string $subdomain, string $id): View
     {
         // Todo : Check if album exists and if user is allows to access it
 
+        /** @var Template $templates */
         $templates = $this->albumHelper->getTemplates();
+        /** @var Album $album */
+        $album = $this->fbHelper->getAlbum($id);
 
         return view('dashboard.website.album.edit', [
-            'templates' => $templates
+            'templates' => $templates,
+            'album' => $album
         ]);
     }
 
