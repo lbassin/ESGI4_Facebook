@@ -4,6 +4,11 @@ namespace App\Http\Api;
 
 use Facebook\GraphNodes\GraphNode;
 
+/**
+ * Class Photo
+ *
+ * @author Laurent Bassin <laurent@bassin.info>
+ */
 class Photo
 {
     /**
@@ -34,6 +39,14 @@ class Photo
     }
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->graphNode->getField('id');
+    }
+
+    /**
      * @param string $size
      * @return string
      */
@@ -58,24 +71,24 @@ class Photo
 
         ksort($availableHeight);
 
-        if($size == Photo::SIZE_SMALL){
+        if ($size == Photo::SIZE_SMALL) {
             return reset($availableHeight);
         }
 
-        if($size == Photo::SIZE_MEDIUM){
-            if(count($availableHeight) <= 2){
+        if ($size == Photo::SIZE_MEDIUM) {
+            if (count($availableHeight) <= 2) {
                 return end($availableHeight);
             }
 
             /** @var int $imageIndex */
-            $imageIndex = (int) ceil(count($availableHeight) / 2);
+            $imageIndex = (int)ceil(count($availableHeight) / 2);
             /** @var array $mediumImage */
             $mediumImage = array_slice($availableHeight, $imageIndex, 1);
 
             return reset($mediumImage);
         }
 
-        if($size == Photo::SIZE_LARGE){
+        if ($size == Photo::SIZE_LARGE) {
             return end($availableHeight);
         }
 

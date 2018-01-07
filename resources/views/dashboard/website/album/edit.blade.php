@@ -45,7 +45,7 @@
                 <div class="step-2" style="display: none;">
                     <h2>Mes images</h2>
                     <div id="images" class="preview-grid">
-                        @include('dashboard.website.album.images.preview-grid', ['photos' => $album->getPhotosByPage(1)])
+                        @include('dashboard.website.album.images.image-grid', ['photos' => $album->getPhotosByPage(1)])
                     </div>
                     <div class="options">
                         <div class="pagination">
@@ -104,6 +104,12 @@
         </div>
     </div>
 
+    <div id="image-modal" class="md-modal md-effect-12">
+        <div class="md-content">
+            <!-- Ajax -->
+        </div>
+    </div>
+
     <div class="md-overlay">
         <button class="md-close">
             <i class="fa fa-times" aria-hidden="true"></i>
@@ -122,6 +128,7 @@
         initTemplatePagination();
         initTemplatePreviews();
         initImagePagination();
+        initImagePreviews();
         initSubmitEvent();
 
         function showTemplates() {
@@ -208,7 +215,7 @@
                 let target = $(this).data('target');
                 templateId = $(this).data('id');
 
-                $.post('{{ route('dashboard.website.albums.template.preview', ['subdomain' => $subdomain]) }}', {id: templateId}).done(
+                $.post('{{ route('dashboard.website.albums.templates.preview', ['subdomain' => $subdomain]) }}', {id: templateId}).done(
                     function (response) {
                         $('#preview-modal').find('.md-content').html(response);
                         initTemplatePreviewModal();
@@ -274,7 +281,31 @@
         }
 
         function initImagePreviews() {
-            // TODO
+            $('#images .visibility').click(function () {
+                let icon = $(this).find('i');
+                let visible = icon.hasClass('fa-eye');
+
+                if (visible) {
+                    icon.removeClass('fa-eye');
+                    icon.addClass('fa-eye-slash');
+                } else {
+                    icon.removeClass('fa-eye-slash');
+                    icon.addClass('fa-eye');
+                }
+            });
+
+            $('#images .view').click(function () {
+                let id = $(this).data('id');
+                let url = '{{ route('dashboard.website.albums.images.preview', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
+
+                $.post(url, {id: id}).done(
+                    function (response) {
+                        $('#image-modal .md-content').html(response);
+                    }
+                ).fail(errorAjax);
+
+                showModal('image-modal');
+            });
         }
 
         function initSubmitEvent() {

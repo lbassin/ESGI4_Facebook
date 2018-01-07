@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Api\Album;
+use App\Http\Api\Photo;
 use App\Http\Helpers\AlbumHelper;
 use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\WebsiteHelper;
@@ -150,6 +151,21 @@ class AlbumController extends BaseController
         /** @var array $phots */
         $photos = $album->getPhotosByPage($page);
 
-        return view('dashboard.website.album.images.preview-grid', ['photos' => $photos]);
+        return view('dashboard.website.album.images.image-grid', ['photos' => $photos]);
+    }
+
+    /**
+     * @param Request $request
+     * @return View
+     * @throws \Facebook\Exceptions\FacebookSDKException
+     */
+    public function imagePreviewAction(Request $request): View
+    {
+        /** @var string $id */
+        $id = $request->post('id');
+        /** @var Photo $photo */
+        $photo = $this->albumHelper->getPhoto($id);
+
+        return view('dashboard.website.album.images.image-modal', ['photo' => $photo]);
     }
 }

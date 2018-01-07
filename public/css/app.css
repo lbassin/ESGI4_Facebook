@@ -2190,6 +2190,41 @@ a:hover {
   margin-right: 18px;
 }
 
+#album-edit #steps #images .preview {
+  position: relative;
+}
+
+#album-edit #steps #images .preview .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(200, 200, 200, 0.3);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#album-edit #steps #images .preview .overlay .visibility,
+#album-edit #steps #images .preview .overlay .view {
+  width: 49%;
+  height: 100%;
+  line-height: 180px;
+  text-align: center;
+  font-size: 4rem;
+  cursor: pointer;
+}
+
+#album-edit #steps #images .preview .overlay .border {
+  width: 1px;
+  height: 80%;
+  -ms-flex-item-align: center;
+      align-self: center;
+  background-color: #3f3f3f;
+}
+
 #album-edit #steps #configurations {
   color: #fff;
 }

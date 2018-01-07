@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Helpers;
 
+use App\Http\Api\Photo;
 use App\Model\Template;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Facebook\GraphNodes\GraphEdge;
+use Facebook\GraphNodes\GraphNode;
 use Illuminate\Support\Collection;
+use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 
 /**
  * Class AlbumHelper
@@ -15,6 +18,16 @@ use Illuminate\Support\Collection;
  */
 class AlbumHelper
 {
+
+    /**
+     * @var LaravelFacebookSdk
+     */
+    private $fb;
+
+    public function __construct(LaravelFacebookSdk $fb)
+    {
+        $this->fb = $fb;
+    }
 
     /**
      * @return Collection
@@ -27,11 +40,30 @@ class AlbumHelper
         return $templates;
     }
 
-    public function getTemplatesByPage($page)
+    /**
+     * @param $page
+     * @return array
+     */
+    public function getTemplatesByPage($page): array
     {
         /** @var Collection $templates */
         $templates = Template::all();
 
         return $templates->forPage($page, 9)->all();
+    }
+
+    /**
+     * @param int $id
+     * @return Photo
+     * @throws \Facebook\Exceptions\FacebookSDKException
+     */
+    public function getPhoto(int $id): Photo
+    {
+        /** @var string $query */
+        $query = $id . '?fields=id,name,images';
+        /** @var GraphNode $graph */
+        $graph = $this->fb->get($query)->getGraphNode();
+
+        return new Photo($graph);
     }
 }

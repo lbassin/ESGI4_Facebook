@@ -134,6 +134,37 @@
       }
     }
 
+    #images {
+      .preview {
+        position: relative;
+
+        .overlay {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(200, 200, 200, 0.3);
+          display: flex;
+          justify-content: space-between;
+
+          .visibility, .view {
+            width: 49%;
+            height: 100%;
+            line-height: 180px;
+            text-align: center;
+            font-size: 4rem;
+            cursor: pointer;
+          }
+
+          .border {
+            width: 1px;
+            height: 80%;
+            align-self: center;
+            background-color: #3f3f3f;
+          }
+        }
+      }
+    }
+
     #configurations {
       color: #fff;
 
