@@ -40,8 +40,11 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
         Route::get('/dashboard/website/{subdomain}/albums/{id}', 'Dashboard\AlbumController@editAction')
             ->name('dashboard.website.albums.edit');
 
-        Route::post('/dashboard/website/{subdomain}/albums/template', 'Dashboard\AlbumController@templateAction')
-            ->name('dashboard.website.albums.template');
+        Route::post('/dashboard/website/{subdomain}/albums/template/preview', 'Dashboard\AlbumController@templatePreviewAction')
+            ->name('dashboard.website.albums.template.preview');
+
+        Route::post('/dashboard/website/{subdomain}/albums/templates/grid', 'Dashboard\AlbumController@templatesGridAction')
+            ->name('dashboard.website.albums.templates.grid');
 
         Route::get('/dashboard/website/{subdomain}/articles', 'Dashboard\WebsiteController@articlesAction')
             ->name('dashboard.website.articles');

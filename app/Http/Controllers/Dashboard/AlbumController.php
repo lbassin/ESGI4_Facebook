@@ -11,12 +11,9 @@ use App\Model\Website;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
-/**
- * Class WebsiteController
- * @package App\Http\Controllers\Dashboard
- */
 class AlbumController extends BaseController
 {
     /**
@@ -92,8 +89,9 @@ class AlbumController extends BaseController
     {
         // Todo : Check if album exists and if user is allows to access it
 
-        /** @var Template $templates */
-        $templates = $this->albumHelper->getTemplates();
+        /** @var Collection $templates */
+        $templates = $this->albumHelper->getTemplatesByPage(1);
+
         /** @var Album $album */
         $album = $this->fbHelper->getAlbum($id);
 
@@ -107,7 +105,7 @@ class AlbumController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function templateAction(Request $request): JsonResponse
+    public function templatePreviewAction(Request $request): JsonResponse
     {
         /** @var string $id */
         $id = $request->post('id');
@@ -115,5 +113,19 @@ class AlbumController extends BaseController
         $template = Template::where(Template::ID, $id)->select(Template::DESKTOP_PREVIEW, Template::MOBILE_PREVIEW)->first();
 
         return response()->json($template);
+    }
+
+    /**
+     * @param Request $request
+     * @return View
+     */
+    public function templatesGridAction(Request $request): View
+    {
+        /** @var int $page */
+        $page = $request->post('page');
+        /** @var Collection $templates */
+        $templates = $this->albumHelper->getTemplatesByPage($page);
+
+        return view('dashboard.website.album.templates-preview-grid', ['templates' => $templates]);
     }
 }

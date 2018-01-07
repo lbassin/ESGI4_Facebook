@@ -27,11 +27,7 @@
                 <div class="step-1">
                     <h2>Mes templates</h2>
                     <div id="templates" class="preview-grid">
-                        @foreach($templates as $template) <?php /** @var \App\Model\Template $template */ ?>
-                        <div class="preview" data-target="modal-preview" data-id="{{ $template->getId() }}">
-                            <img src="{{ $template->getDesktopPreview() }}" alt="">
-                        </div>
-                        @endforeach
+                        @include('dashboard.website.album.templates-preview-grid', ['templates' => $templates])
                     </div>
                     <div class="options">
                         <div class="pagination">
@@ -98,7 +94,7 @@
             let target = $(this).data('target');
             templateId = $(this).data('id');
 
-            $.post('{{ route('dashboard.website.albums.template', ['subdomain' => $subdomain]) }}', {id: templateId}).done(
+            $.post('{{ route('dashboard.website.albums.template.preview', ['subdomain' => $subdomain]) }}', {id: templateId}).done(
                 function (response) {
                     let modal = $('#modal-preview');
 
@@ -158,6 +154,27 @@
         $("#menu-templates").click(showTemplates);
         $("#menu-images").click(showImages);
         $("#menu-options").click(showOptions);
+
+        let templatePagination = $("#templates + .options .pagination");
+        templatePagination.find('.next').click(function () {
+            $('#templates').fadeOut();
+            $('#templates + .options').fadeOut();
+
+            let page = 2;
+            let url = '{{ route('dashboard.website.albums.templates.grid', ['subdomain' => $subdomain]) }}';
+
+            $.post(url, {page: page}).done(
+                function (response) {
+                    $('#templates').html(response);
+                    $('#templates').fadeIn();
+                    $('#templates + .options').fadeIn();
+                }
+            ).fail(
+                function () {
+                    alert('An error occurred');
+                }
+            )
+        });
     </script>
 
     <script> // Global
