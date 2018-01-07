@@ -62,32 +62,32 @@
 
                 <div class="step-3" style="display: none;">
                     <h2>Options</h2>
-                    <div id="configurations">
+                    <form id="configurations">
                         <p>
                             <label>
                                 Titre de la page <br>
-                                <input type="text" name="page[title]">
+                                <input type="text" name="title">
                             </label>
                         </p>
                         <p>
                             <label>
                                 Description <br>
-                                <textarea name="page[description]" cols="40" rows="3"></textarea>
+                                <textarea name="description" cols="40" rows="3"></textarea>
                             </label>
                         </p>
                         <p>
                             <label>
                                 URL <br>
-                                <input type="text" name="page[url]">
+                                <input type="text" name="url">
                             </label>
                         </p>
                         <p>
                             <label>
                                 Masquer les nouvelles images
-                                <input type="checkbox" name="page[hide_new]">
+                                <input type="checkbox" name="hide_new">
                             </label>
                         </p>
-                    </div>
+                    </form>
                     <div class="options">
                         <div class="submit">
                             <span class="next">Valider</span>
@@ -120,6 +120,7 @@
         let templateId = null;
         let currentTemplatePage = 1;
         let currentImagePage = 1;
+        let imagesEdited = {};
 
         let templates = $('#templates');
         let images = $('#images');
@@ -141,6 +142,12 @@
         }
 
         function showImages() {
+            if (!templateId) {
+                alert('No template selected');
+
+                return;
+            }
+
             $('.step-1').hide();
             $('.step-2').fadeIn();
             $('.step-3').hide();
@@ -150,6 +157,12 @@
         }
 
         function showOptions() {
+            if (!templateId) {
+                alert('No template selected');
+
+                return;
+            }
+
             $('.step-1').hide();
             $('.step-2').hide();
             $('.step-3').fadeIn();
@@ -183,12 +196,6 @@
             });
 
             $('#templates').next('.options').find('.submit').click(function () {
-                if (!templateId) {
-                    alert('No template selected');
-
-                    return;
-                }
-
                 showImages();
             });
 
@@ -215,6 +222,7 @@
                 let target = $(this).data('target');
                 templateId = $(this).data('id');
 
+                $('#preview-modal').find('.md-content').html('');
                 $.post('{{ route('dashboard.website.albums.templates.preview', ['subdomain' => $subdomain]) }}', {id: templateId}).done(
                     function (response) {
                         $('#preview-modal').find('.md-content').html(response);
@@ -281,26 +289,51 @@
         }
 
         function initImagePreviews() {
-            $('#images .visibility').click(function () {
-                let icon = $(this).find('i');
-                let visible = icon.hasClass('fa-eye');
+            images.find('.visibility').each(function () {
+                let id = $(this).parent().data('id');
+
+                if (id in imagesEdited) {
+                    setVisibility(!imagesEdited[id].visible, this);
+                }
+
+                $(this).click(changeVisibility)
+            });
+
+            function setVisibility(visible, visibilityDiv) {
+                let icon = $(visibilityDiv).find('i');
 
                 if (visible) {
                     icon.removeClass('fa-eye');
                     icon.addClass('fa-eye-slash');
+                    icon.attr('data-changed', 1)
                 } else {
                     icon.removeClass('fa-eye-slash');
                     icon.addClass('fa-eye');
+                    icon.attr('data-changed', 1)
                 }
-            });
+            }
 
-            $('#images .view').click(function () {
-                let id = $(this).data('id');
+            function changeVisibility() {
+                let icon = $(this).find('i');
+                let visible = icon.hasClass('fa-eye');
+                let id = $(this).parent().data('id');
+
+                imagesEdited[id] = {
+                    visible: !visible
+                };
+
+                setVisibility(visible, this);
+            }
+
+            images.find('.view').click(function () {
+                let id = $(this).parent().data('id');
                 let url = '{{ route('dashboard.website.albums.images.preview', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
+                let imageModal = $('#image-modal');
 
+                imageModal.find('.md-content').html('');
                 $.post(url, {id: id}).done(
                     function (response) {
-                        $('#image-modal .md-content').html(response);
+                        imageModal.find('.md-content').html(response);
                     }
                 ).fail(errorAjax);
 
@@ -310,7 +343,20 @@
 
         function initSubmitEvent() {
             $('#configurations').next('.options').find('.submit').click(function () {
-                alert('SUBMIT');
+                let options = $('#configurations').serializeArray();
+                let data = {
+                    'template': templateId,
+                    'images': imagesEdited,
+                    'options': options
+                };
+
+                let url = '{{ route('dashboard.website.albums.save', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
+
+                $.post(url, data).done(
+                    function () {
+
+                    }
+                ).fail(errorAjax());
             })
         }
     </script>

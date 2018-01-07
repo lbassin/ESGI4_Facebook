@@ -168,4 +168,11 @@ class AlbumController extends BaseController
 
         return view('dashboard.website.album.images.image-modal', ['photo' => $photo]);
     }
+
+    public function saveAction(Request $request): JsonResponse
+    {
+        print_r($request->all());
+
+        return response()->json([]);
+    }
 }
