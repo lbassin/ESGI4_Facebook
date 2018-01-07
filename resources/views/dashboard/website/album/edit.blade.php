@@ -155,12 +155,29 @@
         $("#menu-images").click(showImages);
         $("#menu-options").click(showOptions);
 
+        let page = 1;
         let templatePagination = $("#templates + .options .pagination");
+
         templatePagination.find('.next').click(function () {
+            // TODO  : Check if last page
+
+            page += 1;
+            updateTemplatesGrid();
+        });
+
+        templatePagination.find('.previous').click(function () {
+            if (page <= 1) {
+                return;
+            }
+
+            page -= 1;
+            updateTemplatesGrid();
+        });
+
+        function updateTemplatesGrid() {
             $('#templates').fadeOut();
             $('#templates + .options').fadeOut();
 
-            let page = 2;
             let url = '{{ route('dashboard.website.albums.templates.grid', ['subdomain' => $subdomain]) }}';
 
             $.post(url, {page: page}).done(
@@ -174,7 +191,7 @@
                     alert('An error occurred');
                 }
             )
-        });
+        }
     </script>
 
     <script> // Global
