@@ -155,22 +155,22 @@
         $("#menu-images").click(showImages);
         $("#menu-options").click(showOptions);
 
-        let page = 1;
+        let currentTemplatePage = 1;
         let templatePagination = $("#templates + .options .pagination");
 
         templatePagination.find('.next').click(function () {
             // TODO  : Check if last page
 
-            page += 1;
+            currentTemplatePage += 1;
             updateTemplatesGrid();
         });
 
         templatePagination.find('.previous').click(function () {
-            if (page <= 1) {
+            if (currentTemplatePage <= 1) {
                 return;
             }
 
-            page -= 1;
+            currentTemplatePage -= 1;
             updateTemplatesGrid();
         });
 
@@ -180,7 +180,7 @@
 
             let url = '{{ route('dashboard.website.albums.templates.grid', ['subdomain' => $subdomain]) }}';
 
-            $.post(url, {page: page}).done(
+            $.post(url, {page: currentTemplatePage}).done(
                 function (response) {
                     $('#templates').html(response);
                     $('#templates').fadeIn();
