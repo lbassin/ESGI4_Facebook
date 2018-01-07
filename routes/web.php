@@ -46,6 +46,10 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
         Route::post('/dashboard/website/{subdomain}/albums/templates/grid', 'Dashboard\AlbumController@templatesGridAction')
             ->name('dashboard.website.albums.templates.grid');
 
+        Route::post('/dashboard/website/{subdomain}/albums/{id}/images/grid', 'Dashboard\AlbumController@imagesGridAction')
+            ->name('dashboard.website.albums.images.grid');
+
+
         Route::get('/dashboard/website/{subdomain}/articles', 'Dashboard\WebsiteController@articlesAction')
             ->name('dashboard.website.articles');
 

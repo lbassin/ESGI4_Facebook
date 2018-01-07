@@ -45,11 +45,18 @@
                 <div class="step-2" style="display: none;">
                     <h2>Mes images</h2>
                     <div id="images" class="preview-grid">
-                        @foreach($album->getPhotos() as $photo) <?php /** @var \App\Http\Api\Photo $photo */ ?>
-                        <div class="preview" data-target="preview-modal" data-id="1">
-                            <img src="{{ $photo->getLink(\App\Http\Api\Photo::SIZE_MEDIUM) }}" alt="">
+                        @include('dashboard.website.album.images.preview-grid', ['photos' => $album->getPhotosByPage(1)])
+                    </div>
+                    <div class="options">
+                        <div class="pagination">
+                            <div class="controls">
+                                <span class="previous">Précedent</span>
+                                <span class="next">Suivant</span>
+                            </div>
                         </div>
-                        @endforeach
+                        <div class="submit">
+                            <span class="next">Valider</span>
+                        </div>
                     </div>
                 </div>
 
@@ -78,12 +85,15 @@
     <script> // Specific
         let templateId = null;
         let currentTemplatePage = 1;
+        let currentImagePage = 1;
 
         let templates = $('#templates');
+        let images = $('#images');
 
         initMenu();
         initTemplatePagination();
         initTemplatePreviews();
+        initImagePagination();
 
         function showTemplates() {
             $('.step-1').fadeIn();
@@ -195,6 +205,48 @@
                 $('.md-close').trigger('click');
             });
         }
+
+        function initImagePagination() {
+            let imagePagination = images.next('.options').find('.pagination');
+            imagePagination.find('.next').click(function () {
+                // TODO  : Check if last page
+
+                currentImagePage += 1;
+                updateImagesGrid();
+            });
+
+            imagePagination.find('.previous').click(function () {
+                if (currentImagePage <= 1) {
+                    return;
+                }
+
+                currentImagePage -= 1;
+                updateImagesGrid();
+            });
+
+            $('#images').next('.options').find('.submit').click(showOptions);
+
+            function updateImagesGrid() {
+                images.fadeOut();
+                images.next('.options').fadeOut();
+
+                let url = '{{ route('dashboard.website.albums.images.grid', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
+
+                $.post(url, {page: currentImagePage}).done(
+                    function (response) {
+                        images.html(response);
+                        initImagePreviews();
+
+                        images.fadeIn();
+                        images.next('.options').fadeIn();
+                    }
+                ).fail(errorAjax)
+            }
+        }
+
+        function initImagePreviews() {
+
+        }
     </script>
 
     <script> // Global
@@ -218,7 +270,7 @@
             });
         });
 
-        function errorAjax(){
+        function errorAjax() {
             alert('An error occurred');
         }
     </script>

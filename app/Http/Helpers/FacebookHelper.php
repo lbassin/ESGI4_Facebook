@@ -203,12 +203,12 @@ class FacebookHelper
     public function getAlbums($id = 'me'): array
     {
         /** @var string $albumQuery */
-        $albumQuery = $id . '/albums?fields=id,name,description,updated_time,cover_photo{images},photos{id,name,images}';
+        $albumQuery = $id . '/albums?fields=id,name,description,updated_time,cover_photo{images}';
         /** @var GraphEdge $albums */
         $response = $this->fb->get($albumQuery)->getGraphEdge();
-
         /** @var array $albums */
         $albums = [];
+
         /** @var GraphAlbum $album */
         foreach ($response->all() as $album) {
             $albums[] = new Album($album);

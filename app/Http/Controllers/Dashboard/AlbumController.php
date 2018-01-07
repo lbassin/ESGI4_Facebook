@@ -14,6 +14,11 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
+/**
+ * Class AlbumController
+ *
+ * @author Laurent Bassin <laurent@bassin.info>
+ */
 class AlbumController extends BaseController
 {
     /**
@@ -127,5 +132,24 @@ class AlbumController extends BaseController
         $templates = $this->albumHelper->getTemplatesByPage($page);
 
         return view('dashboard.website.album.templates.preview-grid', ['templates' => $templates]);
+    }
+
+    /**
+     * @param Request $request
+     * @param string $subdomain
+     * @param int $id
+     * @return View
+     * @throws \Facebook\Exceptions\FacebookSDKException
+     */
+    public function imagesGridAction(Request $request, string $subdomain, int $id): View
+    {
+        /** @var int $page */
+        $page = $request->post('page');
+        /** @var Album $album */
+        $album = $this->fbHelper->getAlbum($id);
+        /** @var array $phots */
+        $photos = $album->getPhotosByPage($page);
+
+        return view('dashboard.website.album.images.preview-grid', ['photos' => $photos]);
     }
 }
