@@ -103,16 +103,16 @@ class AlbumController extends BaseController
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return View
      */
-    public function templatePreviewAction(Request $request): JsonResponse
+    public function templatePreviewAction(Request $request): View
     {
         /** @var string $id */
         $id = $request->post('id');
         /** @var Template $template */
         $template = Template::where(Template::ID, $id)->select(Template::DESKTOP_PREVIEW, Template::MOBILE_PREVIEW)->first();
 
-        return response()->json($template);
+        return view('dashboard.website.album.templates.preview-modal', ['template' => $template]);
     }
 
     /**
@@ -126,6 +126,6 @@ class AlbumController extends BaseController
         /** @var Collection $templates */
         $templates = $this->albumHelper->getTemplatesByPage($page);
 
-        return view('dashboard.website.album.templates-preview-grid', ['templates' => $templates]);
+        return view('dashboard.website.album.templates.preview-grid', ['templates' => $templates]);
     }
 }

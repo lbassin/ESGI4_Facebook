@@ -134,5 +134,51 @@
       }
     }
   }
+}
 
+#preview-modal {
+  .md-content {
+    .container-preview {
+      width: 100%;
+      display: flex;
+
+      .desktop-preview {
+        width: 60%;
+        display: inline-block;
+        align-self: center;
+
+        img {
+          width: 90%;
+        }
+      }
+
+      .mobile-preview {
+        width: 40%;
+        display: inline-block;
+
+        img {
+          margin-top: 5%;
+          height: 90%;
+        }
+      }
+
+      img {
+        max-height: 100%;
+        max-width: 100%;
+      }
+    }
+
+    .controls {
+      margin-top: 32px;
+
+      span{
+        color: #fff;
+        border: 1px solid #fff;
+        border-radius: 25px;
+        padding: 8px 26px;
+        cursor: pointer;
+        display: inline-block;
+      }
+    }
+  }
 }

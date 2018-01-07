@@ -27,7 +27,7 @@
                 <div class="step-1">
                     <h2>Mes templates</h2>
                     <div id="templates" class="preview-grid">
-                        @include('dashboard.website.album.templates-preview-grid', ['templates' => $templates])
+                        @include('dashboard.website.album.templates.preview-grid', ['templates' => $templates])
                     </div>
                     <div class="options">
                         <div class="pagination">
@@ -46,7 +46,7 @@
                     <h2>Mes images</h2>
                     <div id="images" class="preview-grid">
                         @foreach($album->getPhotos() as $photo) <?php /** @var \App\Http\Api\Photo $photo */ ?>
-                        <div class="preview" data-target="modal-preview" data-id="1">
+                        <div class="preview" data-target="preview-modal" data-id="1">
                             <img src="{{ $photo->getLink(\App\Http\Api\Photo::SIZE_MEDIUM) }}" alt="">
                         </div>
                         @endforeach
@@ -63,21 +63,9 @@
         </div>
     </div>
 
-    <div id="modal-preview" class="md-modal md-effect-12">
+    <div id="preview-modal" class="md-modal md-effect-12">
         <div class="md-content">
-            <h1>Mise en page</h1>
-            <div>
-                <h2>Ordinateur</h2>
-                <img class="desktop-preview" src="" alt="" style="width: 50%">
-            </div>
-            <div>
-                <h2>Mobile</h2>
-                <img class="mobile-preview" src="" alt="" style="height: 50%">
-            </div>
-            <div>
-                <button id="template-cancel">Cancel</button>
-                <button id="template-submit">Valider</button>
-            </div>
+            <!-- Ajax -->
         </div>
     </div>
 
@@ -89,43 +77,16 @@
 
     <script> // Specific
         let templateId = null;
+        let currentTemplatePage = 1;
 
-        $('#templates .preview').click(function () {
-            let target = $(this).data('target');
-            templateId = $(this).data('id');
+        let templates = $('#templates');
 
-            $.post('{{ route('dashboard.website.albums.template.preview', ['subdomain' => $subdomain]) }}', {id: templateId}).done(
-                function (response) {
-                    let modal = $('#modal-preview');
-
-                    modal.find('.desktop-preview').attr('src', response.desktop_preview);
-                    modal.find('.mobile-preview').attr('src', response.mobile_preview);
-                }
-            ).fail(
-                function () {
-                    alert('An error occurred');
-                }
-            );
-
-            showModal(target);
-        });
-
-        $('#template-cancel').click(function () {
-            $('.md-close').trigger('click');
-        });
-
-        $('#template-submit').click(function () {
-            let nav = $('nav ul');
-            nav.find('li.active').removeClass('active');
-            $(nav.find('li')[1]).addClass('active');
-
-            showImages();
-
-            $('.md-close').trigger('click');
-        });
+        initMenu();
+        initTemplatePagination();
+        initTemplatePreviews();
 
         function showTemplates() {
-            $('.step-1').show();
+            $('.step-1').fadeIn();
             $('.step-2').hide();
             $('.step-3').hide();
 
@@ -135,7 +96,7 @@
 
         function showImages() {
             $('.step-1').hide();
-            $('.step-2').show();
+            $('.step-2').fadeIn();
             $('.step-3').hide();
 
             $('nav ul li').removeClass('active');
@@ -145,52 +106,94 @@
         function showOptions() {
             $('.step-1').hide();
             $('.step-2').hide();
-            $('.step-3').show();
+            $('.step-3').fadeIn();
 
             $('nav ul li').removeClass('active');
             $('nav ul #menu-options').addClass('active');
         }
 
-        $("#menu-templates").click(showTemplates);
-        $("#menu-images").click(showImages);
-        $("#menu-options").click(showOptions);
+        function initMenu() {
+            $("#menu-templates").click(showTemplates);
+            $("#menu-images").click(showImages);
+            $("#menu-options").click(showOptions);
+        }
 
-        let currentTemplatePage = 1;
-        let templatePagination = $("#templates + .options .pagination");
+        function initTemplatePagination() {
+            let templatePagination = templates.next('.options').find('.pagination');
+            templatePagination.find('.next').click(function () {
+                // TODO  : Check if last page
 
-        templatePagination.find('.next').click(function () {
-            // TODO  : Check if last page
+                currentTemplatePage += 1;
+                updateTemplatesGrid();
+            });
 
-            currentTemplatePage += 1;
-            updateTemplatesGrid();
-        });
+            templatePagination.find('.previous').click(function () {
+                if (currentTemplatePage <= 1) {
+                    return;
+                }
 
-        templatePagination.find('.previous').click(function () {
-            if (currentTemplatePage <= 1) {
-                return;
+                currentTemplatePage -= 1;
+                updateTemplatesGrid();
+            });
+
+            $('#templates').next('.options').find('.submit').click(function () {
+                if (!templateId) {
+                    alert('No template selected');
+
+                    return;
+                }
+
+                showImages();
+            });
+
+            function updateTemplatesGrid() {
+                templates.fadeOut();
+                templates.next('.options').fadeOut();
+
+                let url = '{{ route('dashboard.website.albums.templates.grid', ['subdomain' => $subdomain]) }}';
+
+                $.post(url, {page: currentTemplatePage}).done(
+                    function (response) {
+                        templates.html(response);
+                        initTemplatePreviews();
+
+                        templates.fadeIn();
+                        templates.next('.options').fadeIn();
+                    }
+                ).fail(errorAjax)
             }
+        }
 
-            currentTemplatePage -= 1;
-            updateTemplatesGrid();
-        });
+        function initTemplatePreviews() {
+            templates.find('.preview').click(function () {
+                let target = $(this).data('target');
+                templateId = $(this).data('id');
 
-        function updateTemplatesGrid() {
-            $('#templates').fadeOut();
-            $('#templates + .options').fadeOut();
+                $.post('{{ route('dashboard.website.albums.template.preview', ['subdomain' => $subdomain]) }}', {id: templateId}).done(
+                    function (response) {
+                        $('#preview-modal').find('.md-content').html(response);
+                        initTemplatePreviewModal();
+                    }
+                ).fail(errorAjax);
 
-            let url = '{{ route('dashboard.website.albums.templates.grid', ['subdomain' => $subdomain]) }}';
+                showModal(target);
+            });
+        }
 
-            $.post(url, {page: currentTemplatePage}).done(
-                function (response) {
-                    $('#templates').html(response);
-                    $('#templates').fadeIn();
-                    $('#templates + .options').fadeIn();
-                }
-            ).fail(
-                function () {
-                    alert('An error occurred');
-                }
-            )
+        function initTemplatePreviewModal() {
+            $('#template-cancel').click(function () {
+                $('.md-close').trigger('click');
+            });
+
+            $('#template-submit').click(function () {
+                let nav = $('nav ul');
+                nav.find('li.active').removeClass('active');
+                $(nav.find('li')[1]).addClass('active');
+
+                showImages();
+
+                $('.md-close').trigger('click');
+            });
         }
     </script>
 
@@ -214,6 +217,10 @@
                 hideModal($(this).attr('id'));
             });
         });
+
+        function errorAjax(){
+            alert('An error occurred');
+        }
     </script>
 
 @endsection

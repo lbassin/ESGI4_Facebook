@@ -6,6 +6,11 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Template
+ *
+ * @author Laurent Bassin <laurent@bassin.info>
+ */
 class Template extends Model
 {
     /**
@@ -31,11 +36,25 @@ class Template extends Model
      */
     protected $fillable = [self::ID, self::DESKTOP_PREVIEW, self::MOBILE_PREVIEW];
 
+    /**
+     * @return string
+     */
     public function getDesktopPreview(): string
     {
         return $this->{self::DESKTOP_PREVIEW};
     }
 
+    /**
+     * @return string
+     */
+    public function getMobilePreview(): string
+    {
+        return $this->{self::MOBILE_PREVIEW};
+    }
+
+    /**
+     * @return int
+     */
     public function getId(): int
     {
         return $this->{self::ID};
