@@ -2190,6 +2190,57 @@ a:hover {
   margin-right: 18px;
 }
 
+#album-edit #steps #configurations {
+  color: #fff;
+}
+
+#album-edit #steps #configurations p {
+  margin-bottom: 24px;
+}
+
+@media only screen and (max-width: 768px) {
+  #album-edit #steps #configurations p {
+    text-align: center;
+  }
+}
+
+#album-edit #steps #configurations p label {
+  font-family: 'raleway_regular', sans-serif;
+}
+
+#album-edit #steps #configurations p input[type="text"],
+#album-edit #steps #configurations p textarea {
+  width: 45%;
+  max-width: 500px;
+  margin-top: 4px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+@media only screen and (max-width: 768px) {
+  #album-edit #steps #configurations p input[type="text"],
+  #album-edit #steps #configurations p textarea {
+    width: 60%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  #album-edit #steps #configurations p input[type="text"],
+  #album-edit #steps #configurations p textarea {
+    width: 90%;
+  }
+}
+
+#album-edit #steps #configurations p input[type="text"]:focus,
+#album-edit #steps #configurations p input[type="text"]:active,
+#album-edit #steps #configurations p textarea:focus,
+#album-edit #steps #configurations p textarea:active {
+  outline: none;
+}
+
 #preview-modal .md-content .container-preview {
   width: 100%;
   display: -webkit-box;

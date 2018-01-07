@@ -62,8 +62,36 @@
 
                 <div class="step-3" style="display: none;">
                     <h2>Options</h2>
-                    <div>
-                        //
+                    <div id="configurations">
+                        <p>
+                            <label>
+                                Titre de la page <br>
+                                <input type="text" name="page[title]">
+                            </label>
+                        </p>
+                        <p>
+                            <label>
+                                Description <br>
+                                <textarea name="page[description]" cols="40" rows="3"></textarea>
+                            </label>
+                        </p>
+                        <p>
+                            <label>
+                                URL <br>
+                                <input type="text" name="page[url]">
+                            </label>
+                        </p>
+                        <p>
+                            <label>
+                                Masquer les nouvelles images
+                                <input type="checkbox" name="page[hide_new]">
+                            </label>
+                        </p>
+                    </div>
+                    <div class="options">
+                        <div class="submit">
+                            <span class="next">Valider</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,6 +122,7 @@
         initTemplatePagination();
         initTemplatePreviews();
         initImagePagination();
+        initSubmitEvent();
 
         function showTemplates() {
             $('.step-1').fadeIn();
@@ -245,7 +274,13 @@
         }
 
         function initImagePreviews() {
+            // TODO
+        }
 
+        function initSubmitEvent() {
+            $('#configurations').next('.options').find('.submit').click(function () {
+                alert('SUBMIT');
+            })
         }
     </script>
 
