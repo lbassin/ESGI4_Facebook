@@ -33,6 +33,17 @@
                         </div>
                         @endforeach
                     </div>
+                    <div class="options">
+                        <div class="pagination">
+                            <div class="controls">
+                                <span class="previous">Précedent</span>
+                                <span class="next">Suivant</span>
+                            </div>
+                        </div>
+                        <div class="submit">
+                            <span class="next">Valider</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="step-2" style="display: none;">
@@ -53,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
     </div>
 
     <div id="modal-preview" class="md-modal md-effect-12">
