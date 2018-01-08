@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Api\Album;
+use App\Http\Api\Album as AlbumApi;
 use App\Http\Api\Photo;
 use App\Http\Helpers\AlbumHelper;
 use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\WebsiteHelper;
+use App\Model\Album;
 use App\Model\Template;
 use App\Model\Website;
 use Illuminate\Http\JsonResponse;
@@ -62,7 +63,7 @@ class AlbumController extends BaseController
         $name = $request->input('name');
         /** @var Website $website */
         $website = $this->websiteHelper->getCurrentWebsite();
-        /** @var Album $album */
+        /** @var AlbumApi $album */
         $album = null;
 
         try {
@@ -98,7 +99,7 @@ class AlbumController extends BaseController
         /** @var Collection $templates */
         $templates = $this->albumHelper->getTemplatesByPage(1);
 
-        /** @var Album $album */
+        /** @var AlbumApi $album */
         $album = $this->fbHelper->getAlbum($id);
 
         return view('dashboard.website.album.edit', [
@@ -146,7 +147,7 @@ class AlbumController extends BaseController
     {
         /** @var int $page */
         $page = $request->post('page');
-        /** @var Album $album */
+        /** @var AlbumApi $album */
         $album = $this->fbHelper->getAlbum($id);
         /** @var array $phots */
         $photos = $album->getPhotosByPage($page);
@@ -169,9 +170,34 @@ class AlbumController extends BaseController
         return view('dashboard.website.album.images.image-modal', ['photo' => $photo]);
     }
 
-    public function saveAction(Request $request): JsonResponse
+    public function saveAction(Request $request, string $subdomain, int $id): JsonResponse
     {
-        print_r($request->all());
+        /** @var Album $album */
+        $album = Album::where(Album::ID, $id)->first();
+        if (empty($album)) {
+            $album = new Album([Album::ID => $id]);
+        }
+
+        /** @var array $options */
+        $options = [];
+        foreach ($request->post('options') as $option) {
+            if (empty($option['name']) || empty($option['value'])) {
+                continue;
+            }
+
+            $options[$option['name']] = $option['value'];
+        }
+
+        $data = [
+            Album::TEMPLATE_ID => $request->post('template'),
+            Album::TITLE => isset($options['title']) ? $options['title'] : '',
+            Album::DESCRIPTION => isset($options['description']) ? $options['description'] : '',
+            Album::URL => isset($options['url']) ? $options['url'] : '',
+            Album::HIDE_NEW => !empty($options['hide_new'])
+        ];
+
+        $album->fill($data);
+        $album->save();
 
         return response()->json([]);
     }
