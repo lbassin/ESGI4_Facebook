@@ -16,7 +16,7 @@ class CreatePhotoTable extends Migration
         Schema::create('photo', function (Blueprint $table) {
             $table->bigInteger(\App\Model\Photo::ID);
             $table->bigInteger(\App\Model\Photo::ALBUM_ID);
-            $table->boolean(\App\Model\Photo::VISIBLE);
+            $table->integer(\App\Model\Photo::VISIBLE);
             $table->timestamps();
         });
     }

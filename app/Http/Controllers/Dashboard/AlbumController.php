@@ -99,13 +99,30 @@ class AlbumController extends BaseController
 
         /** @var Collection $templates */
         $templates = $this->albumHelper->getTemplatesByPage(1);
-
         /** @var AlbumApi $album */
         $album = $this->fbHelper->getAlbum($id);
+        /** @var string $templateId */
+        $templateId = '';
+        /** @var array $configuration */
+        $configuration = [];
+        /** @var Album $albumModel */
+        $albumModel = Album::where(Album::ID, $id)->first();
+        if (!empty($albumModel)) {
+            $templateId = (string)$albumModel->getTemplateId();
+
+            $configuration = [
+                Album::TITLE => $albumModel->getTitle(),
+                Album::DESCRIPTION => $albumModel->getDescription(),
+                Album::URL => $albumModel->getUrl(),
+                Album::HIDE_NEW => $albumModel->getHideNew()
+            ];
+        }
 
         return view('dashboard.website.album.edit', [
             'templates' => $templates,
-            'album' => $album
+            'album' => $album,
+            'templateId' => $templateId,
+            'config' => $configuration
         ]);
     }
 

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Helpers;
 
 use App\Http\Api\Photo;
+use App\Model\Album;
 use App\Model\Template;
-use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphNode;
 use Illuminate\Support\Collection;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
@@ -24,6 +24,10 @@ class AlbumHelper
      */
     private $fb;
 
+    /**
+     * AlbumHelper constructor.
+     * @param LaravelFacebookSdk $fb
+     */
     public function __construct(LaravelFacebookSdk $fb)
     {
         $this->fb = $fb;
@@ -65,5 +69,37 @@ class AlbumHelper
         $graph = $this->fb->get($query)->getGraphNode();
 
         return new Photo($graph);
+    }
+
+    /**
+     * @param Photo $photo
+     * @return Photo
+     */
+    public function fillPhotoFromDatabase(Photo $photo): Photo
+    {
+        /** @var \App\Model\Photo $databasePhoto */
+        $databasePhoto = \App\Model\Photo::where(\App\Model\Photo::ID, $photo->getId())->first();
+
+        if (empty($databasePhoto)) {
+            return $photo;
+        }
+        $photo->setModel($databasePhoto);
+
+        return $photo;
+    }
+
+    /**
+     * @param Photo $photo
+     * @return bool
+     */
+    public function getDefaultVisibility(Photo $photo): bool
+    {
+        /** @var Album $album */
+        $album = Album::where(Album::ID, $photo->getAlbumId())->first();
+        if (empty($album)) {
+            return true;
+        }
+
+        return $album->shouldShowNew();
     }
 }

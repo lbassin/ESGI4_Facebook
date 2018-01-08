@@ -24,7 +24,7 @@ class Photo extends Model
     /**
      *
      */
-    const VISIBLE = 'visible';
+    const VISIBLE = 'is_visible';
 
     /**
      * @var string
@@ -46,5 +46,13 @@ class Photo extends Model
     public function getId(): int
     {
         return $this->{self::ID};
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisible(): bool
+    {
+        return (bool)$this->{self::VISIBLE};
     }
 }

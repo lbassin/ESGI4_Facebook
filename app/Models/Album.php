@@ -62,4 +62,52 @@ class Album extends Model
     {
         return $this->{self::ID};
     }
+
+    /**
+     * @return bool
+     */
+    public function shouldShowNew(): bool
+    {
+        return !$this->{self::HIDE_NEW};
+    }
+
+    /**
+     * @return int
+     */
+    public function getTemplateId(): int
+    {
+        return $this->{self::TEMPLATE_ID};
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->{self::TITLE};
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->{self::DESCRIPTION};
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->{self::URL};
+    }
+
+    /**
+     * @return bool
+     */
+    public function getHideNew(): bool
+    {
+        return (bool)$this->{self::HIDE_NEW};
+    }
 }

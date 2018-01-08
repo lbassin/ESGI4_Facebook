@@ -2,6 +2,7 @@
 
 namespace App\Http\Api;
 
+use App\Http\Helpers\AlbumHelper;
 use Facebook\GraphNodes\GraphNode;
 
 /**
@@ -28,6 +29,14 @@ class Photo
      * @var GraphNode
      */
     private $graphNode;
+    /**
+     * @var \App\Model\Photo
+     */
+    private $model;
+    /**
+     * @var AlbumHelper
+     */
+    private $albumHelper;
 
     /**
      * Album constructor.
@@ -36,6 +45,7 @@ class Photo
     public function __construct(GraphNode $graphNode)
     {
         $this->graphNode = $graphNode;
+        $this->albumHelper = App()->make(AlbumHelper::class);
     }
 
     /**
@@ -93,6 +103,34 @@ class Photo
         }
 
         return '';
+    }
+
+    /**
+     * @param $model
+     */
+    public function setModel(\App\Model\Photo $model)
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisible(): bool
+    {
+        if (!$this->model) {
+            return $this->albumHelper->getDefaultVisibility($this);
+        }
+
+        return $this->model->isVisible();
+    }
+
+    /**
+     * @return int
+     */
+    public function getAlbumId(): int
+    {
+        return $this->graphNode->getField('album')->getField('id');
     }
 
 }

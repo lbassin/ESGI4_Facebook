@@ -2,8 +2,7 @@
 
 namespace App\Http\Api;
 
-use App\Http\Helpers\FacebookHelper;
-use Facebook\FacebookResponse;
+use App\Http\Helpers\AlbumHelper;
 use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphNode;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
@@ -28,6 +27,10 @@ class Album
      * @var LaravelFacebookSdk
      */
     private $fb;
+    /**
+     * @var AlbumHelper
+     */
+    private $albumHelper;
 
     /**
      * Album constructor.
@@ -39,6 +42,7 @@ class Album
     {
         $this->graphNode = $graphNode;
         $this->fb = App()->make(LaravelFacebookSdk::class);
+        $this->albumHelper = App()->make(AlbumHelper::class);
     }
 
     /**
@@ -47,7 +51,7 @@ class Album
     private function getPhotosGraphWithoutLimit(): string
     {
         /** @var string $query */
-        return $this->getId() . '/photos?fields=id,name,images';
+        return $this->getId() . '/photos?fields=id,name,images,album{id}';
     }
 
     /**
@@ -64,8 +68,10 @@ class Album
         /** @var array $photos */
         $photos = [];
         foreach ($graph->all() as $photo) {
-            $photos[] = new Photo($photo);
+            $apiPhoto = new Photo($photo);
+            $photos[] = $this->albumHelper->fillPhotoFromDatabase($apiPhoto);
         }
+
 
         return $photos;
     }
@@ -94,7 +100,8 @@ class Album
         /** @var array $photos */
         $photos = [];
         foreach ($graph->all() as $photo) {
-            $photos[] = new Photo($photo);
+            $apiPhoto = new Photo($photo);
+            $photos[] = $this->albumHelper->fillPhotoFromDatabase($apiPhoto);
         }
 
         return $photos;

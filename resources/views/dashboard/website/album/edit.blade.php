@@ -6,6 +6,7 @@
 @endsection
 
 @section('content')
+    <?php /** @var \App\Http\Api\Album $album */ ?>
     <div id="album-edit" class="wrapper">
         <div class="head">
             <div class="user-pic">
@@ -66,25 +67,29 @@
                         <p>
                             <label>
                                 Titre de la page <br>
-                                <input type="text" name="title">
+                                <input type="text" name="title"
+                                       value="{{ isset($config[\App\Model\Album::TITLE]) ? $config[\App\Model\Album::TITLE] : '' }}">
                             </label>
                         </p>
                         <p>
                             <label>
                                 Description <br>
-                                <textarea name="description" cols="40" rows="3"></textarea>
+                                <textarea name="description" cols="40"
+                                          rows="3">{{ isset($config[\App\Model\Album::DESCRIPTION]) ? $config[\App\Model\Album::DESCRIPTION] : '' }}</textarea>
                             </label>
                         </p>
                         <p>
                             <label>
                                 URL <br>
-                                <input type="text" name="url">
+                                <input type="text" name="url"
+                                       value="{{ isset($config[\App\Model\Album::URL]) ? $config[\App\Model\Album::URL] : '' }}">
                             </label>
                         </p>
                         <p>
                             <label>
                                 Masquer les nouvelles images
-                                <input type="checkbox" name="hide_new">
+                                <input type="checkbox"
+                                       name="hide_new" {{ !empty($config[\App\Model\Album::HIDE_NEW]) ? 'checked' : '' }}>
                             </label>
                         </p>
                     </form>
@@ -124,6 +129,10 @@
 
         let templates = $('#templates');
         let images = $('#images');
+
+        @if(!empty($templateId))
+            templateId = '{{ $templateId }}';
+        @endif
 
         initMenu();
         initTemplatePagination();
