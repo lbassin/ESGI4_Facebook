@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Api\Album as AlbumApi;
-use App\Http\Api\Photo;
+use App\Http\Api\Photo as PhotoApi;
 use App\Http\Helpers\AlbumHelper;
 use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\WebsiteHelper;
 use App\Model\Album;
+use App\Model\Photo;
 use App\Model\Template;
 use App\Model\Website;
 use Illuminate\Http\JsonResponse;
@@ -149,7 +150,7 @@ class AlbumController extends BaseController
         $page = $request->post('page');
         /** @var AlbumApi $album */
         $album = $this->fbHelper->getAlbum($id);
-        /** @var array $phots */
+        /** @var array $photos */
         $photos = $album->getPhotosByPage($page);
 
         return view('dashboard.website.album.images.image-grid', ['photos' => $photos]);
@@ -164,7 +165,7 @@ class AlbumController extends BaseController
     {
         /** @var string $id */
         $id = $request->post('id');
-        /** @var Photo $photo */
+        /** @var PhotoApi $photo */
         $photo = $this->albumHelper->getPhoto($id);
 
         return view('dashboard.website.album.images.image-modal', ['photo' => $photo]);
@@ -188,8 +189,8 @@ class AlbumController extends BaseController
             $options[$option['name']] = $option['value'];
         }
 
-        /** @var array $data */
-        $data = [
+        /** @var array $albumData */
+        $albumData = [
             Album::TEMPLATE_ID => $request->post('template'),
             Album::TITLE => isset($options['title']) ? $options['title'] : '',
             Album::DESCRIPTION => isset($options['description']) ? $options['description'] : '',
@@ -197,8 +198,23 @@ class AlbumController extends BaseController
             Album::HIDE_NEW => !empty($options['hide_new'])
         ];
 
-        $album->fill($data);
+        $album->fill($albumData);
         $album->save();
+
+        foreach ($request->post('images') as $photoId => $photoData) {
+            /** @var Photo $photo */
+            $photo = Photo::where(Photo::ID, $photoId)->first();
+            if (empty($photo)) {
+                $photo = new Photo([Photo::ID => $photoId]);
+            }
+
+            $photoData[Photo::VISIBLE] = !empty($photoData['visible']) && $photoData['visible'] == 'true';
+            $photoData[Photo::ALBUM_ID] = $id;
+
+            $photo->fill($photoData);
+
+            $photo->save();
+        }
 
         return response()->json([]);
     }
