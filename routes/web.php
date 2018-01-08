@@ -46,7 +46,7 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
         Route::post('/dashboard/website/{subdomain}/albums/templates/preview', 'Dashboard\AlbumController@templatePreviewAction')
             ->name('dashboard.website.albums.templates.preview');
 
-        Route::post('/dashboard/website/{subdomain}/albums/templates/grid', 'Dashboard\AlbumController@templatesGridAction')
+        Route::post('/dashboard/website/{subdomain}/albums/{id}/templates/grid', 'Dashboard\AlbumController@templatesGridAction')
             ->name('dashboard.website.albums.templates.grid');
 
         Route::post('/dashboard/website/{subdomain}/albums/{id}/images/grid', 'Dashboard\AlbumController@imagesGridAction')

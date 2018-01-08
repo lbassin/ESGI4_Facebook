@@ -142,16 +142,30 @@ class AlbumController extends BaseController
 
     /**
      * @param Request $request
+     * @param $subdomain
+     * @param $id
      * @return View
      */
-    public function templatesGridAction(Request $request): View
+    public function templatesGridAction(Request $request, $subdomain, $id): View
     {
         /** @var int $page */
         $page = $request->post('page');
         /** @var Collection $templates */
         $templates = $this->albumHelper->getTemplatesByPage($page);
+        /** @var string $templateId */
+        $templateId = '';
+        /** @var Album $album */
 
-        return view('dashboard.website.album.templates.preview-grid', ['templates' => $templates, 'selectedTemplate' => 2]);
+        if ($request->post('templateId')) {
+            $templateId = $request->post('templateId');
+        } else {
+            $album = Album::where(Album::ID, $id)->first();
+            if (!empty($album)) {
+                $templateId = (string)$album->getTemplateId();
+            }
+        }
+
+        return view('dashboard.website.album.templates.preview-grid', ['templates' => $templates, 'selectedTemplate' => $templateId]);
     }
 
     /**

@@ -207,23 +207,28 @@
             $('#templates').next('.options').find('.submit').click(function () {
                 showImages();
             });
+        }
 
-            function updateTemplatesGrid() {
-                templates.fadeOut();
-                templates.next('.options').fadeOut();
+        function updateTemplatesGrid(withLocalData) {
+            templates.fadeOut();
+            templates.next('.options').fadeOut();
 
-                let url = '{{ route('dashboard.website.albums.templates.grid', ['subdomain' => $subdomain]) }}';
+            let url = '{{ route('dashboard.website.albums.templates.grid', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
 
-                $.post(url, {page: currentTemplatePage}).done(
-                    function (response) {
-                        templates.html(response);
-                        initTemplatePreviews();
-
-                        templates.fadeIn();
-                        templates.next('.options').fadeIn();
-                    }
-                ).fail(errorAjax)
+            let params = {page: currentTemplatePage};
+            if (withLocalData) {
+                params['templateId'] = templateId;
             }
+
+            $.post(url, params).done(
+                function (response) {
+                    templates.html(response);
+                    initTemplatePreviews();
+
+                    templates.fadeIn();
+                    templates.next('.options').fadeIn();
+                }
+            ).fail(errorAjax)
         }
 
         function initTemplatePreviews() {
@@ -252,6 +257,8 @@
                 let nav = $('nav ul');
                 nav.find('li.active').removeClass('active');
                 $(nav.find('li')[1]).addClass('active');
+
+                updateTemplatesGrid(true);
 
                 showImages();
 
