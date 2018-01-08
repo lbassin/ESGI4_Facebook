@@ -151,7 +151,7 @@ class AlbumController extends BaseController
         /** @var Collection $templates */
         $templates = $this->albumHelper->getTemplatesByPage($page);
 
-        return view('dashboard.website.album.templates.preview-grid', ['templates' => $templates]);
+        return view('dashboard.website.album.templates.preview-grid', ['templates' => $templates, 'selectedTemplate' => 2]);
     }
 
     /**

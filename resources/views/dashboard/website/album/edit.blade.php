@@ -28,7 +28,7 @@
                 <div class="step-1">
                     <h2>Mes templates</h2>
                     <div id="templates" class="preview-grid">
-                        @include('dashboard.website.album.templates.preview-grid', ['templates' => $templates])
+                        @include('dashboard.website.album.templates.preview-grid', ['templates' => $templates, 'selectedTemplate' => $templateId])
                     </div>
                     <div class="options">
                         <div class="pagination">
