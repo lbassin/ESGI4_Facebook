@@ -188,6 +188,7 @@ class AlbumController extends BaseController
             $options[$option['name']] = $option['value'];
         }
 
+        /** @var array $data */
         $data = [
             Album::TEMPLATE_ID => $request->post('template'),
             Album::TITLE => isset($options['title']) ? $options['title'] : '',
