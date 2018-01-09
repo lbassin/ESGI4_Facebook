@@ -1,4 +1,8 @@
 # Back  
+## Global
+
+- Ajout d'un bouton retour en haut à gauche
+
 ## Gestion de l'accueil  
 
 - To do
