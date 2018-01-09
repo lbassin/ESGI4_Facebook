@@ -64,11 +64,17 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
         Route::post('/dashboard/website/{subdomain}/events/save', 'Dashboard\EventController@saveAction')
             ->name('dashboard.website.events.save');
 
-        Route::post('/dashboard/website/{subdomain}/events/{id}/details', 'Dashboard\EventController@detailsAction')
+        Route::post('/dashboard/website/{subdomain}/events/details', 'Dashboard\EventController@detailsAction')
             ->name('dashboard.website.events.details');
 
         Route::get('/dashboard/website/{subdomain}/reviews', 'Dashboard\WebsiteController@reviewsAction')
             ->name('dashboard.website.reviews');
+
+        Route::post('/dashboard/website/{subdomain}/reviews/save', 'Dashboard\ReviewController@saveAction')
+            ->name('dashboard.website.reviews.save');
+
+        Route::post('/dashboard/website/{subdomain}/reviews/details', 'Dashboard\ReviewController@detailsAction')
+            ->name('dashboard.website.reviews.details');
     });
 });
 

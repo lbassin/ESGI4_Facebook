@@ -101,7 +101,7 @@
 
             list.find('.details').click(function () {
                 let id = $(this).parent().data('id');
-                let url = '{{ route('dashboard.website.events.details', ['subdomain' => $subdomain, 'id' => $event->getId()]) }}';
+                let url = '{{ route('dashboard.website.events.details', ['subdomain' => $subdomain]) }}';
                 let detailsModal = $('#details-modal');
 
                 detailsModal.find('.md-content').html('');

@@ -1654,6 +1654,14 @@ a:hover {
   margin-top: 18px;
 }
 
+.list-content .grid .element-texte {
+  background-color: #ddd;
+  height: 180px;
+  color: #000;
+  padding: 8px 14px;
+  text-align: justify;
+}
+
 .list-content .grid .element-name {
   position: absolute;
   bottom: 10px;

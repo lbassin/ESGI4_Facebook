@@ -6,12 +6,21 @@ use App\Http\Helpers\WebsiteHelper;
 use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphNode;
 
+/**
+ * Class Review
+ *
+ * @author Laurent Bassin <laurent@bassin.info>
+ */
 class Review
 {
     /**
      * @var GraphNode
      */
     private $graphNode;
+    /**
+     * @var \App\Model\Review
+     */
+    private $model;
 
     /**
      * Album constructor.
@@ -20,6 +29,14 @@ class Review
     public function __construct(GraphNode $graphNode)
     {
         $this->graphNode = $graphNode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->graphNode->getField('source_id') . '.' . $this->graphNode->getField('reviewer')->getField('id');
     }
 
     /**
@@ -80,6 +97,38 @@ class Review
         $date = $this->graphNode->getField('created_time', '');
 
         return $date->format(WebsiteHelper::DATE_FORMAT);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisible(): bool
+    {
+        if (!$this->model) {
+            return true;
+        }
+
+        return $this->model->isVisible();
+    }
+
+    /**
+     * @param $databaseReview
+     */
+    public function setModel(\App\Model\Review $databaseReview): void
+    {
+        $this->model = $databaseReview;
+    }
+
+    public function getReviewerId(): int
+    {
+        /** @var GraphEdge $reviewer */
+        $reviewer = $this->graphNode->getField('reviewer');
+
+        if (empty($reviewer)) {
+            return '';
+        }
+
+        return $reviewer->getField('id', '');
     }
 
 }
