@@ -31,7 +31,7 @@
                 @foreach($albums as $album)
                     <a href="{{ route('dashboard.website.albums.edit', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}">
                         <article class="module desktop-4 tablet-6">
-                            <div class="element-image"
+                            <div class="element-image zoom"
                                  style="background: url('{{ $album->getCover() }}');background-repeat: no-repeat;background-position: center center;background-size: cover;">
 
                             </div>

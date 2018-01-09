@@ -98,17 +98,8 @@
         </div>
     </div>
 
-    <div id="preview-modal" class="md-modal md-effect-12">
-        <div class="md-content">
-            <!-- Ajax -->
-        </div>
-    </div>
-
-    <div id="image-modal" class="md-modal md-effect-12">
-        <div class="md-content">
-            <!-- Ajax -->
-        </div>
-    </div>
+    @include('dashboard.website.modal', ['name' => 'preview-modal'])
+    @include('dashboard.website.modal', ['name' => 'image-modal'])
 
     <div class="md-overlay">
         <button class="md-close">
@@ -372,7 +363,7 @@
         }
     </script>
 
-    <script> // Global
+    <script>
         function showModal(target) {
             $('#' + target).addClass('md-show');
         }
@@ -397,5 +388,4 @@
             alert('An error occurred');
         }
     </script>
-
 @endsection

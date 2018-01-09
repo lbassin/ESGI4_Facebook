@@ -277,12 +277,44 @@ class FacebookHelper
 
         /** @var array $events */
         $events = [];
-        /** @var GraphEvent $album */
-        foreach ($response->all() as $event) {
-            $events[] = new Event($event);
+        /** @var GraphEvent $graph */
+        foreach ($response->all() as $graph) {
+            $event = new Event($graph);
+
+            /** @var \App\Model\Event $databaseEvent */
+            $databaseEvent = \App\Model\Event::where(\App\Model\Event::ID, $event->getId())->first();
+
+            if (!empty($databaseEvent)) {
+                $event->setModel($databaseEvent);
+            }
+
+            $events[] = $event;
         }
 
         return $events;
+    }
+
+    /**
+     * @param string $id
+     * @return Event
+     * @throws FacebookSDKException
+     */
+    public function getEvent(string $id): Event
+    {
+        /** @var string $query */
+        $query = $id . '?fields=cover{source},start_time,end_time,name,place{name}';
+        /** @var GraphEvent $graph */
+        $graph = $this->fb->get($query)->getGraphEvent();
+        /** @var Event $event */
+        $event = new Event($graph);
+        /** @var \App\Model\Event $databaseEvent */
+        $databaseEvent = \App\Model\Event::where(\App\Model\Event::ID, $event->getId())->first();
+
+        if (!empty($databaseEvent)) {
+            $event->setModel($databaseEvent);
+        }
+
+        return $event;
     }
 
     /**
