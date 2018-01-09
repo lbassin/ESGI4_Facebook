@@ -6,14 +6,37 @@
 @endsection
 
 @section('content')
-    <?php dump($reviews); /** @var array $reviews */?>
-    <ul>
-        @foreach($reviews as $review) <?php /** @var \App\Http\Api\Review $review */ ?>
-        <li>{{ $review->getReviewerName() }}</li>
-        <li>{{ $review->getText() }}</li>
-        <li>{{ $review->getRating() }}</li>
-        <li><img src="{{ $review->getReviewerPicture() }}" alt=""></li>
-        <li>{{ $review->getCreatedTime() }}</li>
-        @endforeach
-    </ul>
+    <div id="review-list" class="wrapper">
+        <div class="head">
+            <div class="user-pic">
+                <img src="{{ $userHelper->getPicture() }}" alt="">
+            </div>
+            <span class="user-name">{{ $userHelper->getName() }}</span>
+        </div>
+
+        <div class="list-header">
+            <div id="nav">
+                <a href="{{ route('dashboard.website', ['subdomain' => $subdomain]) }}">
+                    <span class="nav-back">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        <span>Retour à l'accueil</span>
+                    </span>
+                </a>
+                <span class="nav-title">Gérer les avis</span>
+            </div>
+        </div>
+
+        <div class="list-content">
+            <div class="grid">
+                <?php /** @var \App\Http\Api\Review $review */ ?>
+                @foreach($reviews as $review)
+                    <article class="module desktop-4 tablet-6">
+                        <div class="element-name">
+                            <span>{{ $review->getText() }}</span>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </div>
 @endsection
