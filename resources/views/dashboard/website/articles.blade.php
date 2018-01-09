@@ -6,32 +6,29 @@
 @endsection
 
 @section('content')
-    <div class="wrapper">
-        <div class="head">
-            <div class="user-pic">
-                <img src="{{ $userHelper->getPicture() }}" alt="">
-            </div>
-            <span class="user-name">{{ $userHelper->getName() }}</span>
-        </div>
+    <div id="posts-list" class="wrapper">
+        @include('dashboard.website.header')
 
-        <div class="wrapper-albums">
-            <div class="albums-nav">
+        <div class="list-header">
+            <div id="nav">
                 <a href="{{ route('dashboard.website', ['subdomain' => $subdomain]) }}">
-                    <span class="albums-back">
-                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
-                    <span>Retour à l'accueil</span>
-                </span>
+                    <span class="nav-back">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        <span>Retour à l'accueil</span>
+                    </span>
                 </a>
-                <span class="albums-title">Gérer les albums</span>
-                <span class="albums-create">
-                    <span>Créer un album</span>
+                <span class="nav-title">Gérer les articles</span>
+                <span class="nav-create">
+                    <span>Créer un article</span>
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 </span>
             </div>
         </div>
 
-        <div class="wrapper-pictures">
+        <div class="list-content">
+            <div class="grid">
 
+            </div>
         </div>
     </div>
 @endsection

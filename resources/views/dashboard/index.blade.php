@@ -9,12 +9,7 @@
     <div class="image-gradient">
     </div>
     <div class="wrapper-dashboard">
-        <div class="head">
-            <div class="user-pic">
-                <img src="{{ $userHelper->getPicture() }}" alt="">
-            </div>
-            <span class="user-name">{{ $userHelper->getName() }}</span>
-        </div>
+        @include('dashboard.website.header')
 
         <div class="select-dashboard">
             <div class="select-choice">

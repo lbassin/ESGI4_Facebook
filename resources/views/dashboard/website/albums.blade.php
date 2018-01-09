@@ -7,12 +7,7 @@
 
 @section('content')
     <div class="wrapper">
-        <div class="head">
-            <div class="user-pic">
-                <img src="{{ $userHelper->getPicture() }}" alt="">
-            </div>
-            <span class="user-name">{{ $userHelper->getName() }}</span>
-        </div>
+        @include('dashboard.website.header')
 
         <div class="list-header">
             <div id="nav">
