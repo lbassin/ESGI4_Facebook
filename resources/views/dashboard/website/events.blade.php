@@ -6,14 +6,44 @@
 @endsection
 
 @section('content')
-    <?php dump($events); /** @var array $events */?>
-        @foreach($events as $event) <?php /** @var \App\Http\Api\Event $event */ ?>
-        <ul>
-            <li>{{ $event->getName() }}</li>
-            <li>{{ $event->getStartDate() }} -> {{ $event->getEndDate() }}</li>
-            <li>{{ $event->getPlaceName() }}</li>
-            <li><img src="{{ $event->getCover() }}" alt=""></li>
-        </ul>
-        <hr>
-        @endforeach
+    <div id="event-list" class="wrapper">
+        <div class="head">
+            <div class="user-pic">
+                <img src="{{ $userHelper->getPicture() }}" alt="">
+            </div>
+            <span class="user-name">{{ $userHelper->getName() }}</span>
+        </div>
+
+        <div class="list-header">
+            <div id="nav">
+                <a href="{{ route('dashboard.website', ['subdomain' => $subdomain]) }}">
+                    <span class="nav-back">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        <span>Retour à l'accueil</span>
+                    </span>
+                </a>
+                <span class="nav-title">Gérer les événements</span>
+                <span class="nav-create">
+                    <span>Créer un évenement</span>
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="list-content">
+            <div class="grid">
+                <?php /** @var \App\Http\Api\Event $event */ ?>
+                @foreach($events as $event)
+                    <article class="module desktop-4 tablet-6">
+                        <div class="element-image"
+                             style="background: url('{{ $event->getCover() }}');background-repeat: no-repeat;background-position: center center;background-size: cover;">
+                        </div>
+                        <div class="element-name">
+                            <span>{{ $event->getName() }}</span>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </div>
 @endsection

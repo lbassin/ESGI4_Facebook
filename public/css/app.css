@@ -1491,11 +1491,7 @@ a:hover {
   }
 }
 
-/*********************************************
-****************** ALBUMS ********************
-*********************************************/
-
-.wrapper-albums {
+.list-header {
   width: 80%;
   text-align: center;
   position: relative;
@@ -1505,7 +1501,7 @@ a:hover {
   transition: all 0.3s ease;
 }
 
-.wrapper-albums .albums-back {
+.list-header .nav-back {
   color: white;
   position: absolute;
   bottom: 0;
@@ -1515,11 +1511,11 @@ a:hover {
   transition: all 0.3s ease;
 }
 
-.wrapper-albums .albums-back i {
+.list-header .nav-back i {
   margin-right: 10px;
 }
 
-.wrapper-albums .albums-title {
+.list-header .nav-title {
   color: white;
   font-size: 25px;
   position: relative;
@@ -1530,7 +1526,7 @@ a:hover {
   transition: all 0.3s ease;
 }
 
-.wrapper-albums .albums-create {
+.list-header .nav-create {
   color: white;
   position: absolute;
   bottom: 0;
@@ -1540,12 +1536,12 @@ a:hover {
   transition: all 0.3s ease;
 }
 
-.wrapper-albums .albums-create i {
+.list-header .nav-create i {
   margin-left: 10px;
 }
 
 @media only screen and (max-width: 768px) {
-  .wrapper-albums .albums-back {
+  .list-header .nav-back {
     position: absolute;
     padding-right: 20px;
     left: 50%;
@@ -1553,17 +1549,17 @@ a:hover {
     transform: translateX(-100%);
   }
 
-  .wrapper-albums .albums-back i {
+  .list-header .nav-back i {
     margin-right: 10px;
   }
 
-  .wrapper-albums .albums-title {
+  .list-header .nav-title {
     display: block;
     -webkit-transform: translateY(-55px);
     transform: translateY(-55px);
   }
 
-  .wrapper-albums .albums-create {
+  .list-header .nav-create {
     position: absolute;
     padding-left: 20px;
     right: 50%;
@@ -1571,35 +1567,76 @@ a:hover {
     transform: translateX(100%);
   }
 
-  .wrapper-albums .albums-create i {
+  .list-header .nav-create i {
     margin-left: 10px;
   }
 }
 
 @media only screen and (max-width: 480px) {
-  .wrapper-albums {
+  .list-header {
     margin-top: 15vh;
   }
 
-  .wrapper-albums .albums-back span {
+  .list-header .nav-back span {
     display: none;
   }
 
-  .wrapper-albums .albums-back i {
+  .list-header .nav-back i {
     font-size: 30px;
   }
 
-  .wrapper-albums .albums-create span {
+  .list-header .nav-create span {
     display: none;
   }
 
-  .wrapper-albums .albums-create i {
+  .list-header .nav-create i {
     font-size: 30px;
   }
 }
 
-.wrapper-pictures {
+.list-content {
   width: 80%;
+}
+
+.list-content .grid {
+  margin-left: -2%;
+  zoom: 1;
+}
+
+.list-content .grid .element-image {
+  position: relative;
+  height: 175px;
+  border-radius: 5px;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+}
+
+.list-content .grid .element-image:hover {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.list-content .grid .element-name {
+  position: absolute;
+  bottom: 10px;
+  width: 80%;
+  margin-left: 10%;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  background: -webkit-gradient(linear, left top, right bottom, from(#090917), to(#12121c));
+  background: linear-gradient(to bottom right, #090917, #12121c);
+  border: 1px solid white;
+  border-radius: 5px;
+  color: white;
+}
+
+.list-content .grid:after {
+  content: '';
+  display: block;
+  clear: both;
 }
 
 .module {
@@ -1616,47 +1653,6 @@ a:hover {
   cursor: pointer;
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
-}
-
-.grid {
-  margin-left: -2%;
-  *zoom: 1;
-}
-
-.grid:after {
-  content: '';
-  display: block;
-  clear: both;
-}
-
-.album-image {
-  position: relative;
-  height: 175px;
-  border-radius: 5px;
-  -webkit-transform: scale(1);
-  transform: scale(1);
-  -webkit-transition: all 0.3s linear;
-  transition: all 0.3s linear;
-}
-
-.album-image:hover {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
-
-.album-name {
-  position: absolute;
-  bottom: 10px;
-  width: 80%;
-  margin-left: 10%;
-  text-align: center;
-  height: 40px;
-  line-height: 40px;
-  background: -webkit-gradient(linear, left top, right bottom, from(#090917), to(#12121c));
-  background: linear-gradient(to bottom right, #090917, #12121c);
-  border: 1px solid white;
-  border-radius: 5px;
-  color: white;
 }
 
 @media only screen and (min-width: 481px) {

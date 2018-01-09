@@ -14,33 +14,33 @@
             <span class="user-name">{{ $userHelper->getName() }}</span>
         </div>
 
-        <div class="wrapper-albums">
-            <div class="albums-nav">
+        <div class="list-header">
+            <div id="nav">
                 <a href="{{ route('dashboard.website', ['subdomain' => $subdomain]) }}">
-                    <span class="albums-back">
+                    <span class="nav-back">
                     <i class="fa fa-chevron-left" aria-hidden="true"></i>
                     <span>Retour à l'accueil</span>
                 </span>
                 </a>
-                <span class="albums-title">Gérer les albums</span>
-                <span class="albums-create">
+                <span class="nav-title">Gérer les albums</span>
+                <span class="nav-create">
                     <span>Créer un album</span>
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 </span>
             </div>
         </div>
 
-        <div class="wrapper-pictures">
+        <div class="list-content">
             <div class="grid">
                 <?php /** @var \App\Http\Api\Album $album */ ?>
                 @foreach($albums as $album)
                     <a href="{{ route('dashboard.website.albums.edit', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}">
                         <article class="module desktop-4 tablet-6">
-                            <div class="album-image"
+                            <div class="element-image"
                                  style="background: url('{{ $album->getCover() }}');background-repeat: no-repeat;background-position: center center;background-size: cover;">
 
                             </div>
-                            <div class="album-name">
+                            <div class="element-name">
                                 <span>{{ $album->getName() }}</span>
                             </div>
                         </article>
