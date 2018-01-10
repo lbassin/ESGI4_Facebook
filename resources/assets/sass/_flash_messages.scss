@@ -1,0 +1,40 @@
+#flash-messages {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 24px;
+  margin: auto;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 850;
+
+  .message {
+    span {
+      display: inline-block;
+      color: #fff;
+      width: auto;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-family: 'raleway_regular', sans-serif;
+      transition: all 0.5s ease;
+      opacity: 0;
+      margin-bottom: 12px;
+
+      &.success {
+        background-color: #26A65B;
+      }
+
+      &.error {
+        background-color: #D91E18;
+      }
+
+      &.show {
+        opacity: 1;
+      }
+    }
+
+  }
+}

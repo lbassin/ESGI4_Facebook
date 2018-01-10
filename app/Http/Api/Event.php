@@ -7,9 +7,9 @@ use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphNode;
 
 /**
- * Class {Event}
+ * Class Event
  *
- * @author                 Laurent Bassin <laurent.bassin@dnd.fr>
+ * @author Laurent Bassin <laurent@bassin.info>
  */
 class Event
 {
@@ -17,6 +17,10 @@ class Event
      * @var GraphNode
      */
     private $graphNode;
+    /**
+     * @var \App\Model\Event
+     */
+    private $model;
 
     /**
      * Album constructor.
@@ -25,6 +29,14 @@ class Event
     public function __construct(GraphNode $graphNode)
     {
         $this->graphNode = $graphNode;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->graphNode->getField('id');
     }
 
     /**
@@ -86,4 +98,26 @@ class Event
 
         return $cover->getField('source', '');
     }
+
+    /**
+     * @param $databaseEvent
+     */
+    public function setModel($databaseEvent): void
+    {
+        $this->model = $databaseEvent;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisible(): bool
+    {
+        if (!$this->model) {
+            return true;
+        }
+
+        return $this->model->isVisible();
+    }
+
+
 }

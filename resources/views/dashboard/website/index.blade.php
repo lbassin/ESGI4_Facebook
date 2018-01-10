@@ -8,13 +8,8 @@
 @section('content')
 <?php /** @var array $album */ ?>
 
-<div class="wrapper">
-    <div class="head">
-        <div class="user-pic">
-            <img src="{{ $userHelper->getPicture() }}" alt="">
-        </div>
-        <span class="user-name">{{ $userHelper->getName() }}</span>
-    </div>
+<div id="website-home" class="wrapper">
+    @include('dashboard.website.header')
 
     <div class="container website-home">
         <div class="nav-button-mobile">

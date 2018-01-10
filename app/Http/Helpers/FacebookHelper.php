@@ -14,6 +14,7 @@ use Facebook\FacebookResponse;
 use Facebook\GraphNodes\GraphAlbum;
 use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphEvent;
+use Facebook\GraphNodes\GraphNode;
 use Facebook\GraphNodes\GraphNodeFactory;
 use Illuminate\Session\Store;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
@@ -203,12 +204,12 @@ class FacebookHelper
     public function getAlbums($id = 'me'): array
     {
         /** @var string $albumQuery */
-        $albumQuery = $id . '/albums?fields=id,name,description,updated_time,cover_photo{images},photos{id,name,images}';
+        $albumQuery = $id . '/albums?fields=id,name,description,updated_time,cover_photo{images}';
         /** @var GraphEdge $albums */
         $response = $this->fb->get($albumQuery)->getGraphEdge();
-
         /** @var array $albums */
         $albums = [];
+
         /** @var GraphAlbum $album */
         foreach ($response->all() as $album) {
             $albums[] = new Album($album);
@@ -222,7 +223,7 @@ class FacebookHelper
      * @return Album
      * @throws FacebookSDKException
      */
-    private function getAlbum(string $id): Album
+    public function getAlbum(string $id): Album
     {
         /** @var string $query */
         $query = $id . '?fields=id,name,description,updated_time,cover_photo{images},photos{id,name,images}';
@@ -277,12 +278,44 @@ class FacebookHelper
 
         /** @var array $events */
         $events = [];
-        /** @var GraphEvent $album */
-        foreach ($response->all() as $event) {
-            $events[] = new Event($event);
+        /** @var GraphEvent $graph */
+        foreach ($response->all() as $graph) {
+            $event = new Event($graph);
+
+            /** @var \App\Model\Event $databaseEvent */
+            $databaseEvent = \App\Model\Event::where(\App\Model\Event::ID, $event->getId())->first();
+
+            if (!empty($databaseEvent)) {
+                $event->setModel($databaseEvent);
+            }
+
+            $events[] = $event;
         }
 
         return $events;
+    }
+
+    /**
+     * @param string $id
+     * @return Event
+     * @throws FacebookSDKException
+     */
+    public function getEvent(string $id): Event
+    {
+        /** @var string $query */
+        $query = $id . '?fields=cover{source},start_time,end_time,name,place{name}';
+        /** @var GraphEvent $graph */
+        $graph = $this->fb->get($query)->getGraphEvent();
+        /** @var Event $event */
+        $event = new Event($graph);
+        /** @var \App\Model\Event $databaseEvent */
+        $databaseEvent = \App\Model\Event::where(\App\Model\Event::ID, $event->getId())->first();
+
+        if (!empty($databaseEvent)) {
+            $event->setModel($databaseEvent);
+        }
+
+        return $event;
     }
 
     /**
@@ -293,15 +326,72 @@ class FacebookHelper
     public function getReviews(Website $website): array
     {
         /** @var string $reviewQuery */
-        $reviewQuery = $website->getSourceId() . '/ratings?fields=review_text,reviewer{name, picture{url}},rating,created_time';
+        $reviewQuery = $website->getSourceId() . '/ratings?fields=id,review_text,reviewer{name, picture{url}},rating,created_time';
         /** @var GraphEdge $response */
         $response = $this->fb->get($reviewQuery, $website->getAccessToken())->getGraphEdge();
-
+        /** @var array $reviews */
         $reviews = [];
-        foreach ($response->all() as $review) {
-            $reviews[] = new Review($review);
+        /** @var GraphNode $graph */
+        foreach ($response->all() as $graph) {
+            $graph['source_id'] = $website->getSourceId();
+
+            /** @var Review $review */
+            $review = new Review($graph);
+            /** @var int $reviewerId */
+            $reviewerId = $review->getReviewerId();
+            /** @var \App\Model\Review $databaseReview */
+            $databaseReview = \App\Model\Review::where(\App\Model\Review::SOURCE_ID, $website->getSourceId())
+                ->where(\App\Model\Review::REVIEWER_ID, $reviewerId)->first();
+
+            if (!empty($databaseReview)) {
+                $review->setModel($databaseReview);
+            }
+
+            $reviews[] = $review;
         }
 
         return $reviews;
+    }
+
+    /**
+     * @param Website $website
+     * @param string $reviewerId
+     * @return Review
+     * @throws FacebookSDKException
+     */
+    public function getReview(Website $website, string $reviewerId): Review
+    {
+        /** @var string $query */
+        $query = $website->getSourceId() . '/ratings?fields=id,review_text,reviewer{name, picture{url}},rating,created_time';
+        /** @var GraphEdge $response */
+        $response = $this->fb->get($query, $website->getAccessToken())->getGraphEdge();
+
+        /** @var GraphNode $graph */
+        foreach ($response->all() as $graph) {
+            /** @var GraphNode $reviewer */
+            $reviewer = $graph->getField('reviewer');
+            if (empty($reviewer)) {
+                continue;
+            }
+
+            if ($reviewer->getField('id') == $reviewerId) {
+                $graph['source_id'] = $website->getSourceId();
+
+                /** @var Review $review */
+                $review = new Review($graph);
+
+                /** @var \App\Model\Review $databaseReview */
+                $databaseReview = \App\Model\Review::where(\App\Model\Review::SOURCE_ID, $website->getSourceId())
+                    ->where(\App\Model\Review::REVIEWER_ID, $reviewerId)->first();
+
+                if (!empty($databaseReview)) {
+                    $review->setModel($databaseReview);
+                }
+
+                return $review;
+            }
+        }
+
+        die('Review not found'); // TODO
     }
 }

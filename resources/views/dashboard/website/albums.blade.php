@@ -7,40 +7,35 @@
 
 @section('content')
     <div class="wrapper">
-        <div class="head">
-            <div class="user-pic">
-                <img src="{{ $userHelper->getPicture() }}" alt="">
-            </div>
-            <span class="user-name">{{ $userHelper->getName() }}</span>
-        </div>
+        @include('dashboard.website.header')
 
-        <div class="wrapper-albums">
-            <div class="albums-nav">
+        <div class="list-header">
+            <div id="nav">
                 <a href="{{ route('dashboard.website', ['subdomain' => $subdomain]) }}">
-                    <span class="albums-back">
+                    <span class="nav-back">
                     <i class="fa fa-chevron-left" aria-hidden="true"></i>
                     <span>Retour à l'accueil</span>
                 </span>
                 </a>
-                <span class="albums-title">Gérer les albums</span>
-                <span class="albums-create">
+                <span class="nav-title">Gérer les albums</span>
+                <span class="nav-create">
                     <span>Créer un album</span>
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 </span>
             </div>
         </div>
 
-        <div class="wrapper-pictures">
+        <div class="list-content">
             <div class="grid">
                 <?php /** @var \App\Http\Api\Album $album */ ?>
                 @foreach($albums as $album)
                     <a href="{{ route('dashboard.website.albums.edit', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}">
                         <article class="module desktop-4 tablet-6">
-                            <div class="album-image"
+                            <div class="element-image zoom"
                                  style="background: url('{{ $album->getCover() }}');background-repeat: no-repeat;background-position: center center;background-size: cover;">
 
                             </div>
-                            <div class="album-name">
+                            <div class="element-name">
                                 <span>{{ $album->getName() }}</span>
                             </div>
                         </article>
@@ -50,32 +45,23 @@
         </div>
     </div>
 
-    <div class="md-modal md-effect-12">
+    <div id="create-album-modal" class="md-modal md-effect-12">
         <div class="md-content">
             <h1>Nouvel album</h1>
             <form action="{{ route('dashboard.website.albums.create', ['subdomain' => $subdomain ]) }}">
                 <div>
                     <label>
-                        Nom de l'album
+                        Nom de l'album <br>
                         <input type="text" name="new-album-name">
                     </label>
                 </div>
 
                 <div>
                     <button id="submit-new-album">
-                        Créer cet album
+                        Créé cet album
                     </button>
                 </div>
             </form>
-
-            <div id="messages">
-                <div class="success">
-                    <ul></ul>
-                </div>
-                <div class="errors">
-                    <ul></ul>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -86,7 +72,7 @@
     </div>
 
     <script>
-        $('.albums-create').click(function () {
+        $('.nav-create').click(function () {
             $('.md-modal').addClass('md-show');
         });
 
@@ -101,15 +87,15 @@
 
             $.post(this.action, {name: name}).done(
                 function (response) {
-                    if(response.error){
+                    if (response.error) {
                         addError(response.message);
                         return;
                     }
 
-                    addSuccess('Album created');
-                    setTimeout(function(){
+                    addSuccess(response.message);
+                    setTimeout(function () {
                         window.location.href = response.url;
-                    }, 250);
+                    }, 350);
                 }
             ).fail(
                 function (response) {
@@ -117,20 +103,6 @@
                 }
             );
         });
-
-        function addSuccess(message) {
-            let wrapper = $('#messages .success ul');
-
-            let success = $('<li>').text(message);
-            wrapper.append(success);
-        }
-
-        function addError(message) {
-            let wrapper = $('#messages .errors ul');
-
-            let error = $('<li>').text(message);
-            wrapper.append(error);
-        }
     </script>
 
 @endsection

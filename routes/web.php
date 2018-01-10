@@ -40,14 +40,41 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
         Route::get('/dashboard/website/{subdomain}/albums/{id}', 'Dashboard\AlbumController@editAction')
             ->name('dashboard.website.albums.edit');
 
+        Route::post('/dashboard/website/{subdomain}/albums/{id}/save', 'Dashboard\AlbumController@saveAction')
+            ->name('dashboard.website.albums.save');
+
+        Route::post('/dashboard/website/{subdomain}/albums/templates/preview', 'Dashboard\AlbumController@templatePreviewAction')
+            ->name('dashboard.website.albums.templates.preview');
+
+        Route::post('/dashboard/website/{subdomain}/albums/{id}/templates/grid', 'Dashboard\AlbumController@templatesGridAction')
+            ->name('dashboard.website.albums.templates.grid');
+
+        Route::post('/dashboard/website/{subdomain}/albums/{id}/images/grid', 'Dashboard\AlbumController@imagesGridAction')
+            ->name('dashboard.website.albums.images.grid');
+
+        Route::post('/dashboard/website/{subdomain}/albums/{id}/images/preview', 'Dashboard\AlbumController@imagePreviewAction')
+            ->name('dashboard.website.albums.images.preview');
+
         Route::get('/dashboard/website/{subdomain}/articles', 'Dashboard\WebsiteController@articlesAction')
             ->name('dashboard.website.articles');
 
         Route::get('/dashboard/website/{subdomain}/events', 'Dashboard\WebsiteController@eventsAction')
             ->name('dashboard.website.events');
 
+        Route::post('/dashboard/website/{subdomain}/events/save', 'Dashboard\EventController@saveAction')
+            ->name('dashboard.website.events.save');
+
+        Route::post('/dashboard/website/{subdomain}/events/details', 'Dashboard\EventController@detailsAction')
+            ->name('dashboard.website.events.details');
+
         Route::get('/dashboard/website/{subdomain}/reviews', 'Dashboard\WebsiteController@reviewsAction')
             ->name('dashboard.website.reviews');
+
+        Route::post('/dashboard/website/{subdomain}/reviews/save', 'Dashboard\ReviewController@saveAction')
+            ->name('dashboard.website.reviews.save');
+
+        Route::post('/dashboard/website/{subdomain}/reviews/details', 'Dashboard\ReviewController@detailsAction')
+            ->name('dashboard.website.reviews.details');
     });
 });
 
