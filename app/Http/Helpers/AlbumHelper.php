@@ -7,7 +7,10 @@ namespace App\Http\Helpers;
 use App\Http\Api\Photo;
 use App\Model\Album;
 use App\Model\Template;
+use App\Model\Website;
+use Facebook\FacebookResponse;
 use Facebook\GraphNodes\GraphNode;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 
@@ -23,14 +26,23 @@ class AlbumHelper
      * @var LaravelFacebookSdk
      */
     private $fb;
+    /**
+     * @var WebsiteHelper
+     */
+    private $websiteHelper;
 
     /**
      * AlbumHelper constructor.
      * @param LaravelFacebookSdk $fb
+     * @param WebsiteHelper $websiteHelper
      */
-    public function __construct(LaravelFacebookSdk $fb)
+    public function __construct(
+        LaravelFacebookSdk $fb,
+        WebsiteHelper $websiteHelper
+    )
     {
         $this->fb = $fb;
+        $this->websiteHelper = $websiteHelper;
     }
 
     /**
@@ -101,5 +113,35 @@ class AlbumHelper
         }
 
         return $album->shouldShowNew();
+    }
+
+
+    /**
+     * @param $albumId
+     * @param $imageData
+     * @return bool
+     * @throws \Facebook\Exceptions\FacebookSDKException
+     */
+    public function uploadPhoto($albumId, $imageData): bool
+    {
+        if(empty($imageData['description']) || empty($imageData['image'])){
+            return false;
+        }
+
+        /** @var Website $website */
+        $website = $this->websiteHelper->getCurrentWebsite();
+        /** @var string $url */
+        $url = $albumId . '/photos';
+        /** @var UploadedFile $image */
+        $image = $imageData['image'];
+        /** @var array $fbData */
+        $fbData = [
+            'source' => $this->fb->fileToUpload($image->path()),
+            'message' => $imageData['description']
+        ];
+
+        $this->fb->post($url, $fbData, $website->getAccessToken());
+
+        return true;
     }
 }

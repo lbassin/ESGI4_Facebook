@@ -39,7 +39,10 @@
                 </div>
 
                 <div class="step-2" style="display: none;">
-                    <h2>Mes images</h2>
+                    <div class="step-header">
+                        <h2>Mes images</h2>
+                        <div class="action">Ajouter une photo <i class="fa fa-upload" aria-hidden="true"></i></div>
+                    </div>
                     <div id="images" class="preview-grid">
                         @include('dashboard.website.album.images.image-grid', ['photos' => $album->getPhotosByPage(1)])
                     </div>
@@ -100,6 +103,7 @@
 
     @include('dashboard.website.modal', ['name' => 'preview-modal'])
     @include('dashboard.website.modal', ['name' => 'image-modal'])
+    @include('dashboard.website.modal', ['name' => 'upload-modal', 'content' => 'dashboard.website.album.images.upload-modal'])
 
     <div class="md-overlay">
         <button class="md-close">
@@ -125,6 +129,7 @@
         initTemplatePreviews();
         initImagePagination();
         initImagePreviews();
+        initImageUpload();
         initSubmitEvent();
 
         function showTemplates() {
@@ -271,23 +276,23 @@
             });
 
             $('#images').next('.options').find('.submit').click(showOptions);
+        }
 
-            function updateImagesGrid() {
-                images.fadeOut();
-                images.next('.options').fadeOut();
+        function updateImagesGrid() {
+            images.fadeOut();
+            images.next('.options').fadeOut();
 
-                let url = '{{ route('dashboard.website.albums.images.grid', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
+            let url = '{{ route('dashboard.website.albums.images.grid', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
 
-                $.post(url, {page: currentImagePage}).done(
-                    function (response) {
-                        images.html(response);
-                        initImagePreviews();
+            $.post(url, {page: currentImagePage}).done(
+                function (response) {
+                    images.html(response);
+                    initImagePreviews();
 
-                        images.fadeIn();
-                        images.next('.options').fadeIn();
-                    }
-                ).fail(errorAjax)
-            }
+                    images.fadeIn();
+                    images.next('.options').fadeIn();
+                }
+            ).fail(errorAjax)
         }
 
         function initImagePreviews() {
@@ -369,5 +374,66 @@
                 ).fail(errorAjax);
             })
         }
+
+        function initImageUpload() {
+            $('.step-2').find('.step-header').find('.action').click(function () {
+                showModal('upload-modal');
+            });
+        }
+    </script>
+
+
+    <script>
+        let form = $('#upload-modal').find('form[name="upload"]');
+
+        form.find('input[type="file"]').on('change', function () {
+            if (!this.files || !this.files[0]) {
+                return;
+            }
+            let reader = new FileReader();
+
+            reader.onload = function (event) {
+                let imagePreview = $('.image-preview');
+                let img = $('<img>').attr('src', event.target.result);
+
+                imagePreview.find('img').remove();
+                imagePreview.append(img);
+            };
+
+            reader.readAsDataURL(this.files[0]);
+        });
+
+        form.find('.controls').find('#cancel').click(function () {
+            hideModal('upload-modal');
+        });
+
+        form.find('.controls').find('#submit').click(function () {
+            let url = '{{ route('dashboard.website.albums.upload', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
+
+            let uploadForm = document.forms.namedItem('upload');
+            let formData = new FormData(uploadForm);
+
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                error: errorAjax,
+                success: function (response) {
+                    if (response.error) {
+                        addError(response.message);
+                        return;
+                    }
+
+                    addSuccess(response.message);
+                    updateImagesGrid();
+                    setTimeout(function () {
+                        hideModal('upload-modal');
+                    }, 750);
+                }
+            });
+        });
     </script>
 @endsection
