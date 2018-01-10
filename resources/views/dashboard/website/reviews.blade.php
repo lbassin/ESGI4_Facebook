@@ -34,7 +34,8 @@
                             {{ $review->getText() }}
                         </div>
                         <div class="overlay" data-id="{{ $review->getId() }}">
-                            <div class="visibility"><i class="fa {{ $review->isVisible() ? 'fa-eye' : 'fa-eye-slash' }}" aria-hidden="true"></i></div>
+                            <div class="visibility"><i class="fa {{ $review->isVisible() ? 'fa-eye' : 'fa-eye-slash' }}"
+                                                       aria-hidden="true"></i></div>
                             <div class="border"></div>
                             <div class="details"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
                         </div>
@@ -116,15 +117,23 @@
             });
         }
 
-        function initSaveAction(){
-            $('.nav-create').click(function(){
+        function initSaveAction() {
+            $('.nav-create').click(function () {
                 let url = '{{ route('dashboard.website.reviews.save', ['subdomain' => $subdomain]) }}';
 
                 $.post(url, {reviewsEdited: dataEdited}).done(
                     function (response) {
-                        console.log(response);
+                        if (response.error) {
+                            addError(response.message);
+                            return;
+                        }
+
+                        addSuccess(response.message);
+                        setTimeout(function () {
+                            window.location.href = response.url;
+                        }, 350);
                     }
-                ).fail(errorAjax());
+                ).fail(errorAjax);
             });
         }
     </script>

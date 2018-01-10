@@ -14,6 +14,11 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
 
+/**
+ * Class ReviewController
+ *
+ * @author Laurent Bassin <laurent@bassin.info>
+ */
 class ReviewController extends BaseController
 {
     /**
@@ -64,11 +69,15 @@ class ReviewController extends BaseController
         return view('dashboard.website.review.details-modal', ['review' => $review]);
     }
 
-    public function saveAction(Request $request): JsonResponse
+    /**
+     * @param Request $request
+     * @param $subdomain
+     * @return JsonResponse
+     */
+    public function saveAction(Request $request, string $subdomain): JsonResponse
     {
         /** @var array $reviews */
-        $reviews = $request->post('reviewsEdited');
-
+        $reviews = $request->post('reviewsEdited') ?: [];
 
         foreach ($reviews as $id => $data) {
             /** @var array $ids */
@@ -95,6 +104,9 @@ class ReviewController extends BaseController
             $review->save();
         }
 
-        return response()->json([]);
+        return response()->json([
+            'message' => 'Avis sauvegardés',
+            'url' => route('dashboard.website', ['subdomain' => $subdomain])
+        ]);
     }
 }

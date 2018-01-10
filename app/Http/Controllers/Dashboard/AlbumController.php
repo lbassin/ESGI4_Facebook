@@ -62,6 +62,16 @@ class AlbumController extends BaseController
     {
         /** @var string $name */
         $name = $request->input('name');
+
+        if (empty($name)) {
+            $response = [
+                'error' => true,
+                'message' => 'Le nom de l\'album ne doit pas être vide'
+            ];
+
+            return response()->json($response);
+        }
+
         /** @var Website $website */
         $website = $this->websiteHelper->getCurrentWebsite();
         /** @var AlbumApi $album */
@@ -84,7 +94,10 @@ class AlbumController extends BaseController
             'id' => $album->getId()
         ];
 
-        return response()->json(['url' => route('dashboard.website.albums.edit', $routeParams)]);
+        return response()->json([
+            'message' => 'Album créé',
+            'url' => route('dashboard.website.albums.edit', $routeParams)]
+        );
     }
 
     /**
@@ -232,7 +245,10 @@ class AlbumController extends BaseController
         $album->fill($albumData);
         $album->save();
 
-        foreach ($request->post('images') as $photoId => $photoData) {
+        /** @var array $images */
+        $images = $request->post('images') ?: [];
+
+        foreach ($images as $photoId => $photoData) {
             /** @var Photo $photo */
             $photo = Photo::where(Photo::ID, $photoId)->first();
             if (empty($photo)) {
@@ -247,6 +263,9 @@ class AlbumController extends BaseController
             $photo->save();
         }
 
-        return response()->json([]);
+        return response()->json([
+            'message' => 'Album sauvegardé',
+            'url' => route('dashboard.website.albums', ['subdomain' => $subdomain])
+        ]);
     }
 }

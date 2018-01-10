@@ -45,32 +45,23 @@
         </div>
     </div>
 
-    <div class="md-modal md-effect-12">
+    <div id="create-album-modal" class="md-modal md-effect-12">
         <div class="md-content">
             <h1>Nouvel album</h1>
             <form action="{{ route('dashboard.website.albums.create', ['subdomain' => $subdomain ]) }}">
                 <div>
                     <label>
-                        Nom de l'album
+                        Nom de l'album <br>
                         <input type="text" name="new-album-name">
                     </label>
                 </div>
 
                 <div>
                     <button id="submit-new-album">
-                        Créer cet album
+                        Créé cet album
                     </button>
                 </div>
             </form>
-
-            <div id="messages">
-                <div class="success">
-                    <ul></ul>
-                </div>
-                <div class="errors">
-                    <ul></ul>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -96,13 +87,13 @@
 
             $.post(this.action, {name: name}).done(
                 function (response) {
-                    if(response.error){
+                    if (response.error) {
                         addError(response.message);
                         return;
                     }
 
-                    addSuccess('Album created');
-                    setTimeout(function(){
+                    addSuccess(response.message);
+                    setTimeout(function () {
                         window.location.href = response.url;
                     }, 350);
                 }

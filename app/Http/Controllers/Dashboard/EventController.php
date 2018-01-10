@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
 
+/**
+ * Class EventController
+ *
+ * @author Laurent Bassin <laurent@bassin.info>
+ */
 class EventController extends BaseController
 {
     /**
@@ -45,10 +50,15 @@ class EventController extends BaseController
         return view('dashboard.website.event.details-modal', ['event' => $event]);
     }
 
-    public function saveAction(Request $request): JsonResponse
+    /**
+     * @param Request $request
+     * @param $subdomain
+     * @return JsonResponse
+     */
+    public function saveAction(Request $request, $subdomain): JsonResponse
     {
         /** @var array $events */
-        $events = $request->post('eventsEdited');
+        $events = $request->post('eventsEdited') ?: [];
 
         foreach ($events as $id => $data) {
             /** @var Event $event */
@@ -63,6 +73,9 @@ class EventController extends BaseController
             $event->save();
         }
 
-        return response()->json([]);
+        return response()->json([
+            'message' => 'Evenements sauvegardés',
+            'url' => route('dashboard.website', ['subdomain' => $subdomain])
+        ]);
     }
 }

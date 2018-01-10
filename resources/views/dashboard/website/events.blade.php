@@ -122,9 +122,17 @@
 
                 $.post(url, {eventsEdited: eventsEdited}).done(
                     function (response) {
-                        console.log(response);
+                        if (response.error) {
+                            addError(response.message);
+                            return;
+                        }
+
+                        addSuccess(response.message);
+                        setTimeout(function () {
+                            window.location.href = response.url;
+                        }, 350);
                     }
-                ).fail(errorAjax());
+                ).fail(errorAjax);
             });
         }
     </script>

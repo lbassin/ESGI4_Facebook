@@ -1491,9 +1491,28 @@ a:hover {
   }
 }
 
+#create-album-modal label {
+  font-family: raleway_bold, sans-serif;
+}
+
+#create-album-modal input[type='text'] {
+  margin-top: 12px;
+  padding: 6px 12px;
+}
+
+#create-album-modal #submit-new-album {
+  margin-top: 24px;
+  outline: none;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 25px;
+  padding: 8px 26px;
+  cursor: pointer;
+}
+
 #flash-messages {
   position: absolute;
-  min-height: 32px;
   left: 0;
   right: 0;
   top: 24px;

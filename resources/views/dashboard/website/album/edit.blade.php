@@ -355,37 +355,19 @@
                 let url = '{{ route('dashboard.website.albums.save', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
 
                 $.post(url, data).done(
-                    function () {
+                    function (response) {
+                        if (response.error) {
+                            addError(response.message);
+                            return;
+                        }
 
+                        addSuccess(response.message);
+                        setTimeout(function () {
+                            window.location.href = response.url;
+                        }, 750);
                     }
-                ).fail(errorAjax());
+                ).fail(errorAjax);
             })
-        }
-    </script>
-
-    <script>
-        function showModal(target) {
-            $('#' + target).addClass('md-show');
-        }
-
-        $(document).on('keydown', function (event) {
-            if (event.keyCode === 27) {
-                $('.md-close').trigger('click');
-            }
-        });
-
-        function hideModal(target) {
-            $('#' + target).removeClass('md-show');
-        }
-
-        $('.md-close').click(function () {
-            $('.md-modal').each(function () {
-                hideModal($(this).attr('id'));
-            });
-        });
-
-        function errorAjax() {
-            alert('An error occurred');
         }
     </script>
 @endsection

@@ -1133,6 +1133,30 @@ a {
   }
 }
 
+#create-album-modal {
+
+  label {
+    font-family: raleway_bold, sans-serif;
+  }
+
+  input[type='text'] {
+    margin-top: 12px;
+    padding: 6px 12px;
+  }
+
+  #submit-new-album {
+    margin-top: 24px;
+    outline: none;
+    background: transparent;
+
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 25px;
+    padding: 8px 26px;
+    cursor: pointer;
+  }
+}
+
 @import 'flash_messages';
 @import 'list';
 @import 'website/index';

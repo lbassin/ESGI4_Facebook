@@ -245,7 +245,6 @@
                 $.post(this.action, {id: id, url: url}).done(
                     function (response) {
                         if (response.error) {
-                            console.log(response);
                             addError(response.message);
                             return;
                         }
@@ -262,32 +261,7 @@
             });
         }
 
-        function addSuccess(message) {
-            let wrapper = $('#messages .success ul');
 
-            let success = $('<li>').text(message);
-            wrapper.append(success);
-        }
-
-        function addError(message) {
-            let wrapper = $('#messages .errors ul');
-
-            let error = $('<li>').text(message);
-            wrapper.append(error);
-        }
-
-        function hideModal() {
-            let listModal = $('.md-modal .md-content.list');
-            let configModal = $('.md-modal .md-content.config');
-
-            $('.md-modal').removeClass('md-show');
-
-            listModal.css({opacity: 1});
-            listModal.show();
-            configModal.css({opacity: 0});
-
-            $('input[name="new-page-url"]').val('');
-        }
 
         $(function () {
             $('.add-page').on('click', function () {
@@ -303,6 +277,19 @@
             $('.md-close').on('click', function () {
                 hideModal();
             });
+
+            function hideModal() {
+                let listModal = $('.md-modal .md-content.list');
+                let configModal = $('.md-modal .md-content.config');
+
+                $('.md-modal').removeClass('md-show');
+
+                listModal.css({opacity: 1});
+                listModal.show();
+                configModal.css({opacity: 0});
+
+                $('input[name="new-page-url"]').val('');
+            }
 
             initDropdown();
             initNewPage();
