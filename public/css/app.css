@@ -1500,29 +1500,41 @@ a:hover {
   margin: auto;
   width: 100%;
   text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  z-index: 500;
 }
 
-#flash-messages .message {
+#flash-messages .message span {
+  display: inline-block;
   color: #fff;
   width: auto;
-  display: inline-block;
   padding: 12px 24px;
   border-radius: 25px;
   font-family: 'raleway_regular', sans-serif;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
   opacity: 0;
+  margin-bottom: 12px;
 }
 
-#flash-messages .message.success {
+#flash-messages .message span.success {
   background-color: #26A65B;
 }
 
-#flash-messages .message.error {
+#flash-messages .message span.error {
   background-color: #D91E18;
 }
 
-#flash-messages .message.show {
+#flash-messages .message span.show {
   opacity: 1;
 }
 

@@ -7,27 +7,35 @@
   margin: auto;
   width: 100%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 500;
 
   .message {
-    color: #fff;
-    width: auto;
-    display: inline-block;
-    padding: 12px 24px;
-    border-radius: 25px;
-    font-family: 'raleway_regular', sans-serif;
-    transition: all 0.5s ease;
-    opacity: 0;
+    span {
+      display: inline-block;
+      color: #fff;
+      width: auto;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-family: 'raleway_regular', sans-serif;
+      transition: all 0.5s ease;
+      opacity: 0;
+      margin-bottom: 12px;
 
-    &.success {
-      background-color: #26A65B;
+      &.success {
+        background-color: #26A65B;
+      }
+
+      &.error {
+        background-color: #D91E18;
+      }
+
+      &.show {
+        opacity: 1;
+      }
     }
 
-    &.error {
-      background-color: #D91E18;
-    }
-
-    &.show {
-      opacity: 1;
-    }
   }
 }

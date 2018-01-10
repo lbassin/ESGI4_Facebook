@@ -34,7 +34,8 @@
                              style="background: url('{{ $event->getCover() }}');background-repeat: no-repeat;background-position: center center;background-size: cover;">
                         </div>
                         <div class="overlay" data-id="{{ $event->getId() }}">
-                            <div class="visibility"><i class="fa {{ $event->isVisible() ? 'fa-eye' : 'fa-eye-slash' }}" aria-hidden="true"></i></div>
+                            <div class="visibility"><i class="fa {{ $event->isVisible() ? 'fa-eye' : 'fa-eye-slash' }}"
+                                                       aria-hidden="true"></i></div>
                             <div class="border"></div>
                             <div class="details"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
                         </div>
@@ -115,8 +116,8 @@
             });
         }
 
-        function initSaveAction(){
-            $('.nav-create').click(function(){
+        function initSaveAction() {
+            $('.nav-create').click(function () {
                 let url = '{{ route('dashboard.website.events.save', ['subdomain' => $subdomain]) }}';
 
                 $.post(url, {eventsEdited: eventsEdited}).done(
@@ -125,32 +126,6 @@
                     }
                 ).fail(errorAjax());
             });
-        }
-    </script>
-
-    <script>
-        function showModal(target) {
-            $('#' + target).addClass('md-show');
-        }
-
-        $(document).on('keydown', function (event) {
-            if (event.keyCode === 27) {
-                $('.md-close').trigger('click');
-            }
-        });
-
-        function hideModal(target) {
-            $('#' + target).removeClass('md-show');
-        }
-
-        $('.md-close').click(function () {
-            $('.md-modal').each(function () {
-                hideModal($(this).attr('id'));
-            });
-        });
-
-        function errorAjax() {
-            alert('An error occurred');
         }
     </script>
 @endsection

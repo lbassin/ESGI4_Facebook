@@ -128,31 +128,4 @@
             });
         }
     </script>
-
-
-    <script>
-        function showModal(target) {
-            $('#' + target).addClass('md-show');
-        }
-
-        $(document).on('keydown', function (event) {
-            if (event.keyCode === 27) {
-                $('.md-close').trigger('click');
-            }
-        });
-
-        function hideModal(target) {
-            $('#' + target).removeClass('md-show');
-        }
-
-        $('.md-close').click(function () {
-            $('.md-modal').each(function () {
-                hideModal($(this).attr('id'));
-            });
-        });
-
-        function errorAjax() {
-            alert('An error occurred');
-        }
-    </script>
 @endsection

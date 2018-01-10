@@ -113,19 +113,9 @@
             );
         });
 
-        function addSuccess(message) {
-            let wrapper = $('#messages .success ul');
-
-            let success = $('<li>').text(message);
-            wrapper.append(success);
-        }
-
-        function addError(message) {
-            let wrapper = $('#messages .errors ul');
-
-            let error = $('<li>').text(message);
-            wrapper.append(error);
-        }
+        setTimeout(function(){
+            addSuccess('Ok');
+        }, 2000);
     </script>
 
 @endsection
