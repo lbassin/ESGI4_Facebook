@@ -68,7 +68,7 @@ class AlbumController extends BaseController
         $album = null;
 
         try {
-            $album = $this->fbHelper->createAlbum($name, $website);
+            //$album = $this->fbHelper->createAlbum($name, $website);
         } catch (\Exception $e) {
             $response = [
                 'error' => true,
@@ -81,7 +81,7 @@ class AlbumController extends BaseController
         /** @var array $routeParams */
         $routeParams = [
             'subdomain' => $website->getSubDomain(),
-            'id' => $album->getId()
+            'id' => 1//$album->getId()
         ];
 
         return response()->json(['url' => route('dashboard.website.albums.edit', $routeParams)]);

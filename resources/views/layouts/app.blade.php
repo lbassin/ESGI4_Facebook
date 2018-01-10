@@ -41,6 +41,18 @@ $websiteHelper = resolve('App\Http\Helpers\WebsiteHelper');
     });
 </script>
 
+<div id="flash-messages">
+    <div class="message success show">
+        <i class="fa fa-check" aria-hidden="true"></i> L'album a été correctement créé
+    </div>
+</div>
+
+<script>
+    setTimeout(function(){
+        $('#flash-messages .success').removeClass('show');
+    }, 3500);
+</script>
+
 @yield('content')
 
 </body>

@@ -103,7 +103,7 @@
 
                     addSuccess('Album created');
                     setTimeout(function(){
-                        window.location.href = response.url;
+                        //window.location.href = response.url; TODO
                     }, 250);
                 }
             ).fail(

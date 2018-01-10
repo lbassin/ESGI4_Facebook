@@ -1491,6 +1491,41 @@ a:hover {
   }
 }
 
+#flash-messages {
+  position: absolute;
+  min-height: 32px;
+  left: 0;
+  right: 0;
+  top: 24px;
+  margin: auto;
+  width: 100%;
+  text-align: center;
+}
+
+#flash-messages .message {
+  color: #fff;
+  width: auto;
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-family: 'raleway_regular', sans-serif;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+#flash-messages .message.success {
+  background-color: #26A65B;
+}
+
+#flash-messages .message.error {
+  background-color: #D91E18;
+}
+
+#flash-messages .message.show {
+  opacity: 1;
+}
+
 .list-header {
   width: 80%;
   text-align: center;
