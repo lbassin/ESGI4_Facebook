@@ -2,14 +2,16 @@
 ## Global
 
 - Ajout d'un bouton retour en haut à gauche
+- Ajout de loaders
+- FacebookException Catcher
 
 ## Gestion de l'accueil  
 
 - To do
 
-### Configuration d'un album
+## Dashboard website
 
-- Ajout d'un bouton ouvrant un modal permettant l'upload d'une image
+- Lien sur la grille albums
 
 ## Gestion des articles
 
