@@ -4,6 +4,7 @@
 - Ajout d'un bouton retour en haut à gauche
 - Ajout de loaders
 - FacebookException Catcher
+- Scrollbars pendant animation chargement page
 
 ## Gestion de l'accueil  
 
