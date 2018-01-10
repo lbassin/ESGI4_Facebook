@@ -967,7 +967,7 @@ a {
   visibility: hidden;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 800;
   opacity: 0;
   background: -webkit-gradient(linear, left top, right bottom, from($color1), to($color2));
   background: linear-gradient(to bottom right, $color1, $color2);

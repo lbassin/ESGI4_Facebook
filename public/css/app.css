@@ -1301,7 +1301,7 @@ a:hover {
   visibility: hidden;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 800;
   opacity: 0;
   background: -webkit-gradient(linear, left top, right bottom, from(#090917), to(#12121c));
   background: linear-gradient(to bottom right, #090917, #12121c);
@@ -1510,7 +1510,7 @@ a:hover {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  z-index: 500;
+  z-index: 850;
 }
 
 #flash-messages .message span {
