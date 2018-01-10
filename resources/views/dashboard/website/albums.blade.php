@@ -81,7 +81,7 @@
     </div>
 
     <script>
-        $('.albums-create').click(function () {
+        $('.nav-create').click(function () {
             $('.md-modal').addClass('md-show');
         });
 
