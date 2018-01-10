@@ -2,7 +2,6 @@
 ## Global
 
 - Ajout d'un bouton retour en haut à gauche
-- Affichage des succes et erreurs a la sauvegarde
 
 ## Gestion de l'accueil  
 
