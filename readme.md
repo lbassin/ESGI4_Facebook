@@ -2,6 +2,7 @@
 ## Global
 
 - Ajout d'un bouton retour en haut à gauche
+- Affichage des succes et erreurs a la sauvegarde
 
 ## Gestion de l'accueil  
 
@@ -16,14 +17,3 @@
 - Listage des articles et au clique, ouverture d'un modal affichant la configuration  
 Visible ou non  
 Choix de l'url
-
-## Gestion des evenements  
-
-- Listage des events et au clique, ouverture d'un modal affichant la configuration  
-Visible ou non  
-Choix de l'url
-
-## Gestion des avis 
-
-- Listage des articles et au clique sur 1 article, ouverture d'un modal affichant la configuration  
-Visible ou non  
