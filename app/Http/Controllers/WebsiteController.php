@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Model\Album;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
 
@@ -55,10 +57,29 @@ class WebsiteController extends BaseController
     }
 
     /**
+     * @param Request $request
+     * @param string $subdomain
+     * @param string $url
      * @return View
      */
-    public function viewAction(): View
+    public function viewAction(Request $request, string $subdomain, string $url): View
     {
-        die('Yep');
+        /** @var Album $album */
+        $album = Album::where(Album::URL, $url)->first();
+        if (!empty($album)) {
+            return $this->viewAlbum($album);
+        }
+
+        abort(404);
+        return null;
+    }
+
+    /**
+     * @param Album $album
+     * @return View
+     */
+    private function viewAlbum(Album $album): View
+    {
+        return view('website.albums.view', ['album' => $album]);
     }
 }
