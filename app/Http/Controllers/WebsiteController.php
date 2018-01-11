@@ -8,8 +8,9 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
 
 /**
- * Class DashboardController
- * @package App\Http\Controllers
+ * Class WebsiteController
+ *
+ * @author Laurent Bassin <laurent@bassin.info>
  */
 class WebsiteController extends BaseController
 {
@@ -18,6 +19,46 @@ class WebsiteController extends BaseController
      */
     public function indexAction(): View
     {
-        die('website');
+        return view('website.index');
+    }
+
+    /**
+     * @return View
+     */
+    public function albumsAction(): View
+    {
+        return view('website.albums');
+    }
+
+    /**
+     * @return View
+     */
+    public function articlesAction(): View
+    {
+        return view('website.articles');
+    }
+
+    /**
+     * @return View
+     */
+    public function eventsAction(): View
+    {
+        return view('website.events');
+    }
+
+    /**
+     * @return View
+     */
+    public function reviewsAction(): View
+    {
+        return view('website.reviews');
+    }
+
+    /**
+     * @return View
+     */
+    public function viewAction(): View
+    {
+        die('Yep');
     }
 }
