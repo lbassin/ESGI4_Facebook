@@ -8,6 +8,8 @@
 
     <title>@yield('title')</title>
 
+    <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
+
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
     <script src="{{ asset('js/app.js') }}"></script>
@@ -41,7 +43,72 @@ $websiteHelper = resolve('App\Http\Helpers\WebsiteHelper');
     });
 </script>
 
+<script>
+    function addSuccess(message) {
+        addMessage(message, 'check', 'success');
+    }
+
+    function addError(message) {
+        addMessage(message, 'times', 'error');
+    }
+
+    function addMessage(message, icon, style) {
+        let wrapper = $('#flash-messages');
+
+        let success = $('<div>').addClass('message');
+        let span = $('<span>').addClass(style);
+
+        let prefix = $('<i>').addClass('fa').addClass('fa-' + icon).attr('aria-hidden', 'true');
+        span.append(prefix);
+        span.append(' ' + message);
+
+        success.append(span);
+        wrapper.append(success);
+
+        setTimeout(function () {
+            span.addClass('show');
+        }, 100);
+
+        setTimeout(function () {
+            span.removeClass('show');
+            setTimeout(function () {
+                span.parent().remove();
+            }, 550);
+        }, 3500);
+    }
+
+    function errorAjax() {
+        addError('An error occurred');
+    }
+</script>
+
+<div id="flash-messages">
+
+</div>
+
 @yield('content')
+
+<script> // Modal
+    function showModal(target) {
+        $('#' + target).addClass('md-show');
+    }
+
+    $(document).on('keydown', function (event) {
+        if (event.keyCode === 27) {
+            $('.md-close').trigger('click');
+        }
+    });
+
+    function hideModal(target) {
+        $('#' + target).removeClass('md-show');
+    }
+
+    $('.md-close').click(function () {
+        $('.md-modal').each(function () {
+            hideModal($(this).attr('id'));
+        });
+    });
+</script>
 
 </body>
 </html>
