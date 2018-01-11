@@ -5,6 +5,7 @@
 - Ajout de loaders
 - FacebookException Catcher
 - Scrollbars pendant animation chargement page
+- Ajout bouton "Voir mon site" sur le dashboard
 
 ## Gestion de l'accueil  
 
