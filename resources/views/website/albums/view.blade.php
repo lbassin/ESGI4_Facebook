@@ -1,3 +1,10 @@
-<?php /** @var \App\Model\Album $album */ ?>
+@extends('website.layouts.home')
 
-@include('website.albums.templates.' . $album->getTemplateId())
+@section('content')
+<?php
+/** @var \App\Model\Album $album */
+/** @var array $photos */
+?>
+
+@include('website.albums.templates.' . $album->getTemplateId(), ['photos' => $photos])
+@endsection

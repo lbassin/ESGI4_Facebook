@@ -60,6 +60,14 @@ class Website extends Model
     }
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->{self::ID};
+    }
+
+    /**
      * @return string
      * @throws \Facebook\Exceptions\FacebookSDKException
      */

@@ -30,19 +30,26 @@ class AlbumHelper
      * @var WebsiteHelper
      */
     private $websiteHelper;
+    /**
+     * @var FacebookHelper
+     */
+    private $fbHelper;
 
     /**
      * AlbumHelper constructor.
      * @param LaravelFacebookSdk $fb
      * @param WebsiteHelper $websiteHelper
+     * @param FacebookHelper $fbHelper
      */
     public function __construct(
         LaravelFacebookSdk $fb,
-        WebsiteHelper $websiteHelper
+        WebsiteHelper $websiteHelper,
+        FacebookHelper $fbHelper
     )
     {
         $this->fb = $fb;
         $this->websiteHelper = $websiteHelper;
+        $this->fbHelper = $fbHelper;
     }
 
     /**
@@ -124,7 +131,7 @@ class AlbumHelper
      */
     public function uploadPhoto($albumId, $imageData): bool
     {
-        if(empty($imageData['description']) || empty($imageData['image'])){
+        if (empty($imageData['description']) || empty($imageData['image'])) {
             return false;
         }
 
@@ -143,5 +150,26 @@ class AlbumHelper
         $this->fb->post($url, $fbData, $website->getAccessToken());
 
         return true;
+    }
+
+
+    /**
+     * @param Album $album
+     * @return array
+     * @throws \Facebook\Exceptions\FacebookSDKException
+     */
+    public function getVisiblePhotos(Album $album): array
+    {
+        /** @var \App\Http\Api\Album $albumApi */
+        $albumApi = $this->fbHelper->getAlbum((string)$album->getId());
+        /** @var array $photos */
+        $photos = $albumApi->getPhotos();
+
+        $photos = array_filter($photos, function ($photo) {
+            /** @var Photo $photo */
+            return $photo->isVisible();
+        });
+
+        return $photos;
     }
 }

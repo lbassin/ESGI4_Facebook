@@ -37,6 +37,10 @@ class Album extends Model
      *
      */
     const HIDE_NEW = 'hide_new';
+    /**
+     *
+     */
+    const WEBSITE_ID = 'website_id';
 
     /**
      * @var string
@@ -52,7 +56,8 @@ class Album extends Model
         self::TITLE,
         self::DESCRIPTION,
         self::URL,
-        self::HIDE_NEW
+        self::HIDE_NEW,
+        self::WEBSITE_ID
     ];
 
     /**

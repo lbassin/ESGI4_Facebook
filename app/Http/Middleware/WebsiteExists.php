@@ -9,6 +9,7 @@ use App\Http\Helpers\WebsiteHelper;
 use App\Model\Website;
 use Closure;
 use Illuminate\Http\Request;
+use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 
 /**
  * Class WebsiteExists
@@ -24,19 +25,26 @@ class WebsiteExists
      * @var FacebookHelper
      */
     private $fbHelper;
+    /**
+     * @var LaravelFacebookSdk
+     */
+    private $fb;
 
     /**
      * WebsiteExists constructor.
      * @param WebsiteHelper $websiteHelper
      * @param FacebookHelper $fbHelper
+     * @param LaravelFacebookSdk $fb
      */
     public function __construct(
         WebsiteHelper $websiteHelper,
-        FacebookHelper $fbHelper
+        FacebookHelper $fbHelper,
+        LaravelFacebookSdk $fb
     )
     {
         $this->websiteHelper = $websiteHelper;
         $this->fbHelper = $fbHelper;
+        $this->fb = $fb;
     }
 
     /**
@@ -61,6 +69,9 @@ class WebsiteExists
         }
 
         $this->websiteHelper->setCurrentWebsite($website);
+
+        // TODO : Change with our app token
+        $this->fb->setDefaultAccessToken($website->getAccessToken());
 
         return $next($request);
     }

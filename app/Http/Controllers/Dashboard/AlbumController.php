@@ -224,6 +224,9 @@ class AlbumController extends BaseController
      */
     public function saveAction(Request $request, string $subdomain, int $id): JsonResponse
     {
+        /** @var Website $website */
+        $website = $this->websiteHelper->getCurrentWebsite();
+
         /** @var Album $album */
         $album = Album::where(Album::ID, $id)->first();
         if (empty($album)) {
@@ -246,7 +249,8 @@ class AlbumController extends BaseController
             Album::TITLE => isset($options['title']) ? $options['title'] : '',
             Album::DESCRIPTION => isset($options['description']) ? $options['description'] : '',
             Album::URL => isset($options['url']) ? $options['url'] : '',
-            Album::HIDE_NEW => !empty($options['hide_new'])
+            Album::HIDE_NEW => !empty($options['hide_new']),
+            Album::WEBSITE_ID => $website->getId()
         ];
 
         $album->fill($albumData);
