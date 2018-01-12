@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Api\Event;
+use App\Http\Api\Review;
 use App\Http\Helpers\AlbumHelper;
+use App\Http\Helpers\FacebookHelper;
 use App\Model\Album;
 use App\Model\Website;
 use Illuminate\Http\Request;
@@ -23,15 +26,23 @@ class WebsiteController extends BaseController
      * @var AlbumHelper
      */
     private $albumHelper;
+    /**
+     * @var FacebookHelper
+     */
+    private $fbHelper;
 
     /**
      * WebsiteController constructor.
      * @param AlbumHelper $albumHelper
+     * @param FacebookHelper $fbHelper
      */
-    public function __construct(AlbumHelper $albumHelper)
+    public function __construct(
+        AlbumHelper $albumHelper,
+        FacebookHelper $fbHelper
+    )
     {
-
         $this->albumHelper = $albumHelper;
+        $this->fbHelper = $fbHelper;
     }
 
     /**
@@ -45,7 +56,7 @@ class WebsiteController extends BaseController
     /**
      * @return View
      */
-    public function albumsAction(Request $request, $subdomain): View
+    public function albumsAction(Request $request, string $subdomain): View
     {
         /** @var Website $website */
         $website = Website::where(Website::SUBDOMAIN, $subdomain)->first();
@@ -65,18 +76,41 @@ class WebsiteController extends BaseController
 
     /**
      * @return View
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
-    public function eventsAction(): View
+    public function eventsAction(Request $request, string $subdomain): View
     {
-        return view('website.events');
+        /** @var Website $website */
+        $website = Website::where(Website::SUBDOMAIN, $subdomain)->first();
+        /** @var array $events */
+        $events = $this->fbHelper->getEvents((string)$website->getSourceId());
+
+        $events = array_filter($events, function ($event) {
+            /** @var Event $event */
+            return $event->isVisible();
+        });
+
+
+        return view('website.events', ['events' => $events]);
     }
 
     /**
      * @return View
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
-    public function reviewsAction(): View
+    public function reviewsAction(Request $request, string $subdomain): View
     {
-        return view('website.reviews');
+        /** @var Website $website */
+        $website = Website::where(Website::SUBDOMAIN, $subdomain)->first();
+        /** @var array $reviews */
+        $reviews = $this->fbHelper->getReviews($website);
+
+        $reviews = array_filter($reviews, function ($review) {
+            /** @var Review $review */
+            return $review->isVisible();
+        });
+
+        return view('website.reviews', ['reviews' => $reviews]);
     }
 
     /**

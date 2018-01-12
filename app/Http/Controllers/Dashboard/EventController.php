@@ -6,7 +6,9 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Api\Event as EventApi;
 use App\Http\Helpers\FacebookHelper;
+use App\Http\Helpers\WebsiteHelper;
 use App\Model\Event;
+use App\Model\Website;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -23,16 +25,23 @@ class EventController extends BaseController
      * @var FacebookHelper
      */
     private $fbHelper;
+    /**
+     * @var WebsiteHelper
+     */
+    private $websiteHelper;
 
     /**
      * EventController constructor.
      * @param FacebookHelper $fbHelper
+     * @param WebsiteHelper $websiteHelper
      */
     public function __construct(
-        FacebookHelper $fbHelper
+        FacebookHelper $fbHelper,
+        WebsiteHelper $websiteHelper
     )
     {
         $this->fbHelper = $fbHelper;
+        $this->websiteHelper = $websiteHelper;
     }
 
     /**
@@ -57,6 +66,8 @@ class EventController extends BaseController
      */
     public function saveAction(Request $request, $subdomain): JsonResponse
     {
+        /** @var Website $website */
+        $website = $this->websiteHelper->getCurrentWebsite();
         /** @var array $events */
         $events = $request->post('eventsEdited') ?: [];
 
@@ -68,6 +79,7 @@ class EventController extends BaseController
             }
 
             $data[Event::VISIBLE] = !empty($data['visible']) && $data['visible'] == 'true';
+            $data[Event::WEBSITE_ID] = $website->getId();
 
             $event->fill($data);
             $event->save();

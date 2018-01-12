@@ -25,6 +25,10 @@ class Review extends Model
      *
      */
     const VISIBLE = 'is_visible';
+    /**
+     *
+     */
+    const WEBSITE_ID = 'website_id';
 
     /**
      * @var string
@@ -38,6 +42,7 @@ class Review extends Model
         self::SOURCE_ID,
         self::REVIEWER_ID,
         self::VISIBLE,
+        self::WEBSITE_ID
     ];
 
     /**

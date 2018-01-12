@@ -76,6 +76,8 @@ class ReviewController extends BaseController
      */
     public function saveAction(Request $request, string $subdomain): JsonResponse
     {
+        /** @var Website $website */
+        $website = $this->websiteHelper->getCurrentWebsite();
         /** @var array $reviews */
         $reviews = $request->post('reviewsEdited') ?: [];
 
@@ -99,6 +101,7 @@ class ReviewController extends BaseController
             }
 
             $data[Review::VISIBLE] = !empty($data['visible']) && $data['visible'] == 'true';
+            $data[Review::WEBSITE_ID] = $website->getId();
 
             $review->fill($data);
             $review->save();
