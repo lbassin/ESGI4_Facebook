@@ -293,8 +293,15 @@ class AlbumController extends BaseController
         $description = $request->post('upload-description');
         /** @var ? $image */
         $image = $request->file('upload-image');
+        /** @var bool $uploaded */
+        $uploaded = $this->albumHelper->uploadPhoto($albumId, ['description' => $description, 'image' => $image]);
 
-        $this->albumHelper->uploadPhoto($albumId, ['description' => $description, 'image' => $image]);
+        if (!$uploaded) {
+            return response()->json([
+                'error' => true,
+                'message' => 'An error occurred'
+            ]);
+        }
 
         return response()->json([
             'message' => 'Image ajoutée à l\'album',

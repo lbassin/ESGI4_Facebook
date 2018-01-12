@@ -131,7 +131,7 @@ class AlbumHelper
      */
     public function uploadPhoto($albumId, $imageData): bool
     {
-        if (empty($imageData['description']) || empty($imageData['image'])) {
+        if (empty($imageData['image'])) {
             return false;
         }
 
