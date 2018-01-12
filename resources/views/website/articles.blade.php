@@ -1,5 +1,20 @@
 @extends('website.layouts.home')
 
 @section('content')
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. A adipisci culpa delectus distinctio doloremque eos illo ipsam ipsum labore molestias nisi nostrum perferendis quae quam quos, reprehenderit similique sunt unde.
+    <div class="wrapper">
+        <h1>Aucun article n'est disponible</h1>
+    </div>
+
+    <style>
+        .wrapper {
+            width: 90%;
+            margin: auto;
+            text-align: center;
+            padding: 2% 0;
+        }
+
+        h1, h2 {
+            font-family: Raleway, sans-serif;
+        }
+    </style>
 @endsection

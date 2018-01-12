@@ -1,5 +1,26 @@
 @extends('website.layouts.home')
 
 @section('content')
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. A adipisci culpa delectus distinctio doloremque eos illo ipsam ipsum labore molestias nisi nostrum perferendis quae quam quos, reprehenderit similique sunt unde.
+    <div class="wrapper">
+        <div class="logo">
+            <h1>Foliobook</h1>
+            <h2>The futur is now, old man</h2>
+        </div>
+    </div>
+
+    <style>
+        .wrapper {
+            width: 90%;
+            margin: auto;
+            text-align: center;
+        }
+
+        .wrapper .logo {
+            margin-top: 15%;
+        }
+
+        h1, h2 {
+            font-family: Raleway, sans-serif;
+        }
+    </style>
 @endsection

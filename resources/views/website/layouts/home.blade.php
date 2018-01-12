@@ -7,7 +7,12 @@
 
     <title>@yield('title')</title>
 
+    <?php // TODO : Dynamic build (Routeur action return json) ?>
     <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('css/website.css') }}">
 </head>
 <body>
 <nav>
