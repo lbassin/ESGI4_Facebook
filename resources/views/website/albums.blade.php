@@ -33,6 +33,7 @@
         .wrapper .grid div {
             box-sizing: border-box;
             width: 25%;
+            height: 250px;
             padding: 12px;
             text-align: center;
 
@@ -40,6 +41,8 @@
 
         .wrapper .grid img {
             max-width: 100%;
+            height: 100%;
+            object-fit: cover;
             box-shadow: 3px 3px 3px -1px rgba(0, 0, 0, 0.6);
         }
 
