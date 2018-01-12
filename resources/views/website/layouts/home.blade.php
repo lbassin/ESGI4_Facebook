@@ -10,7 +10,7 @@
     <?php // TODO : Dynamic build (Routeur action return json) ?>
     <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
 
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('css/website.css') }}">
 </head>
