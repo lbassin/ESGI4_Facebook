@@ -20,7 +20,7 @@
         }
 
         h1, h2 {
-            font-family: Raleway, sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
     </style>
 @endsection
