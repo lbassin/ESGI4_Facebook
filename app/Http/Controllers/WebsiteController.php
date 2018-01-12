@@ -54,14 +54,22 @@ class WebsiteController extends BaseController
     }
 
     /**
+     * @param Request $request
+     * @param string $subdomain
      * @return View
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function albumsAction(Request $request, string $subdomain): View
     {
         /** @var Website $website */
         $website = Website::where(Website::SUBDOMAIN, $subdomain)->first();
-        /** @var Collection $albums */
-        $albums = Album::where(Album::WEBSITE_ID, $website->getId())->get();
+        /** @var array $albums */
+        $albums = $this->fbHelper->getAlbums($website->getSourceId());
+
+        $albums = array_filter($albums, function ($album) {
+            /** @var \App\Http\Api\Album $album */
+            return $album->isVisible();
+        });
 
         return view('website.albums', ['albums' => $albums]);
     }

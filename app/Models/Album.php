@@ -115,4 +115,12 @@ class Album extends Model
     {
         return (bool)$this->{self::HIDE_NEW};
     }
+
+    /**
+     * @return bool
+     */
+    public function isVisible(): bool
+    {
+        return true;
+    }
 }

@@ -5,12 +5,11 @@
         <h1>Mes albums</h1>
 
         <div class="grid">
-            <?php /** @var \App\Model\Album $album */ ?>
+            <?php /** @var \App\Http\Api\Album $album */ ?>
             @foreach($albums as $album)
                 <div>
-                    <a href="">
-                        <img src="https://scontent.xx.fbcdn.net/v/t31.0-0/p600x600/26198659_1050322651775212_4174814763142848597_o.jpg?oh=0bbdfac9c8c35a87e4dfe927abc2dc85&oe=5AE8ED37"
-                             alt="">
+                    <a href="{{ route('website.view', ['subdomain' => $subdomain, 'element' => $album->getUrl()]) }}">
+                        <img src="{{ $album->getCover() }}" alt="{{ $album->getName() }}">
                     </a>
                 </div>
             @endforeach
@@ -37,9 +36,10 @@
 
         .wrapper .grid img {
             max-width: 100%;
+            box-shadow: 3px 3px 3px -1px rgba(0, 0, 0, 0.6);
         }
 
-        h1{
+        h1 {
             text-align: center;
             margin-bottom: 16px;
         }
