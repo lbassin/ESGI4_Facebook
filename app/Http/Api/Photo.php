@@ -141,4 +141,9 @@ class Photo
         return '';
     }
 
+    public function getDescription(): string
+    {
+        return $this->graphNode->getField('name') ?: '';
+    }
+
 }

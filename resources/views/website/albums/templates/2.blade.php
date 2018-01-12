@@ -11,7 +11,7 @@
         @foreach($photos as $photo)
             <div>
                 <img src="{{ $photo->getLink(\App\Http\Api\Photo::SIZE_MEDIUM) }}" alt="{{ $photo->getAlt() }}">
-                <p>Test</p>
+                <p>{{ $photo->getDescription() }}</p>
             </div>
         @endforeach
     </div>
