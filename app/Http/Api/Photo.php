@@ -133,4 +133,17 @@ class Photo
         return $this->graphNode->getField('album')->getField('id');
     }
 
+    /**
+     * @return string
+     */
+    public function getAlt(): string
+    {
+        return '';
+    }
+
+    public function getDescription(): string
+    {
+        return $this->graphNode->getField('name') ?: '';
+    }
+
 }

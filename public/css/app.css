@@ -2297,6 +2297,27 @@ a:hover {
   margin-right: 18px;
 }
 
+#album-edit #steps .step-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#album-edit #steps .step-header .action {
+  margin-right: 24px;
+  font-family: 'raleway_thin', sans-serif;
+  font-weight: 300;
+  color: #fff;
+  cursor: pointer;
+}
+
+#album-edit #steps .step-header .action i {
+  margin-left: 8px;
+}
+
 #album-edit #steps #templates .preview {
   position: relative;
 }
@@ -2355,22 +2376,22 @@ a:hover {
   color: #fff;
 }
 
-#album-edit #steps #configurations p {
+form p {
   margin-bottom: 24px;
 }
 
 @media only screen and (max-width: 768px) {
-  #album-edit #steps #configurations p {
+  form p {
     text-align: center;
   }
 }
 
-#album-edit #steps #configurations p label {
+form label {
   font-family: 'raleway_regular', sans-serif;
 }
 
-#album-edit #steps #configurations p input[type="text"],
-#album-edit #steps #configurations p textarea {
+form input[type="text"],
+form textarea {
   width: 45%;
   max-width: 500px;
   margin-top: 4px;
@@ -2382,23 +2403,23 @@ a:hover {
 }
 
 @media only screen and (max-width: 768px) {
-  #album-edit #steps #configurations p input[type="text"],
-  #album-edit #steps #configurations p textarea {
+  form input[type="text"],
+  form textarea {
     width: 60%;
   }
 }
 
 @media only screen and (max-width: 480px) {
-  #album-edit #steps #configurations p input[type="text"],
-  #album-edit #steps #configurations p textarea {
+  form input[type="text"],
+  form textarea {
     width: 90%;
   }
 }
 
-#album-edit #steps #configurations p input[type="text"]:focus,
-#album-edit #steps #configurations p input[type="text"]:active,
-#album-edit #steps #configurations p textarea:focus,
-#album-edit #steps #configurations p textarea:active {
+form input[type="text"]:focus,
+form input[type="text"]:active,
+form textarea:focus,
+form textarea:active {
   outline: none;
 }
 
@@ -2435,11 +2456,11 @@ a:hover {
   max-width: 100%;
 }
 
-#preview-modal .md-content .controls {
+.md-content .controls {
   margin-top: 32px;
 }
 
-#preview-modal .md-content .controls span {
+.md-content .controls span {
   color: #fff;
   border: 1px solid #fff;
   border-radius: 25px;
@@ -2451,6 +2472,10 @@ a:hover {
 #image-modal img {
   max-width: 100%;
   max-height: 70vh;
+}
+
+#upload-modal .image-preview img {
+  max-width: 50%;
 }
 
 #details-modal img {

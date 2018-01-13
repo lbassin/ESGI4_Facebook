@@ -13,7 +13,7 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
     Route::get('/dashboard/permissions', 'DashboardController@permissionsAction')
         ->name('dashboard.permissions');
 
-    Route::middleware(['AuthFb', 'AddViewData'])->group(function () {
+    Route::middleware(['AuthFb', 'AddDashboardDataToView'])->group(function () {
         Route::get('/dashboard', 'DashboardController@indexAction')
             ->name('dashboard');
 
@@ -24,7 +24,7 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
             ->name('dashboard.suggest.url');
     });
 
-    Route::middleware(['AuthFb', 'WebsiteExists', 'AddViewData'])->group(function () {
+    Route::middleware(['AuthFb', 'WebsiteExists', 'AddDashboardDataToView'])->group(function () {
         Route::get('/dashboard/website/{subdomain}', 'Dashboard\WebsiteController@indexAction')
             ->name('dashboard.website');
 
@@ -42,6 +42,9 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
 
         Route::post('/dashboard/website/{subdomain}/albums/{id}/save', 'Dashboard\AlbumController@saveAction')
             ->name('dashboard.website.albums.save');
+
+        Route::post('/dashboard/website/{subdomain}/albums/{id}/upload', 'Dashboard\AlbumController@uploadAction')
+            ->name('dashboard.website.albums.upload');
 
         Route::post('/dashboard/website/{subdomain}/albums/templates/preview', 'Dashboard\AlbumController@templatePreviewAction')
             ->name('dashboard.website.albums.templates.preview');
@@ -80,9 +83,25 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
 
 // Website viewer
 Route::domain('{subdomain}.' . $appHelper->getAppUrlWithoutHttp(false))
-    ->middleware(['WebsiteExists'])
+    ->middleware(['WebsiteExists', 'AddWebsiteDataToView'])
     ->group(function () {
-        Route::get('/', 'WebsiteController@indexAction');
+        Route::get('/', 'WebsiteController@indexAction')
+            ->name('website.home');
+
+        Route::get('/albums', 'WebsiteController@albumsAction')
+            ->name('website.albums');
+
+        Route::get('/articles', 'WebsiteController@articlesAction')
+            ->name('website.articles');
+
+        Route::get('/evenements', 'WebsiteController@eventsAction')
+            ->name('website.events');
+
+        Route::get('/avis', 'WebsiteController@reviewsAction')
+            ->name('website.reviews');
+
+        Route::get('/{element}', 'WebsiteController@viewAction')
+            ->name('website.view');
     });
 
 

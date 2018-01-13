@@ -18,7 +18,7 @@
                 </div>
                 <div class="select-action">
                     <select id="website-select">
-                        <option value="" disabled selected>Website !</option>
+                        <option value="" disabled selected>Website</option>
                         @foreach($websites as $website)
                             <option value="{{ $website['subdomain'] }}">{{ $website['name'] }}</option>
                         @endforeach
@@ -60,15 +60,6 @@
                     </button>
                 </div>
             </form>
-
-            <div id="messages">
-                <div class="success">
-                    <ul></ul>
-                </div>
-                <div class="errors">
-                    <ul></ul>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -162,9 +153,14 @@
                 }
             });
 
-            $('.dropdown .option').on('click', function () {
+            $('.dropdown .option').on('click', function (event) {
                 let selected = $(this);
                 let dropdown = selected.closest('.dropdown');
+
+                if (selected.hasClass('disabled')) {
+                    event.preventDefault();
+                    return;
+                }
 
                 selected.closest('.list').find('.selected').removeClass('selected');
                 selected.addClass('selected');
@@ -260,7 +256,6 @@
                 );
             });
         }
-
 
 
         $(function () {

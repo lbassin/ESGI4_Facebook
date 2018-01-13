@@ -210,9 +210,19 @@ class FacebookHelper
         /** @var array $albums */
         $albums = [];
 
-        /** @var GraphAlbum $album */
-        foreach ($response->all() as $album) {
-            $albums[] = new Album($album);
+        /** @var GraphAlbum $graph */
+        foreach ($response->all() as $graph) {
+
+            /** @var Album $album */
+            $album = new Album($graph);
+
+            /** @var \App\Model\Album $albumModel */
+            $albumModel = \App\Model\Album::where(\App\Model\Album::ID, $album->getId())->first();
+            if (!empty($albumModel)) {
+                $album->setModel($albumModel);
+            }
+
+            $albums[] = $album;
         }
 
         return $albums;
@@ -231,7 +241,15 @@ class FacebookHelper
         /** @var GraphAlbum $response */
         $response = $this->fb->get($query)->getGraphAlbum();
 
-        return new Album($response);
+        $album = new Album($response);
+
+        /** @var \App\Model\Album $albumModel */
+        $albumModel = \App\Model\Album::where(\App\Model\Album::ID, $album->getId())->first();
+        if (!empty($albumModel)) {
+            $album->setModel($albumModel);
+        }
+
+        return $album;
     }
 
     /**

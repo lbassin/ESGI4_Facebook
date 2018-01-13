@@ -31,6 +31,10 @@ class Album
      * @var AlbumHelper
      */
     private $albumHelper;
+    /**
+     * @var \App\Model\Album
+     */
+    private $model;
 
     /**
      * Album constructor.
@@ -226,6 +230,38 @@ class Album
     public function getId(): string
     {
         return $this->graphNode->getField('id', '');
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        if (!$this->model) {
+            return '';
+        }
+
+        return $this->model->getUrl();
+    }
+
+    /**
+     * @param \App\Model\Album $album
+     */
+    public function setModel(\App\Model\Album $album): void
+    {
+        $this->model = $album;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisible(): bool
+    {
+        if (!$this->model) {
+            return false;
+        }
+
+        return $this->model->isVisible();
     }
 
 }

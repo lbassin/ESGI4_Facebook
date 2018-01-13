@@ -15,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Input;
 use Illuminate\View\View;
 
 /**
@@ -95,8 +96,8 @@ class AlbumController extends BaseController
         ];
 
         return response()->json([
-            'message' => 'Album créé',
-            'url' => route('dashboard.website.albums.edit', $routeParams)]
+                'message' => 'Album créé',
+                'url' => route('dashboard.website.albums.edit', $routeParams)]
         );
     }
 
@@ -215,8 +216,17 @@ class AlbumController extends BaseController
         return view('dashboard.website.album.images.image-modal', ['photo' => $photo]);
     }
 
+    /**
+     * @param Request $request
+     * @param string $subdomain
+     * @param int $id
+     * @return JsonResponse
+     */
     public function saveAction(Request $request, string $subdomain, int $id): JsonResponse
     {
+        /** @var Website $website */
+        $website = $this->websiteHelper->getCurrentWebsite();
+
         /** @var Album $album */
         $album = Album::where(Album::ID, $id)->first();
         if (empty($album)) {
@@ -239,7 +249,8 @@ class AlbumController extends BaseController
             Album::TITLE => isset($options['title']) ? $options['title'] : '',
             Album::DESCRIPTION => isset($options['description']) ? $options['description'] : '',
             Album::URL => isset($options['url']) ? $options['url'] : '',
-            Album::HIDE_NEW => !empty($options['hide_new'])
+            Album::HIDE_NEW => !empty($options['hide_new']),
+            Album::WEBSITE_ID => $website->getId()
         ];
 
         $album->fill($albumData);
@@ -266,6 +277,34 @@ class AlbumController extends BaseController
         return response()->json([
             'message' => 'Album sauvegardé',
             'url' => route('dashboard.website.albums', ['subdomain' => $subdomain])
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param string $subdomain
+     * @param int $albumId
+     * @return JsonResponse
+     * @throws \Facebook\Exceptions\FacebookSDKException
+     */
+    public function uploadAction(Request $request, string $subdomain, int $albumId): JsonResponse
+    {
+        /** @var array $formData */
+        $description = $request->post('upload-description');
+        /** @var ? $image */
+        $image = $request->file('upload-image');
+        /** @var bool $uploaded */
+        $uploaded = $this->albumHelper->uploadPhoto($albumId, ['description' => $description, 'image' => $image]);
+
+        if (!$uploaded) {
+            return response()->json([
+                'error' => true,
+                'message' => 'An error occurred'
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Image ajoutée à l\'album',
         ]);
     }
 }

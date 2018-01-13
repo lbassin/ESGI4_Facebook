@@ -21,6 +21,10 @@ class Event extends Model
      *
      */
     const VISIBLE = 'is_visible';
+    /**
+     *
+     */
+    const WEBSITE_ID = 'website_id';
 
     /**
      * @var string
@@ -33,6 +37,7 @@ class Event extends Model
     protected $fillable = [
         self::ID,
         self::VISIBLE,
+        self::WEBSITE_ID
     ];
 
     /**
