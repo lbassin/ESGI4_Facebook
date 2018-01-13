@@ -1,6 +1,6 @@
 @extends('layouts/app')
 
-@section('title', 'Foliobook')
+@section('title', 'Wawat')
 
 @section('header_scripts')
     <script src="//cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
@@ -11,7 +11,7 @@
     <div class="wrapper">
         <div id="particles-js"></div>
 
-        <h1 class="title">FolioBook</h1>
+        <h1 class="title">Wawat</h1>
 
         <button class="spin" id="spin">
             <span>Créer mon site</span>

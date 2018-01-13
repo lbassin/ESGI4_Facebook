@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Foliobook')
+@section('title', 'Wawat')
 
 @section('header_scripts')
 @endsection
@@ -50,7 +50,7 @@
             <h1>Choix de l'url</h1>
             <form action="{{ route('dashboard.new') }}">
                 <p>
-                    https://<input title="Website URL" type="text" style="text-align: center" name="new-page-url">.foliobook.fr/
+                    https://<input title="Website URL" type="text" style="text-align: center" name="new-page-url">.wawat.fr/
                 </p>
                 <input type="hidden" name="new-page-id" value="">
 

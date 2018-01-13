@@ -3,7 +3,7 @@
 @section('content')
     <div class="wrapper">
         <div class="logo">
-            <h1>Foliobook</h1>
+            <h1>Wawat</h1>
             <h2>The futur is now, old man</h2>
         </div>
     </div>
