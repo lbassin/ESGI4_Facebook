@@ -20,7 +20,9 @@ class AppHelper
         if(!$withPort){
             /** @var array $explodedUrl */
             $explodedUrl = explode(':', $url);
-            array_pop($explodedUrl);
+            if(count($explodedUrl) > 1){
+                array_pop($explodedUrl);
+            }
             return implode($explodedUrl, ',');
         }
 
