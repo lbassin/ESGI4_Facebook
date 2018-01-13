@@ -10,6 +10,9 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
     Route::get('/', 'HomeController@indexAction')
         ->name('home');
 
+    Route::get('/policy', 'HomeController@policyAction')
+        ->name('policy');
+
     Route::get('/dashboard/permissions', 'DashboardController@permissionsAction')
         ->name('dashboard.permissions');
 

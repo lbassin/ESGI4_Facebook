@@ -20,4 +20,9 @@ class HomeController extends BaseController
     {
         return view('home');
     }
+
+    public function policyAction(): View
+    {
+        return view('policy');
+    }
 }
