@@ -250,7 +250,8 @@ class AlbumController extends BaseController
             Album::DESCRIPTION => isset($options['description']) ? $options['description'] : '',
             Album::URL => isset($options['url']) ? $options['url'] : '',
             Album::HIDE_NEW => !empty($options['hide_new']),
-            Album::WEBSITE_ID => $website->getId()
+            Album::WEBSITE_ID => $website->getId(),
+            Album::VISIBLE => !empty($options['visible'])
         ];
 
         $album->fill($albumData);

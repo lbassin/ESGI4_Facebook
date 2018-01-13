@@ -90,6 +90,13 @@
                                        name="hide_new" {{ !empty($config[\App\Model\Album::HIDE_NEW]) ? 'checked' : '' }}>
                             </label>
                         </p>
+                        <p>
+                            <label>
+                                Album visible
+                                <input type="checkbox"
+                                       name="visible" {{ !empty($config[\App\Model\Album::VISIBLE]) ? 'checked' : '' }}>
+                            </label>
+                        </p>
                     </form>
                     <div class="options">
                         <div class="submit">
