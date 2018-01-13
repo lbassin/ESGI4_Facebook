@@ -4,17 +4,23 @@
     <div class="wrapper">
         <h1>Mes albums</h1>
 
-        <div class="grid">
-            <?php /** @var \App\Http\Api\Album $album */ ?>
-            @foreach($albums as $album)
-                <div>
-                    <a href="{{ route('website.view', ['subdomain' => $subdomain, 'element' => $album->getUrl()]) }}">
-                        <img src="{{ $album->getCover() }}" alt="{{ $album->getName() }}">
-                    </a>
-                    <p>{{ $album->getName() }}</p>
-                </div>
-            @endforeach
-        </div>
+        @empty($albums)
+            <div class="empty">
+                <h2>Aucun article n'est disponible</h2>
+            </div>
+        @else
+            <div class="grid">
+                <?php /** @var \App\Http\Api\Album $album */ ?>
+                @foreach($albums as $album)
+                    <div>
+                        <a href="{{ route('website.view', ['subdomain' => $subdomain, 'element' => $album->getUrl()]) }}">
+                            <img src="{{ $album->getCover() }}" alt="{{ $album->getName() }}">
+                        </a>
+                        <p>{{ $album->getName() }}</p>
+                    </div>
+                @endforeach
+            </div>
+        @endempty
     </div>
 
     <style>
@@ -36,7 +42,11 @@
             height: 250px;
             padding: 12px;
             text-align: center;
+        }
 
+        .wrapper .empty {
+            width: 100%;
+            text-align: center;
         }
 
         .wrapper .grid img {
@@ -46,7 +56,7 @@
             box-shadow: 3px 3px 3px -1px rgba(0, 0, 0, 0.6);
         }
 
-        .wrapper .grid p{
+        .wrapper .grid p {
             padding-top: 6px;
         }
 
