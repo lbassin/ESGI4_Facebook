@@ -41,6 +41,10 @@ class Album extends Model
      *
      */
     const WEBSITE_ID = 'website_id';
+    /**
+     *
+     */
+    const VISIBLE = 'is_visible';
 
     /**
      * @var string
@@ -57,7 +61,8 @@ class Album extends Model
         self::DESCRIPTION,
         self::URL,
         self::HIDE_NEW,
-        self::WEBSITE_ID
+        self::WEBSITE_ID,
+        self::VISIBLE
     ];
 
     /**
