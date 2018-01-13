@@ -109,6 +109,5 @@ $websiteHelper = resolve('App\Http\Helpers\WebsiteHelper');
         });
     });
 </script>
-
 </body>
 </html>

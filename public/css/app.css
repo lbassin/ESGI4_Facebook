@@ -2482,3 +2482,16 @@ form textarea:active {
   max-height: 350px;
 }
 
+.cookie-consent {
+  z-index: 9000;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  height: 42px;
+  line-height: 42px;
+  background-color: rgba(200, 200, 200, 0.6);
+  color: #fff;
+}
+
