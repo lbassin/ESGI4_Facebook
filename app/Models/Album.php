@@ -126,6 +126,6 @@ class Album extends Model
      */
     public function isVisible(): bool
     {
-        return true;
+        return $this->{self::VISIBLE};
     }
 }
