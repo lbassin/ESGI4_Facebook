@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Foliobook')
+@section('title', 'Wawat')
 
 @section('header_scripts')
 @endsection
