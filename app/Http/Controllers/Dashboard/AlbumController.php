@@ -128,7 +128,8 @@ class AlbumController extends BaseController
                 Album::TITLE => $albumModel->getTitle(),
                 Album::DESCRIPTION => $albumModel->getDescription(),
                 Album::URL => $albumModel->getUrl(),
-                Album::HIDE_NEW => $albumModel->getHideNew()
+                Album::HIDE_NEW => $albumModel->getHideNew(),
+                Album::VISIBLE => $albumModel->isVisible()
             ];
         }
 
