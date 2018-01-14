@@ -2619,3 +2619,70 @@ a:hover {
           transform-origin: top right;
 }
 
+.login-modal-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  background-color: rgba(127, 127, 127, 0.7);
+  display: none;
+}
+
+.login-modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 90%;
+  max-width: 500px;
+  height: 350px;
+  z-index: 51;
+  background-color: #fff;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+  border-radius: 12px;
+  text-align: center;
+  font-family: raleway_regular, sans-serif;
+  display: none;
+}
+
+.login-modal h3 {
+  font-size: 200%;
+  margin-top: 42px;
+  margin-bottom: 24px;
+}
+
+.login-modal p {
+  font-size: 110%;
+  padding: 12px 24px;
+}
+
+.login-modal .legend {
+  font-size: 80%;
+}
+
+.login-modal .login-fb {
+  margin-top: 48px;
+  outline: none;
+  border: none;
+  color: #fff;
+  background-color: #3a5795;
+  border-radius: 4px;
+  padding: 15px 30px;
+  font-size: 120%;
+  cursor: pointer;
+}
+
+.login-modal .login-fb i {
+  margin-right: 10px;
+}
+
+.login-modal .close-modal {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 130%;
+  cursor: pointer;
+}
+
