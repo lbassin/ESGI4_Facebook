@@ -2459,3 +2459,230 @@ a:hover {
   color: #fff;
 }
 
+#home {
+  font-family: raleway_regular, sans-serif;
+  margin: auto;
+  width: 80%;
+  height: 500px;
+  position: relative;
+}
+
+#home nav {
+  display: block;
+  height: 80px;
+  line-height: 80px;
+  width: 100%;
+  text-align: right;
+}
+
+#home nav .logo {
+  float: left;
+  padding-left: 48px;
+  color: #fff;
+  font-family: raleway_regular, sans-serif;
+  font-weight: 400;
+  font-size: 38px;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+@media only screen and (max-width: 768px) {
+  #home nav .logo {
+    float: none;
+    text-align: center;
+    padding: 0;
+  }
+}
+
+#home nav a {
+  color: #fff;
+  padding: 10px 14px;
+}
+
+@media only screen and (max-width: 768px) {
+  #home nav a {
+    display: none;
+  }
+}
+
+#home nav a.primary {
+  border: 1px solid #fff;
+  border-radius: 25px;
+}
+
+#home .content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#home .image {
+  width: 55%;
+  text-align: center;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+@media only screen and (max-width: 1320px) {
+  #home .image {
+    display: none;
+  }
+}
+
+#home .image img {
+  margin-top: 32px;
+  width: 80%;
+  border: 1px solid #fff;
+}
+
+#home .text {
+  width: 45%;
+  text-align: center;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+@media only screen and (max-width: 1320px) {
+  #home .text {
+    width: 100%;
+  }
+}
+
+#home .text > div {
+  position: relative;
+}
+
+#home .text > div p {
+  width: 100%;
+  font-weight: 300;
+  color: #fff;
+  margin-top: 100px;
+  font-size: 240%;
+  max-width: 425px;
+  text-align: center;
+  display: inline-block;
+}
+
+#home .text button {
+  margin-top: 48px;
+  color: #fff;
+  outline: none;
+  border: 1px solid #fff;
+  border-radius: 25px;
+  background-color: transparent;
+  padding: 10px 18px;
+  font-size: 14pt;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.alternative-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  z-index: 1;
+}
+
+.home-header {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  opacity: 0;
+  -webkit-animation: appear 2s ease;
+  animation: appear 2s ease;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.home-header .background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #14273a;
+  background: -webkit-gradient(linear, left top, right bottom, from(#090917), to(#12121c));
+  background: linear-gradient(to bottom right, #090917, #12121c);
+  -webkit-transform: skewY(4deg);
+          transform: skewY(4deg);
+  -webkit-transform-origin: top right;
+          transform-origin: top right;
+}
+
+.login-modal-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  background-color: rgba(127, 127, 127, 0.7);
+  display: none;
+}
+
+.login-modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 90%;
+  max-width: 500px;
+  height: 350px;
+  z-index: 51;
+  background-color: #fff;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+  border-radius: 12px;
+  text-align: center;
+  font-family: raleway_regular, sans-serif;
+  display: none;
+}
+
+.login-modal h3 {
+  font-size: 200%;
+  margin-top: 42px;
+  margin-bottom: 24px;
+}
+
+.login-modal p {
+  font-size: 110%;
+  padding: 12px 24px;
+}
+
+.login-modal .legend {
+  font-size: 80%;
+}
+
+.login-modal .login-fb {
+  margin-top: 48px;
+  outline: none;
+  border: none;
+  color: #fff;
+  background-color: #3a5795;
+  border-radius: 4px;
+  padding: 15px 30px;
+  font-size: 120%;
+  cursor: pointer;
+}
+
+.login-modal .login-fb i {
+  margin-right: 10px;
+}
+
+.login-modal .close-modal {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 130%;
+  cursor: pointer;
+}
+
