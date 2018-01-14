@@ -562,6 +562,8 @@ section {
 .head {
   height: 80px;
   width: 100vw;
+  position: relative;
+  z-index: 10;
   .user-pic {
     height: 40px;
     width: 40px;

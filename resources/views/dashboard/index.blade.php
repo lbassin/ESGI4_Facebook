@@ -6,8 +6,7 @@
 @endsection
 
 @section('content')
-    <div class="image-gradient">
-    </div>
+    <div class="image-gradient"></div>
     <div class="wrapper-dashboard">
         @include('dashboard.website.header')
 

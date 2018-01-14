@@ -855,6 +855,8 @@ section {
 .head {
   height: 80px;
   width: 100vw;
+  position: relative;
+  z-index: 10;
   -webkit-animation: appear 2s ease;
   animation: appear 2s ease;
   -webkit-animation-fill-mode: forwards;
