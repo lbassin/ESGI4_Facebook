@@ -13,6 +13,9 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
     Route::get('/policy', 'HomeController@policyAction')
         ->name('policy');
 
+    Route::get('/dashboard/logout', 'DashboardController@logoutAction')
+        ->name('dashboard.logout');
+
     Route::get('/dashboard/permissions', 'DashboardController@permissionsAction')
         ->name('dashboard.permissions');
 
