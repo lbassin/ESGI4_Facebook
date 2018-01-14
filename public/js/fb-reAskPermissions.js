@@ -77,10 +77,10 @@ module.exports = __webpack_require__(37);
 /***/ (function(module, exports) {
 
 window.fbLoaded = function () {
-    addFacebookLoginEvent();
+    addFacebookReAuthEvent();
 };
 
-function addFacebookLoginEvent() {
+function addFacebookReAuthEvent() {
     $('#reAskPermissions').click(function () {
         FB.login(function (result) {
             window.location.href = redirectTo;
