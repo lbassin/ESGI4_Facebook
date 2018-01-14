@@ -13,6 +13,12 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
     Route::get('/policy', 'HomeController@policyAction')
         ->name('policy');
 
+    Route::get('/support', 'HomeController@supportAction')
+        ->name('support');
+
+    Route::post('/support', 'HomeController@supportSubmitAction')
+        ->name('support.submit');
+
     Route::get('/dashboard/logout', 'DashboardController@logoutAction')
         ->name('dashboard.logout');
 
