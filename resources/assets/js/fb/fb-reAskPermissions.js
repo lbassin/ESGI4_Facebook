@@ -1,8 +1,8 @@
 window.fbLoaded = function () {
-    addFacebookLoginEvent();
+    addFacebookReAuthEvent();
 };
 
-function addFacebookLoginEvent() {
+function addFacebookReAuthEvent() {
     $('#reAskPermissions').click(() => {
         FB.login(result => {
             window.location.href = redirectTo;
