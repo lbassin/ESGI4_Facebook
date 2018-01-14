@@ -1048,27 +1048,29 @@ a {
   }
 }
 
-#create-album-modal {
+.md-content {
+  form{
 
-  label {
-    font-family: raleway_bold, sans-serif;
-  }
+    label {
+      font-family: raleway_bold, sans-serif;
+    }
 
-  input[type='text'] {
-    margin-top: 12px;
-    padding: 6px 12px;
-  }
+    input[type='text'] {
+      margin-top: 12px;
+      padding: 6px 12px;
+    }
 
-  #submit-new-album {
-    margin-top: 24px;
-    outline: none;
-    background: transparent;
+    button {
+      margin-top: 24px;
+      outline: none;
+      background: transparent;
 
-    color: #fff;
-    border: 1px solid #fff;
-    border-radius: 25px;
-    padding: 8px 26px;
-    cursor: pointer;
+      color: #fff;
+      border: 1px solid #fff;
+      border-radius: 25px;
+      padding: 8px 26px;
+      cursor: pointer;
+    }
   }
 }
 
