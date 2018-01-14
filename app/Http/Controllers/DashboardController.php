@@ -7,9 +7,9 @@ use App\Http\Helpers\UserHelper;
 use App\Http\Helpers\WebsiteHelper;
 use App\Model\Website;
 use Facebook\Exceptions\FacebookSDKException;
-use Facebook\GraphNodes\GraphUser;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
 use Illuminate\View\View;
@@ -207,4 +207,13 @@ class DashboardController extends BaseController
         ]);
     }
 
+    /**
+     * @return RedirectResponse
+     */
+    public function logoutAction(): RedirectResponse
+    {
+        $this->session->flush();
+
+        return response()->redirectToRoute('home');
+    }
 }

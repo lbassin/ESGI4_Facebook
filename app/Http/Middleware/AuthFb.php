@@ -64,6 +64,11 @@ class AuthFb
             $fbToken = $this->getToken($request);
         } catch (FacebookSDKException $exception) {
             $request->session()->flash('redirectTo', $request->path());
+
+            if ($exception->getCode() == 100) {
+                return redirect()->route('home');
+            }
+
             return redirect()->route('dashboard.permissions');
         }
 

@@ -86,7 +86,6 @@ video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
   font: inherit;
   vertical-align: baseline;
 }
@@ -123,7 +122,6 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: '';
   content: none;
 }
 
@@ -423,92 +421,12 @@ body {
 }
 
 /*********************************************
-***************** LOADING ********************
-*********************************************/
-
-.loading-overlay {
-  background: -webkit-gradient(linear, left top, right bottom, from(#090917), to(#12121c));
-  background: linear-gradient(to bottom right, #090917, #12121c);
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  display: none;
-  opacity: 0;
-}
-
-.loading {
-  height: 75px;
-  left: 50%;
-  margin-left: -37.5px;
-  margin-top: -20px;
-  position: absolute;
-  top: 50%;
-  width: 75px;
-}
-
-.loading .animation {
-  -webkit-animation: loading 10s linear 0s infinite;
-  animation: loading 10s linear 0s infinite;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  -webkit-perspective: 1000;
-  perspective: 1000;
-  opacity: 0;
-}
-
-.loading .animation:nth-child(2) {
-  -webkit-animation-delay: 250ms;
-  animation-delay: 250ms;
-}
-
-.loading .animation:nth-child(3) {
-  -webkit-animation-delay: 500ms;
-  animation-delay: 500ms;
-}
-
-.loading .animation:nth-child(4) {
-  -webkit-animation-delay: 750ms;
-  animation-delay: 750ms;
-}
-
-.loading .animation:nth-child(5) {
-  -webkit-animation-delay: 1000ms;
-  animation-delay: 1000ms;
-}
-
-.loading .circle {
-  background: none repeat scroll 0 0 white;
-  border-radius: 100% 100% 100% 100%;
-  height: 4px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 4px;
-}
-
-.loading .circle.two {
-  background: rgba(255, 255, 255, 0.8);
-}
-
-.loading .circle.three {
-  background: rgba(255, 255, 255, 0.6);
-}
-
-.loading .circle.four {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-.loading .circle.five {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/*********************************************
 **************** LOGIN PAGE ******************
 *********************************************/
 
 .wrapper {
   width: 100%;
-  height: 100vh;
+  height: 99vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -522,14 +440,15 @@ body {
   opacity: 0;
   -webkit-animation: appear 2s ease;
   animation: appear 2s ease;
-  -webkit-animation-delay: 1s;
-  animation-delay: 1s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
+  overflow-x: hidden;
 }
 
 .wrapper .title {
-  font-family: 'raleway_regular';
+  font-family: 'raleway_regular', sans-serif;
   font-size: 100px;
   position: absolute;
   margin-top: 10vh;
@@ -570,7 +489,6 @@ body {
 .wrapper .spin {
   border: 2px solid white;
   color: white;
-  font-weight: 100;
   font-weight: bold;
   font-size: 17px;
   -webkit-transition: all 200ms ease-in-out;
@@ -578,7 +496,7 @@ body {
 }
 
 .wrapper .spin span {
-  font-family: 'raleway_regular';
+  font-family: 'raleway_regular', sans-serif;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -915,9 +833,7 @@ section {
 *********************************************/
 
 .image-gradient {
-  background: url("https://images.pexels.com/photos/708921/pexels-photo-708921.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb");
-  background-repeat: no-repeat;
-  background-position: center center;
+  background: url("https://images.pexels.com/photos/708921/pexels-photo-708921.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb") no-repeat center center;
   background-size: cover;
   height: 100vh;
   position: absolute;
@@ -939,6 +855,8 @@ section {
 .head {
   height: 80px;
   width: 100vw;
+  position: relative;
+  z-index: 10;
   -webkit-animation: appear 2s ease;
   animation: appear 2s ease;
   -webkit-animation-fill-mode: forwards;
@@ -951,18 +869,64 @@ section {
   margin-top: 20px;
   margin-right: 20px;
   float: right;
-  display: -webkit-inline-box;
   display: -ms-inline-flexbox;
+  display: -webkit-inline-box;
   display: inline-flex;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  cursor: pointer;
+  position: relative;
+}
+
+.head .user-pic .head-menu {
+  width: 200px;
+  height: 120px;
+  top: 50px;
+  right: 0;
+  position: absolute;
+  z-index: 50;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  display: none;
+}
+
+.head .user-pic .head-menu a {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  text-align: right;
+  padding: 0 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media only screen and (max-width: 480px) {
+  .head .user-pic .head-menu a {
+    text-align: center;
+  }
+}
+
+.head .user-pic .head-menu a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.head .user-pic .head-menu a i {
+  float: left;
+  line-height: 40px;
+}
+
+@media only screen and (max-width: 480px) {
+  .head .user-pic .head-menu {
+    right: -80px;
+  }
 }
 
 .head .user-pic img {
   overflow: hidden;
   border-radius: 50%;
   border: 1px solid white;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 480px) {
@@ -973,7 +937,7 @@ section {
 }
 
 .head .user-name {
-  font-family: 'raleway_thin';
+  font-family: 'raleway_thin', sans-serif;
   line-height: 80px;
   margin-right: 15px;
   float: right;
@@ -984,7 +948,7 @@ section {
 
 @media only screen and (max-width: 480px) {
   .head .user-name {
-    margin-right: 0px;
+    margin-right: 0;
     line-height: 40px;
     margin-top: 60px;
     -webkit-transform: translateX(calc(50% + 20px));
@@ -1026,10 +990,10 @@ section {
   color: white;
   display: inline-block;
   margin-bottom: 30px;
-  font-family: raleway_thin;
+  font-family: raleway_thin, sans-serif;
   font-size: 3em;
   margin-top: 0;
-  left: 0%;
+  left: 0;
   position: relative;
   -webkit-transform: translateX(0%);
   transform: translateX(0%);
@@ -1055,7 +1019,7 @@ section {
 
 @media only screen and (max-width: 768px) {
   .select-dashboard .select-choice {
-    padding-left: 0px;
+    padding-left: 0;
   }
 }
 
@@ -1064,7 +1028,7 @@ section {
   -webkit-transform: translateX(0%);
   transform: translateX(0%);
   position: relative;
-  left: 0%;
+  left: 0;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
@@ -1151,8 +1115,8 @@ select {
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
   border-top: 4px solid #777;
-  -webkit-transform: origin(50% 20%);
-  transform: origin(50% 20%);
+  transform-origin: 50% 20%;
+  -webkit-transform-origin: 50% 20%;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
   content: '';
@@ -1221,7 +1185,7 @@ select {
 
 .dropdown .list ul {
   list-style-type: none;
-  padding: 0px;
+  padding: 0;
 }
 
 .dropdown .option {
@@ -1375,7 +1339,7 @@ a:hover {
 }
 
 .md-content h1 {
-  font-family: "raleway_thin";
+  font-family: 'raleway_thin', sans-serif;
   font-size: 45px;
   margin-bottom: 15px;
   -webkit-transition: all 0.3s ease;
@@ -1389,7 +1353,7 @@ a:hover {
 }
 
 .md-content h2 {
-  font-family: "raleway_regular";
+  font-family: 'raleway_regular', sans-serif;
   font-size: 15px;
   margin-bottom: 25px;
   -webkit-transition: all 0.3s ease;
@@ -1445,7 +1409,7 @@ a:hover {
 .md-content.list li > div span {
   color: white;
   width: 100%;
-  padding: 0px 10px;
+  padding: 0 10px;
 }
 
 .md-content.list li:hover {
@@ -1469,7 +1433,7 @@ a:hover {
 *********************************************/
 
 .wrapper .title-permission {
-  font-family: 'raleway_regular';
+  font-family: 'raleway_regular', sans-serif;
   font-size: 40px;
   position: absolute;
   margin-top: 25vh;
@@ -1491,16 +1455,16 @@ a:hover {
   }
 }
 
-#create-album-modal label {
+.md-content form label {
   font-family: raleway_bold, sans-serif;
 }
 
-#create-album-modal input[type='text'] {
+.md-content form input[type='text'] {
   margin-top: 12px;
   padding: 6px 12px;
 }
 
-#create-album-modal #submit-new-album {
+.md-content form button {
   margin-top: 24px;
   outline: none;
   background: transparent;
@@ -2376,22 +2340,22 @@ a:hover {
   color: #fff;
 }
 
-form p {
+#album-edit #steps form p {
   margin-bottom: 24px;
 }
 
 @media only screen and (max-width: 768px) {
-  form p {
+  #album-edit #steps form p {
     text-align: center;
   }
 }
 
-form label {
+#album-edit #steps form label {
   font-family: 'raleway_regular', sans-serif;
 }
 
-form input[type="text"],
-form textarea {
+#album-edit #steps form input[type="text"],
+#album-edit #steps form textarea {
   width: 45%;
   max-width: 500px;
   margin-top: 4px;
@@ -2403,23 +2367,23 @@ form textarea {
 }
 
 @media only screen and (max-width: 768px) {
-  form input[type="text"],
-  form textarea {
+  #album-edit #steps form input[type="text"],
+  #album-edit #steps form textarea {
     width: 60%;
   }
 }
 
 @media only screen and (max-width: 480px) {
-  form input[type="text"],
-  form textarea {
+  #album-edit #steps form input[type="text"],
+  #album-edit #steps form textarea {
     width: 90%;
   }
 }
 
-form input[type="text"]:focus,
-form input[type="text"]:active,
-form textarea:focus,
-form textarea:active {
+#album-edit #steps form input[type="text"]:focus,
+#album-edit #steps form input[type="text"]:active,
+#album-edit #steps form textarea:focus,
+#album-edit #steps form textarea:active {
   outline: none;
 }
 
