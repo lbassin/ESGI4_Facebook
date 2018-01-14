@@ -86,7 +86,6 @@ video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
   font: inherit;
   vertical-align: baseline;
 }
@@ -123,7 +122,6 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: '';
   content: none;
 }
 
@@ -165,92 +163,12 @@ body {
 }
 
 /*********************************************
-***************** LOADING ********************
-*********************************************/
-
-.loading-overlay {
-  background: -webkit-gradient(linear, left top, right bottom, from($color1), to($color2));
-  background: linear-gradient(to bottom right, $color1, $color2);
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  display: none;
-  opacity: 0;
-}
-
-.loading {
-  height: 75px;
-  left: 50%;
-  margin-left: -37.5px;
-  margin-top: -20px;
-  position: absolute;
-  top: 50%;
-  width: 75px;
-}
-
-.loading .animation {
-  -webkit-animation: loading 10s linear 0s infinite;
-  animation: loading 10s linear 0s infinite;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  -webkit-perspective: 1000;
-  perspective: 1000;
-  opacity: 0;
-}
-
-.loading .animation:nth-child(2) {
-  -webkit-animation-delay: 250ms;
-  animation-delay: 250ms;
-}
-
-.loading .animation:nth-child(3) {
-  -webkit-animation-delay: 500ms;
-  animation-delay: 500ms;
-}
-
-.loading .animation:nth-child(4) {
-  -webkit-animation-delay: 750ms;
-  animation-delay: 750ms;
-}
-
-.loading .animation:nth-child(5) {
-  -webkit-animation-delay: 1000ms;
-  animation-delay: 1000ms;
-}
-
-.loading .circle {
-  background: none repeat scroll 0 0 white;
-  border-radius: 100% 100% 100% 100%;
-  height: 4px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 4px;
-}
-
-.loading .circle.two {
-  background: rgba(255, 255, 255, 0.8);
-}
-
-.loading .circle.three {
-  background: rgba(255, 255, 255, 0.6);
-}
-
-.loading .circle.four {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-.loading .circle.five {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/*********************************************
 **************** LOGIN PAGE ******************
 *********************************************/
 
 .wrapper {
   width: 100%;
-  height: 100vh;
+  height: 99vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -264,12 +182,13 @@ body {
   opacity: 0;
   -webkit-animation: appear 2s ease;
   animation: appear 2s ease;
-  -webkit-animation-delay: 1s;
-  animation-delay: 1s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
+  overflow-x: hidden;
   .title {
-    font-family: 'raleway_regular';
+    font-family: 'raleway_regular', sans-serif;
     font-size: 100px;
     position: absolute;
     margin-top: 10vh;
@@ -301,13 +220,12 @@ body {
   .spin {
     border: 2px solid white;
     color: white;
-    font-weight: 100;
     font-weight: bold;
     font-size: 17px;
     -webkit-transition: all 200ms ease-in-out;
     transition: all 200ms ease-in-out;
     span {
-      font-family: 'raleway_regular';
+      font-family: 'raleway_regular', sans-serif;
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
@@ -542,9 +460,7 @@ section {
   }
   .deco-layer {
     -webkit-transition: -webkit-transform 0.5s;
-    transition: -webkit-transform 0.5s;
     transition: transform 0.5s;
-    transition: transform 0.5s, -webkit-transform 0.5s;
   }
   .pricing-item {
     &:hover {
@@ -624,9 +540,7 @@ section {
 *********************************************/
 
 .image-gradient {
-  background: url('https://images.pexels.com/photos/708921/pexels-photo-708921.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb');
-  background-repeat: no-repeat;
-  background-position: center center;
+  background: url('https://images.pexels.com/photos/708921/pexels-photo-708921.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb') no-repeat center center;
   background-size: cover;
   height: 100vh;
   position: absolute;
@@ -654,7 +568,6 @@ section {
     margin-top: 20px;
     margin-right: 20px;
     float: right;
-    display: -webkit-inline-box;
     display: -ms-inline-flexbox;
     display: inline-flex;
     -webkit-transition: all 0.3s ease;
@@ -671,7 +584,7 @@ section {
     }
   }
   .user-name {
-    font-family: 'raleway_thin';
+    font-family: 'raleway_thin', sans-serif;
     line-height: 80px;
     margin-right: 15px;
     float: right;
@@ -679,7 +592,7 @@ section {
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     @include MQ(S) {
-      margin-right: 0px;
+      margin-right: 0;
       line-height: 40px;
       margin-top: 60px;
       -webkit-transform: translateX(calc(50% + 20px));
@@ -719,10 +632,10 @@ section {
       color: white;
       display: inline-block;
       margin-bottom: 30px;
-      font-family: raleway_thin;
+      font-family: raleway_thin, sans-serif;
       font-size: 3em;
       margin-top: 0;
-      left: 0%;
+      left: 0;
       position: relative;
       -webkit-transform: translateX(0%);
       transform: translateX(0%);
@@ -740,7 +653,7 @@ section {
       }
     }
     @include MQ(M) {
-      padding-left: 0px;
+      padding-left: 0;
     }
   }
   .select-action {
@@ -748,7 +661,7 @@ section {
     -webkit-transform: translateX(0%);
     transform: translateX(0%);
     position: relative;
-    left: 0%;
+    left: 0;
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     @include MQ(M) {
@@ -827,8 +740,8 @@ select {
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
     border-top: 4px solid #777;
-    -webkit-transform: origin(50% 20%);
-    transform: origin(50% 20%);
+    transform-origin: 50% 20%;
+    -webkit-transform-origin: 50% 20%;
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     content: '';
@@ -890,7 +803,7 @@ select {
     }
     ul {
       list-style-type: none;
-      padding: 0px;
+      padding: 0;
     }
   }
   .option {
@@ -1033,7 +946,7 @@ a {
   text-align: center;
   color: white;
   h1 {
-    font-family: "raleway_thin";
+    font-family: 'raleway_thin', sans-serif;
     font-size: 45px;
     margin-bottom: 15px;
     -webkit-transition: all 0.3s ease;
@@ -1043,7 +956,7 @@ a {
     }
   }
   h2 {
-    font-family: "raleway_regular";
+    font-family: 'raleway_regular', sans-serif;
     font-size: 15px;
     margin-bottom: 25px;
     -webkit-transition: all 0.3s ease;
@@ -1089,7 +1002,7 @@ a {
         span {
           color: white;
           width: 100%;
-          padding: 0px 10px;
+          padding: 0 10px;
         }
       }
       &:hover {
@@ -1116,7 +1029,7 @@ a {
 
 .wrapper {
   .title-permission {
-    font-family: 'raleway_regular';
+    font-family: 'raleway_regular', sans-serif;
     font-size: 40px;
     position: absolute;
     margin-top: 25vh;
