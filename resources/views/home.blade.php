@@ -32,7 +32,7 @@
                     <button>Créez votre site</button>
                 </div>
                 <div class="image">
-                    lorem
+                    <img src="{{ asset('images/home.jpg') }}" alt="">
                 </div>
             </div>
         </div>

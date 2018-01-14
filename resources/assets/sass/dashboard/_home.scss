@@ -2,7 +2,7 @@
   font-family: raleway_regular, sans-serif;
   margin: auto;
   width: 80%;
-  height: 450px;
+  height: 500px;
   position: relative;
 
   nav {
@@ -19,15 +19,22 @@
       font-family: raleway_regular, sans-serif;
       font-weight: 400;
       font-size: 38px;
-    }
+      transition: all 0.5s ease;
 
-    @include MQ(M) {
-      display: none;
+      @include MQ(M){
+        float: none;
+        text-align: center;
+        padding: 0;
+      }
     }
 
     a {
       color: #fff;
       padding: 10px 14px;
+
+      @include MQ(M) {
+        display: none;
+      }
 
       &.primary {
         border: 1px solid #fff;
@@ -43,11 +50,28 @@
 
   .image{
     width: 55%;
+    text-align: center;
+    transition: all 0.5s ease;
+
+    @media only screen and (max-width: 1320px) {
+      display: none;
+    }
+
+    img{
+      margin-top: 32px;
+      width: 80%;
+      border: 1px solid #fff;
+    }
   }
 
   .text {
     width: 45%;
     text-align: center;
+    transition: all 0.5s ease;
+
+    @media only screen and (max-width: 1320px) {
+      width: 100%;
+    }
 
     > div {
       position: relative;
@@ -61,10 +85,6 @@
         max-width: 425px;
         text-align: center;
         display: inline-block;
-
-        @include MQ(M) {
-          display: none;
-        }
       }
     }
 
@@ -78,6 +98,7 @@
       padding: 10px 18px;
       font-size: 14pt;
       cursor: pointer;
+      margin-bottom: 15px;
     }
   }
 }
@@ -95,7 +116,6 @@
 .home-header {
   position: relative;
   z-index: 2;
-  height: 650px;
   width: 100%;
 
   opacity: 0;
