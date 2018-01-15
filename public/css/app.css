@@ -886,8 +886,8 @@ section {
   z-index: 50;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   border: 1px solid rgba(255, 255, 255, 0.5);
   display: none;
 }
@@ -2459,6 +2459,47 @@ a:hover {
   color: #fff;
 }
 
+#policy {
+  padding: 50px;
+}
+
+#policy h1 {
+  text-align: -webkit-center;
+  font-size: 35px;
+  color: white;
+  margin-bottom: 50px;
+}
+
+#policy h2 {
+  color: white;
+  font-size: 25px;
+  text-decoration: underline;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+#policy h3 {
+  color: white;
+  font-size: 17px;
+}
+
+#policy div {
+  color: #ababab;
+  padding: 20px 20px 0px 20px;
+}
+
+#policy p {
+  border-left: 1px solid white;
+  padding-left: 10px;
+  margin-bottom: 20px;
+}
+
+#policy ul {
+  list-style: circle;
+  padding-left: 40px;
+  margin-bottom: 20px;
+}
+
 #home {
   font-family: raleway_regular, sans-serif;
   margin: auto;
@@ -2515,8 +2556,8 @@ a:hover {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 #home .image {
@@ -2614,9 +2655,9 @@ a:hover {
   background: -webkit-gradient(linear, left top, right bottom, from(#090917), to(#12121c));
   background: linear-gradient(to bottom right, #090917, #12121c);
   -webkit-transform: skewY(4deg);
-          transform: skewY(4deg);
+  transform: skewY(4deg);
   -webkit-transform-origin: top right;
-          transform-origin: top right;
+  transform-origin: top right;
 }
 
 .login-modal-overlay {
@@ -2640,7 +2681,7 @@ a:hover {
   z-index: 51;
   background-color: #fff;
   -webkit-transform: translateX(-50%) translateY(-50%);
-          transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
   border-radius: 12px;
   text-align: center;
   font-family: raleway_regular, sans-serif;
