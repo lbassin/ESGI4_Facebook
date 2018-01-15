@@ -6,109 +6,96 @@
 @endsection
 
 @section('content')
-<?php /** @var array $album */ ?>
+    <div class="wrapper">
+        @include('dashboard.website.header')
 
-<div id="website-home" class="wrapper">
-    @include('dashboard.website.header')
+        <div class="list-content-dashboard">
+            <div class="grid">
+                <ul>
+                    <li><a href="{{ route('dashboard.website.home', ['subdomain' => $subdomain]) }}">Gestion de l'accueil</a></li>
+                    <li><a href="{{ route('dashboard.website.albums', ['subdomain' => $subdomain]) }}">Gestion des albums</a></li>
+                    <li><a href="{{ route('dashboard.website.articles', ['subdomain' => $subdomain]) }}">Gestion des articles</a></li>
+                    <li><a href="{{ route('dashboard.website.events', ['subdomain' => $subdomain]) }}">Gestion des evenements</a></li>
+                    <li><a href="{{ route('dashboard.website.reviews', ['subdomain' => $subdomain]) }}">Gestion des avis</a></li>
+                </ul>
+                <div class="grid-album">
+                    <?php /** @var \App\Http\Api\Album $album */ ?>
+                    @foreach($albums as $album)
+                        <a href="{{ route('dashboard.website.albums.edit', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}">
+                            <article class="module desktop-4 tablet-6">
+                                <div class="element-image zoom"
+                                    style="background: url('{{ $album->getCover() }}');background-repeat: no-repeat;background-position: center center;background-size: cover;">
 
-    <div class="container website-home">
-        <div class="nav-button-mobile">
-            <h2>menu</h2>
-        </div>
-        <nav class="website-home-nav">
-            <button class="md-close">
-                <i class="fa fa-times" aria-hidden="true"></i>
-            </button>
-            <ul>
-                <li><a href="{{ route('dashboard.website.home', ['subdomain' => $subdomain]) }}">Gestion de l'accueil</a></li>
-                <li><a href="{{ route('dashboard.website.albums', ['subdomain' => $subdomain]) }}">Gestion des albums</a></li>
-                <li><a href="{{ route('dashboard.website.articles', ['subdomain' => $subdomain]) }}">Gestion des articles</a></li>
-                <li><a href="{{ route('dashboard.website.events', ['subdomain' => $subdomain]) }}">Gestion des evenements</a></li>
-                <li><a href="{{ route('dashboard.website.reviews', ['subdomain' => $subdomain]) }}">Gestion des avis</a></li>
-            </ul>
-        </nav>
-        <div class="menu-albums">
-            <div class="menu-albums-title">
-                <h2>Mes Derniers Albums</h2>
-            </div>
-            @foreach($albums as $album)
-                <div class="album">
-                    <div class="title">
-                        <div class="inner">
-                            <h2>{{ $album->getName() }}</h2>
-                        </div>
-                        <div class="gradient"></div>
-                    </div>
-                    <div class="image">
-                        <?php $cover = $album->getCover(); ?>
-                        @if ($cover !== "")
-                            <img src="{{ $cover }}" alt="">
-                        @else
-                            <img src="http://via.placeholder.com/350x150" alt="">
-                        @endif
-                    </div>
+                                </div>
+                                <div class="element-name">
+                                    <span>{{ $album->getName() }}</span>
+                                </div>
+                            </article>
+                        </a>
+                    @endforeach
                 </div>
-
-            @endforeach
+            </div>
         </div>
     </div>
 
+    <div id="create-album-modal" class="md-modal md-effect-12">
+        <div class="md-content">
+            <h1>Nouvel album</h1>
+            <form action="{{ route('dashboard.website.albums.create', ['subdomain' => $subdomain ]) }}">
+                <div>
+                    <label>
+                        Nom de l'album <br>
+                        <input type="text" name="new-album-name">
+                    </label>
+                </div>
+
+                <div>
+                    <button id="submit-new-album">
+                        Créé cet album
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="md-overlay">
+        <button class="md-close">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+    </div>
 
     <script>
-        let mobileNav = false;
-        let desktopNav = false;
-        let websiteNavExp = 'nav.website-home-nav';
-        function isMediumWidth(){
-            return window.innerWidth <= 768;
-        }
-        $('nav button.md-close').click(function(){
-            if(isMediumWidth()){
-                if($(websiteNavExp).hasClass('m-open')){
-                    $(websiteNavExp).removeClass('m-open');
+        $('.nav-create').click(function () {
+            $('.md-modal').addClass('md-show');
+        });
+
+        $('.md-close').click(function () {
+            $('.md-modal').removeClass('md-show');
+        });
+
+        $('.md-content form').on('submit', function (event) {
+            event.preventDefault();
+
+            let name = $('input[name="new-album-name"]').val();
+
+            $.post(this.action, {name: name}).done(
+                function (response) {
+                    if (response.error) {
+                        addError(response.message);
+                        return;
+                    }
+
+                    addSuccess(response.message);
+                    setTimeout(function () {
+                        window.location.href = response.url;
+                    }, 350);
                 }
-            }
+            ).fail(
+                function (response) {
+                    addError(response.responseJSON.message);
+                }
+            );
         });
-
-        $('div.nav-button-mobile').click(function(){
-           if(isMediumWidth()){
-               if(!$(websiteNavExp).hasClass('m-open')){
-                   $(websiteNavExp).addClass('m-open');
-               }
-           }
-        });
-
-        function moveNavTo(position){
-            switch(position){
-                case 'desktop':
-                    if(!$(websiteNavExp).parent().hasClass('website-home')){
-                        $(websiteNavExp).insertAfter('.nav-button-mobile')
-                    }
-                    break;
-                case 'mobile':
-                    if($(websiteNavExp).parent().hasClass('website-home')){
-                        $(websiteNavExp).insertAfter('.head');
-                    }
-                    break;
-            }
-        }
-        function checkNavState(){
-            if(isMediumWidth() && !mobileNav){
-                moveNavTo('mobile');
-                mobileNav = true;
-                desktopNav = false;
-            }
-
-            if(!isMediumWidth() && !desktopNav){
-                moveNavTo('desktop');
-                desktopNav = true;
-                mobileNav = false;
-            }
-        }
-        $(window).resize(checkNavState);
-        $(document).ready(checkNavState);
     </script>
-
-</div>
-
 
 @endsection
