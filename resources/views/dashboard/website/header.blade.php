@@ -12,6 +12,6 @@
 
 <script>
     $('.head').find('.user-pic').click(function () {
-        $('.head').find('.head-menu').toggle('active');
+        $('.head').find('.head-menu').stop().toggle('active');
     });
 </script>

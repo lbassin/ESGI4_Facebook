@@ -888,7 +888,9 @@ section {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background-color: #090917;
+  border-radius: 5px;
+  border: 1px solid white;
   display: none;
 }
 
@@ -898,7 +900,7 @@ section {
   line-height: 40px;
   text-align: right;
   padding: 0 8px;
-  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
 @media only screen and (max-width: 480px) {
@@ -1460,19 +1462,32 @@ a:hover {
 }
 
 .md-content form input[type='text'] {
-  margin-top: 12px;
   padding: 6px 12px;
+  text-align: center;
+  margin: 100px 15px 15px 15px;
+  border-radius: 5px;
+  font-size: 15px;
+  border: none;
+  outline: none;
 }
 
 .md-content form button {
-  margin-top: 24px;
+  margin-top: 50px;
   outline: none;
   background: transparent;
   color: #fff;
   border: 1px solid #fff;
   border-radius: 25px;
-  padding: 8px 26px;
+  padding: 15px 50px;
   cursor: pointer;
+  font-size: 15px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.md-content form button:hover {
+  background: white;
+  color: #090917;
 }
 
 #flash-messages {
@@ -1652,44 +1667,12 @@ a:hover {
   position: relative;
 }
 
-.list-content .grid .overlay {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(200, 200, 200, 0.3);
-  z-index: 100;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
-.list-content .grid .overlay .visibility,
-.list-content .grid .overlay .details {
-  width: 49%;
-  height: 100%;
-  line-height: 130px;
-  text-align: center;
-  font-size: 4rem;
-  cursor: pointer;
-}
-
-.list-content .grid .overlay .border {
-  width: 1px;
-  height: 50%;
-  background-color: #3f3f3f;
-  margin-top: 18px;
-}
-
 .list-content .grid .element-texte {
   background-color: #ddd;
   height: 180px;
   color: #000;
   padding: 8px 14px;
-  text-align: justify;
+  text-align: center;
 }
 
 .list-content .grid .element-name {
@@ -1700,14 +1683,29 @@ a:hover {
   text-align: center;
   height: 40px;
   line-height: 40px;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(103, 103, 103, 0)), color-stop(115%, rgba(10, 10, 25, 0.75)));
-  background-image: linear-gradient(rgba(103, 103, 103, 0) 0%, rgba(10, 10, 25, 0.75) 115%);
+  background-color: #0a0a18;
+  border: 1px solid white;
   border-radius: 5px;
   color: white;
   z-index: 110;
-  border-left: 1px solid rgba(255, 255, 255, 0.5);
-  border-right: 1px solid rgba(255, 255, 255, 0.5);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.list-content .grid .element-name span {
+  width: 60%;
+  display: inline-block;
+}
+
+.list-content .grid .element-name .visibility,
+.list-content .grid .element-name .details {
+  width: 20%;
+}
+
+.list-content .grid .element-name .visibility {
+  float: left;
+}
+
+.list-content .grid .element-name .details {
+  float: right;
 }
 
 .list-content .grid:after {
@@ -1960,12 +1958,21 @@ a:hover {
   transform: scale(1.1);
 }
 
+.list-content-dashboard .grid h2 {
+  text-align: right;
+  color: white;
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+
 .list-content-dashboard .grid ul {
   width: 25%;
+  margin-top: 30px;
   float: left;
 }
 
 .list-content-dashboard .grid ul li {
+  cursor: pointer;
   padding: 10px;
   margin-left: 0px;
   text-decoration: none;
@@ -1983,6 +1990,28 @@ a:hover {
 .list-content-dashboard .grid .grid-album {
   width: 75%;
   float: right;
+}
+
+@media only screen and (max-width: 768px) {
+  .list-content-dashboard .grid .list-content-dashboard {
+    margin-top: 40px;
+  }
+
+  .list-content-dashboard .grid .grid-album {
+    width: 100%;
+  }
+
+  .list-content-dashboard .grid h2 {
+    text-align: center;
+  }
+
+  .list-content-dashboard .grid ul {
+    width: 100%;
+    text-align: -webkit-center;
+    float: left;
+    margin-top: 0;
+    margin-bottom: 40px;
+  }
 }
 
 .list-content-dashboard .grid .module {
@@ -2037,14 +2066,11 @@ a:hover {
   text-align: center;
   height: 40px;
   line-height: 40px;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(103, 103, 103, 0)), color-stop(115%, rgba(10, 10, 25, 0.75)));
-  background-image: linear-gradient(rgba(103, 103, 103, 0) 0%, rgba(10, 10, 25, 0.75) 115%);
+  background-color: #0a0a18;
+  border: 1px solid white;
   border-radius: 5px;
   color: white;
   z-index: 110;
-  border-left: 1px solid rgba(255, 255, 255, 0.5);
-  border-right: 1px solid rgba(255, 255, 255, 0.5);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .list-content-dashboard .grid:after {
