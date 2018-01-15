@@ -8,6 +8,15 @@
 
     <title>@yield('title') | {{ env('APP_NAME') }}</title>
 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112512559-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-112512559-1');
+    </script>
+
     <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
 
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
