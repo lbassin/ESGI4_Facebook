@@ -2,7 +2,8 @@
     <div class="user-pic">
         <img src="{{ $userHelper->getPicture() }}" alt="">
         <div class="head-menu">
-            <a href="{{ route('docs') }}">Docs</a>
+            <a href="{{ route('dashboard') }}">Dashboard</a>
+            <a href="{{ route('docs') }}">Documentation</a>
             <a href="#">Support</a>
             <a href="{{ route('dashboard.logout') }}">Deconnexion</a>
         </div>
