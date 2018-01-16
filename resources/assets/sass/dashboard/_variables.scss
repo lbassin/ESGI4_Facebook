@@ -13,39 +13,41 @@ $S: 480px;
 $M: 768px;
 $L: 1170px;
 @mixin MQ($canvas) {
-    @if $canvas==S {
-        @media only screen and (max-width: $S) {
-            @content;
-        }
+  @if $canvas==S {
+    @media only screen and (max-width: $S) {
+      @content;
     }
-    @else if $canvas==M {
-        @media only screen and (max-width: $M) {
-            @content;
-        }
+  } @else if $canvas==M {
+    @media only screen and (max-width: $M) {
+      @content;
     }
-    @else if $canvas==L {
-        @media only screen and (max-width: $L) {
-            @content;
-        }
+  } @else if $canvas==L {
+    @media only screen and (max-width: $L) {
+      @content;
     }
+  }
 }
-
 
 /*********************************************
 ******************** FONT ********************
 *********************************************/
 
 @font-face {
-    font-family: 'raleway_thin';
-    src: url('https://fonts.gstatic.com/s/raleway/v12/RJMlAoFXXQEzZoMSUteGWJBw1xU1rKptJj_0jans920.woff2') format('woff2');
+  font-family: 'raleway_thin';
+  src: url('https://fonts.gstatic.com/s/raleway/v12/RJMlAoFXXQEzZoMSUteGWJBw1xU1rKptJj_0jans920.woff2') format('woff2');
 }
 
 @font-face {
-    font-family: 'raleway_regular';
-    src: url('https://fonts.gstatic.com/s/raleway/v12/QAUlVt1jXOgQavlW5wEfxQLUuEpTyoUstqEm5AMlJo4.woff2') format('woff2');
+  font-family: 'raleway_regular';
+  src: url('https://fonts.gstatic.com/s/raleway/v12/QAUlVt1jXOgQavlW5wEfxQLUuEpTyoUstqEm5AMlJo4.woff2') format('woff2');
 }
 
 @font-face {
-    font-family: 'raleway_bold';
-    src: url('https://fonts.gstatic.com/s/raleway/v12/JbtMzqLaYbbbCL9X6EvaIwzyDMXhdD8sAj6OAJTFsBI.woff2') format('woff2');
+  font-family: 'raleway_bold';
+  src: url('https://fonts.gstatic.com/s/raleway/v12/JbtMzqLaYbbbCL9X6EvaIwzyDMXhdD8sAj6OAJTFsBI.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Befolk';
+  src: url('/fonts/Befolk_Script.woff') format('woff2');;
 }
