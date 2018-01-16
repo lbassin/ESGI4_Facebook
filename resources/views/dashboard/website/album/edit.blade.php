@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Wawat')
+<?php /** @var \App\Http\Api\Album $album */ ?>
+
+@section('title', ucfirst($subdomain) . ' - ' . $album->getName())
 
 @section('header_scripts')
 @endsection
 
 @section('content')
-    <?php /** @var \App\Http\Api\Album $album */ ?>
     <div id="album-edit" class="wrapper">
         @include('dashboard.website.header')
 
