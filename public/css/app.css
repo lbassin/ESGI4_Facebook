@@ -2839,6 +2839,9 @@ a:hover {
   font-size: 50px;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 @media only screen and (max-width: 768px) {
