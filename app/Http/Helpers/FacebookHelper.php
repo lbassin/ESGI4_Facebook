@@ -36,7 +36,7 @@ class FacebookHelper
     /**
      *
      */
-    const FB_SCOPES = 'public_profile,email,manage_pages,user_photos,publish_pages';
+    const FB_SCOPES = 'public_profile,email,manage_pages,publish_pages';
 
     /**
      * @var Store

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Wawat')
+@section('title', ucfirst($subdomain) . ' - Avis')
 
 @section('header_scripts')
 @endsection
@@ -33,14 +33,11 @@
                         <div class="element-texte">
                             {{ $review->getText() }}
                         </div>
-                        <div class="overlay" data-id="{{ $review->getId() }}">
-                            <div class="visibility"><i class="fa {{ $review->isVisible() ? 'fa-eye' : 'fa-eye-slash' }}"
-                                                       aria-hidden="true"></i></div>
-                            <div class="border"></div>
+                        <div class="element-name" data-id="{{ $review->getId() }}">
+                            <input type="hidden" value="{{ $review->getRating() }}">
+                            <div class="visibility"><i class="fa {{ $review->isVisible() ? 'fa-eye' : 'fa-eye-slash' }}" aria-hidden="true"></i></div>
+                            <span></span>
                             <div class="details"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
-                        </div>
-                        <div class="element-name">
-                            <span>{{ $review->getRating() }}/5</span>
                         </div>
                     </article>
                 @endforeach
@@ -63,6 +60,20 @@
 
         initChangeVisibility();
         initSaveAction();
+        displayStars();
+
+        function displayStars() {
+            $(".element-name").each(function() {
+                var stars = 0;
+                for (i = 0; i < $(this).find("input").val(); i++) {
+                    $(this).find("span").append("<i class='fa fa-star' aria-hidden='true'></i>");
+                    stars++;              
+                }
+                for (stars; stars < 5; stars++) {
+                    $(this).find("span").append("<i class='fa fa-star-o' aria-hidden='true'></i>");           
+                }
+            });
+        }
 
         function initChangeVisibility() {
             list.find('.visibility').each(function () {

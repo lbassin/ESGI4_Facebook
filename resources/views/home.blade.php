@@ -14,15 +14,7 @@
             <div id="particles-js"></div>
         </div>
         <div id="home">
-            <nav>
-                <div class="logo">
-                    Wawat
-                </div>
-                <a href="#">Pricing</a>
-                <a href="#">Docs</a>
-                <a href="#">Support</a>
-                <a class="primary fb-login-open" href="#">Get started</a>
-            </nav>
+            @include('home.header')
 
             <div class="content">
                 <div class="text">
@@ -32,24 +24,21 @@
                     <button class="fb-login-open">Créez votre site</button>
                 </div>
                 <div class="image">
-                    <img src="{{ asset('images/home.jpg') }}" alt="">
+                    <div class="absolute-center">
+
+                        <!-- The Morphing Device -->
+                        <figure class="device">
+                            <figcaption class="ir">
+                                Responsive Web Design
+                            </figcaption>
+                        </figure>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="login-modal">
-        <div class="close-modal fb-login-close"><i class="fa fa-times" aria-hidden="true"></i></div>
-        <h3>Créez votre site web</h3>
-        <p>
-            Veuillez vous connectez à l'aide de votre compte facebook afin de synchroniser vos images
-        </p>
-        <button class="login-fb"><i class="fa fa-facebook" aria-hidden="true"></i> Continuer avec Facebook</button>
-        <p class="legend">
-            Nous ne publierons rien sur votre profil Facebook
-        </p>
-    </div>
-    <div class="login-modal-overlay fb-login-close"></div>
+    @include('home.login-modal')
 
     <script>
         $(document).ready(function () {

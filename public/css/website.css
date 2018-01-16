@@ -12,7 +12,7 @@ nav {
   height: 64px;
   line-height: 64px;
   -webkit-box-shadow: 0 5px 15px -1px rgba(0, 0, 0, 0.7);
-          box-shadow: 0 5px 15px -1px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 5px 15px -1px rgba(0, 0, 0, 0.7);
 }
 
 nav ul {
@@ -20,8 +20,8 @@ nav ul {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 nav ul li {

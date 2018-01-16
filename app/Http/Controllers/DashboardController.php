@@ -198,7 +198,12 @@ class DashboardController extends BaseController
     public function permissionsAction(): View
     {
         /** @var string $redirectTo */
-        $redirectTo = $this->session->get('redirectTo') ?: route('dashboard');
+        $redirectTo = $this->session->get('redirectTo');
+        if (!empty($redirectTo)) {
+            $redirectTo = url($redirectTo);
+        } else {
+            $redirectTo = url(route('dashboard'));
+        }
 
         $this->session->forget(FacebookHelper::FB_TOKEN_KEY);
 
