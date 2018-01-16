@@ -559,8 +559,8 @@ section {
 
 .wrapper-dashboard {
 	background: rgb(9, 9, 23);
-	background: -webkit-gradient(linear, left top, right top, from($color1), color-stop(57%, rgba(18, 18, 28, 0.97)), to(rgba(18, 18, 28, 0.8)));
-	background: linear-gradient(to right, $color1 0%, rgba(18, 18, 28, 0.97) 57%, rgba(18, 18, 28, 0.8) 100%);
+	background: -webkit-gradient(linear, left top, right top, from($color1), color-stop(57%, rgba(32, 33, 38, 0.97)), to(rgba(32, 33, 38, 0.8)));
+	background: linear-gradient(to right, $color1 0%, rgba(32, 33, 38, 0.97) 57%, rgba(32, 33, 38, 0.8) 100%);
 	position: absolute;
 	height: 100%;
 }
