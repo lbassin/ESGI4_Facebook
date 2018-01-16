@@ -34,17 +34,22 @@
         <div class="md-content list">
             <h1>NOUVEAU SITE</h1>
             <h2>Choisissez la page à synchroniser</h2>
-            <ul id="pages">
-                @foreach($pages as $page)
-                    <li class="page" data-id="{{ $page['id'] }}">
-                        <div>
-                            <img src="{{ $page['picture']['data']['url'] }}" alt="">
-                            <span>{{ $page['name'] }}</span>
-                        </div>
-                    </li>
-                @endforeach
-            </ul>
+            <div class="grid-modal">
+                <div class="grid-album-modal" id="pages">
+                    <?php /** @var \App\Http\Api\Album $album */ ?>
+                    @foreach($pages as $page)
+                        <article class="module-modal desktop-4 tablet-6 page" data-id="{{ $page['id'] }}">
+                            <div class="element-image-modal zoom" style="background: url('{{ $page['picture']['data']['url'] }}');background-repeat: no-repeat;background-position: center center;background-size: cover;">
+                            </div>
+                            <div class="element-name-modal">
+                                <span>{{ $page['name'] }}</span>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            </div>
         </div>
+
         <div class="md-content config" style="opacity: 0;">
             <h1>Choix de l'url</h1>
             <form action="{{ route('dashboard.new') }}">

@@ -1490,6 +1490,194 @@ a:hover {
   color: #202126;
 }
 
+.grid-modal {
+  margin-left: -2%;
+  margin-top: 75px;
+  zoom: 1;
+}
+
+.grid-modal .element-image-modal {
+  position: relative;
+  margin-left: calc(50% - 37.5px);
+  margin-top: 25px;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+}
+
+.grid-modal .grid-album-modal {
+  width: 100%;
+  float: right;
+}
+
+@media only screen and (max-width: 768px) {
+  .grid-modal .grid-album-modal {
+    width: 100%;
+  }
+}
+
+.grid-modal .module-modal {
+  position: relative;
+}
+
+.grid-modal .element-texte-modal {
+  background-color: #ddd;
+  height: 180px;
+  color: #000;
+  padding: 8px 14px;
+  text-align: justify;
+}
+
+.grid-modal .element-name-modal {
+  position: absolute;
+  bottom: 10px;
+  width: 80%;
+  margin-left: 10%;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  background-color: #202126;
+  border: 1px solid white;
+  border-radius: 5px;
+  color: white;
+  z-index: 110;
+}
+
+.grid-modal:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.module-modal {
+  float: left;
+  width: 98%;
+  margin-left: 2%;
+  margin-bottom: 2%;
+  background-color: #202126;
+  min-height: 175px;
+  position: relative;
+  border: 1px solid white;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+}
+
+.module-modal:hover {
+  background-color: white;
+}
+
+.module-modal:hover .element-image.zoom {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+@media only screen and (min-width: 481px) {
+  .tablet-1 {
+    width: 6.33333333%;
+  }
+
+  .tablet-2 {
+    width: 14.66666667%;
+  }
+
+  .tablet-3 {
+    width: 23%;
+  }
+
+  .tablet-4 {
+    width: 31.33333333%;
+  }
+
+  .tablet-5 {
+    width: 39.66666667%;
+  }
+
+  .tablet-6 {
+    width: 48%;
+  }
+
+  .tablet-7 {
+    width: 56.33333333%;
+  }
+
+  .tablet-8 {
+    width: 64.66666667%;
+  }
+
+  .tablet-9 {
+    width: 73%;
+  }
+
+  .tablet-10 {
+    width: 81.33333333%;
+  }
+
+  .tablet-11 {
+    width: 89.66666667%;
+  }
+
+  .tablet-12 {
+    width: 98%;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .desktop-1 {
+    width: 6.33333333%;
+  }
+
+  .desktop-2 {
+    width: 14.66666667%;
+  }
+
+  .desktop-3 {
+    width: 23%;
+  }
+
+  .desktop-4 {
+    width: 31.33333333%;
+  }
+
+  .desktop-5 {
+    width: 39.66666667%;
+  }
+
+  .desktop-6 {
+    width: 48%;
+  }
+
+  .desktop-7 {
+    width: 56.33333333%;
+  }
+
+  .desktop-8 {
+    width: 64.66666667%;
+  }
+
+  .desktop-9 {
+    width: 73%;
+  }
+
+  .desktop-10 {
+    width: 81.33333333%;
+  }
+
+  .desktop-11 {
+    width: 89.66666667%;
+  }
+
+  .desktop-12 {
+    width: 98%;
+  }
+}
+
 #flash-messages {
   position: absolute;
   left: 0;
