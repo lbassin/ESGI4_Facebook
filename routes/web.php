@@ -16,6 +16,9 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
     Route::get('/support', 'HomeController@supportAction')
         ->name('support');
 
+    Route::get('/documentation', 'HomeController@documentationAction')
+        ->name('docs');
+
     Route::post('/support', 'HomeController@supportSubmitAction')
         ->name('support.submit');
 
