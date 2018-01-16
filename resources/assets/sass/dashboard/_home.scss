@@ -19,6 +19,9 @@
 			font-size: 50px;
 			-webkit-transition: all 0.5s ease;
 			transition: all 0.5s ease;
+			position: absolute;
+			left: 0;
+			top: 0;
 			@include MQ(M) {
 				float: none;
 				text-align: center;
