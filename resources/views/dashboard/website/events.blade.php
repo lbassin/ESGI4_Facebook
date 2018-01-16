@@ -33,14 +33,10 @@
                         <div class="element-image"
                              style="background: url('{{ $event->getCover() }}');background-repeat: no-repeat;background-position: center center;background-size: cover;">
                         </div>
-                        <div class="overlay" data-id="{{ $event->getId() }}">
-                            <div class="visibility"><i class="fa {{ $event->isVisible() ? 'fa-eye' : 'fa-eye-slash' }}"
-                                                       aria-hidden="true"></i></div>
-                            <div class="border"></div>
-                            <div class="details"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
-                        </div>
-                        <div class="element-name">
+                        <div class="element-name" data-id="{{ $event->getId() }}">
+                            <div class="visibility"><i class="fa {{ $event->isVisible() ? 'fa-eye' : 'fa-eye-slash' }}" aria-hidden="true"></i></div>
                             <span>{{ $event->getName() }}</span>
+                            <div class="details"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
                         </div>
                     </article>
                 @endforeach

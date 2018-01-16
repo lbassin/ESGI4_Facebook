@@ -24,7 +24,16 @@
                     <button class="fb-login-open">Créez votre site</button>
                 </div>
                 <div class="image">
-                    <img src="{{ asset('images/home.jpg') }}" alt="">
+                    <div class="absolute-center">
+
+                        <!-- The Morphing Device -->
+                        <figure class="device">
+                            <figcaption class="ir">
+                                Responsive Web Design
+                            </figcaption>
+                        </figure>
+
+                    </div>
                 </div>
             </div>
         </div>

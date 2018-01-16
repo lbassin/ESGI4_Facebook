@@ -19,6 +19,7 @@
                     <li><a href="{{ route('dashboard.website.reviews', ['subdomain' => $subdomain]) }}">Gestion des avis</a></li>
                 </ul>
                 <div class="grid-album">
+                    <h2>Derniers albums</h2>
                     <?php /** @var \App\Http\Api\Album $album */ ?>
                     @foreach($albums as $album)
                         <a href="{{ route('dashboard.website.albums.edit', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}">

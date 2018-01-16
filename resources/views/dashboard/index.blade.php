@@ -49,7 +49,7 @@
             <h1>Choix de l'url</h1>
             <form action="{{ route('dashboard.new') }}">
                 <p>
-                    https://<input title="Website URL" type="text" style="text-align: center" name="new-page-url">.wawat.fr/
+                    https://<input class="input-new-page" title="Website URL" type="text" style="text-align: center" name="new-page-url">.wawat.fr/
                 </p>
                 <input type="hidden" name="new-page-id" value="">
 
