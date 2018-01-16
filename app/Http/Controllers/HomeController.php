@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Log;
@@ -38,6 +39,14 @@ class HomeController extends BaseController
     public function supportAction(): View
     {
         return view('support');
+    }
+
+    /**
+     * @return RedirectResponse
+     */
+    public function documentationAction(): RedirectResponse
+    {
+        return response()->redirectTo('https://lbassin.gitbooks.io/wawat/content/');
     }
 
     /**
