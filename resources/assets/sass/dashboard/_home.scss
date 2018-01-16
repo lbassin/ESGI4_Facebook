@@ -7,16 +7,16 @@
 	nav {
 		display: block;
 		height: 80px;
-		line-height: 80px;
+		line-height: 120px;
 		width: 100%;
 		text-align: right;
 		.logo {
 			float: left;
 			padding-left: 48px;
 			color: #fff;
-			font-family: raleway_regular, sans-serif;
+			font-family: Befolk, sans-serif;
 			font-weight: 400;
-			font-size: 38px;
+			font-size: 50px;
 			-webkit-transition: all 0.5s ease;
 			transition: all 0.5s ease;
 			@include MQ(M) {

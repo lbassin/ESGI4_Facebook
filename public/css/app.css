@@ -161,6 +161,11 @@ table {
   src: url("https://fonts.gstatic.com/s/raleway/v12/JbtMzqLaYbbbCL9X6EvaIwzyDMXhdD8sAj6OAJTFsBI.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: 'Befolk';
+  src: url("/fonts/Befolk_Script.woff") format("woff2");
+}
+
 /*********************************************
 ***************** LOADING ********************
 *********************************************/
@@ -2632,7 +2637,7 @@ a:hover {
 #home nav {
   display: block;
   height: 80px;
-  line-height: 80px;
+  line-height: 120px;
   width: 100%;
   text-align: right;
 }
@@ -2641,9 +2646,9 @@ a:hover {
   float: left;
   padding-left: 48px;
   color: #fff;
-  font-family: raleway_regular, sans-serif;
+  font-family: Befolk, sans-serif;
   font-weight: 400;
-  font-size: 38px;
+  font-size: 50px;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
