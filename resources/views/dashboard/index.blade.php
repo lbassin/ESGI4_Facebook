@@ -232,6 +232,7 @@
                 listModal.css({opacity: 0});
                 setTimeout(function () {
                     listModal.hide();
+                    configModal.css("display", "block");
                     configModal.animate({opacity: 1}, 250);
                 }, 300);
             });
@@ -280,6 +281,7 @@
             function hideModal() {
                 let listModal = $('.md-modal .md-content.list');
                 let configModal = $('.md-modal .md-content.config');
+                configModal.css("display", "none");
 
                 $('.md-modal').removeClass('md-show');
 
