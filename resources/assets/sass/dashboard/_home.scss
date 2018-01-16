@@ -23,20 +23,25 @@
 			left: 0;
 			top: 0;
 			@include MQ(M) {
-				float: none;
+				left: 0;
+				right: 0;
 				text-align: center;
-				padding: 0;
+				padding-left: 0;
+				top: 30px;
+				font-size: 75px;
 			}
 		}
 		a {
 			color: #fff;
 			padding: 10px 14px;
-			@include MQ(M) {
-				display: none;
-			}
 			&.primary {
 				border: 1px solid #fff;
 				border-radius: 25px;
+			}
+		}
+		@include MQ(M) {
+			a:not(:first-child) {
+				display: none;
 			}
 		}
 	}
@@ -48,20 +53,23 @@
 		-ms-flex-pack: justify;
 		justify-content: space-between;
 	}
+	@include MQ(M) {
+		.content {
+			margin-top: 50px;
+		}
+	}
 	.image {
-		width: 55%;
+		width: 50%;
+		margin-top: 90px;
 		text-align: center;
 		-webkit-transition: all 0.5s ease;
 		transition: all 0.5s ease;
 	}
 	.text {
-		width: 45%;
+		width: 50%;
 		text-align: center;
 		-webkit-transition: all 0.5s ease;
 		transition: all 0.5s ease;
-		@media only screen and (max-width: 1320px) {
-			width: 100%;
-		}
 		>div {
 			position: relative;
 			p {
@@ -229,21 +237,13 @@ $outline: rgba(255, 255, 255, .1);
 	}
 }
 
-.absolute-center {
-	position: relative;
-	width: 300px;
-	height: 222px;
-	left: calc(50% - 150px);
-	margin-top: 60px;
-}
-
 .ir {
 	font: 0/0 a;
 	text-shadow: none;
 	color: transparent;
 }
 
-@include MQ(M) {
+@include MQ(L) {
 	#home .content {
 		display: block;
 	}
@@ -252,9 +252,6 @@ $outline: rgba(255, 255, 255, .1);
 	}
 	#home .image {
 		width: 100%;
-	}
-	.absolute-center {
-		left: calc(50% - 150px);
 	}
 }
 
@@ -431,8 +428,8 @@ $outline: rgba(255, 255, 255, .1);
 		left: 100%;
 		margin: -5px 0 0 -20px;
 		background: #ece9f2;
-		-webkit-box-shadow: 0 0 0 250px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
-		box-shadow: 0 0 0 250px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
+		-webkit-box-shadow: 0 0 0 5000px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
+		box-shadow: 0 0 0 5000px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
 		-webkit-transform: scale(.9);
 		transform: scale(.9);
 	}
@@ -453,8 +450,8 @@ $outline: rgba(255, 255, 255, .1);
 		left: 50%;
 		margin: -20px 0 0 -5px;
 		background: #ece9f2;
-		-webkit-box-shadow: 0 0 0 250px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
-		box-shadow: 0 0 0 250px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
+		-webkit-box-shadow: 0 0 0 5000px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
+		box-shadow: 0 0 0 5000px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
 		-webkit-transform: scale(.9);
 		transform: scale(.9);
 	}
@@ -479,8 +476,8 @@ $outline: rgba(255, 255, 255, .1);
 		left: 100%;
 		margin: -5px 0 0 -20px;
 		background: #ece9f2;
-		-webkit-box-shadow: 0 0 0 250px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
-		box-shadow: 0 0 0 250px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
+		-webkit-box-shadow: 0 0 0 5000px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
+		box-shadow: 0 0 0 5000px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
 		-webkit-transform: scale(.9);
 		transform: scale(.9);
 	}
@@ -501,8 +498,8 @@ $outline: rgba(255, 255, 255, .1);
 		left: 50%;
 		margin: -20px 0 0 -5px;
 		background: #ece9f2;
-		-webkit-box-shadow: 0 0 0 250px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
-		box-shadow: 0 0 0 250px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
+		-webkit-box-shadow: 0 0 0 5000px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
+		box-shadow: 0 0 0 5000px rgba(255, 255, 255, 0.05), 0 0 0 100px transparent;
 		-webkit-transform: scale(.9);
 		transform: scale(.9);
 	}
