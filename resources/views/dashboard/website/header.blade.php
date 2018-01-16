@@ -4,7 +4,7 @@
         <div class="head-menu">
             <a href="{{ route('dashboard') }}">Dashboard</a>
             <a href="{{ route('docs') }}">Documentation</a>
-            <a href="#">Support</a>
+            <a href="{{ route('support') }}">Support</a>
             <a href="{{ route('dashboard.logout') }}">Deconnexion</a>
         </div>
     </div>
