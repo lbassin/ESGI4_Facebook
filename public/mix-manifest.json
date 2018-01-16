@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/css/website.css": "/css/website.css",
     "/js/particles.js": "/js/particles.js",
     "/js/fb-reAskPermissions.js": "/js/fb-reAskPermissions.js",
     "/js/fb-login.js": "/js/fb-login.js"

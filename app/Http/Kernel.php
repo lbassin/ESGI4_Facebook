@@ -2,7 +2,8 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\AddViewData;
+use App\Http\Middleware\AddDashboardDataToView;
+use App\Http\Middleware\AddWebsiteDataToView;
 use App\Http\Middleware\AuthFb;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\TrimStrings;
@@ -17,6 +18,7 @@ use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Spatie\CookieConsent\CookieConsentMiddleware;
 
 class Kernel extends HttpKernel
 {
@@ -33,9 +35,10 @@ class Kernel extends HttpKernel
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
         TrustProxies::class,
+        CookieConsentMiddleware::class
     ];
 
-    /**
+    /**T
      * The application's route middleware groups.
      *
      * @var array
@@ -64,6 +67,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'AuthFb' => AuthFb::class,
         'WebsiteExists' => WebsiteExists::class,
-        'AddViewData' => AddViewData::class
+        'AddDashboardDataToView' => AddDashboardDataToView::class,
+        'AddWebsiteDataToView' => AddWebsiteDataToView::class
     ];
 }

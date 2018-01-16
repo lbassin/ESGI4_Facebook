@@ -2,9 +2,16 @@
 
 namespace App\Http\Api;
 
+use App\Http\Helpers\AlbumHelper;
 use Facebook\GraphNodes\GraphEdge;
 use Facebook\GraphNodes\GraphNode;
+use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 
+/**
+ * Class Album
+ *
+ * @author Laurent Bassin <laurent@bassin.info>
+ */
 class Album
 {
     /**
@@ -16,31 +23,89 @@ class Album
      * @var int
      */
     private $randomPictureReturned = 3;
+    /**
+     * @var LaravelFacebookSdk
+     */
+    private $fb;
+    /**
+     * @var AlbumHelper
+     */
+    private $albumHelper;
+    /**
+     * @var \App\Model\Album
+     */
+    private $model;
 
     /**
      * Album constructor.
      * @param GraphNode $graphNode
      */
-    public function __construct(GraphNode $graphNode)
+    public function __construct(
+        GraphNode $graphNode
+    )
     {
         $this->graphNode = $graphNode;
+        $this->fb = App()->make(LaravelFacebookSdk::class);
+        $this->albumHelper = App()->make(AlbumHelper::class);
+    }
+
+    /**
+     * @return string
+     */
+    private function getPhotosGraphWithoutLimit(): string
+    {
+        /** @var string $query */
+        return $this->getId() . '/photos?fields=id,name,images,album{id}';
     }
 
     /**
      * @return array
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
-    public function getPhotos()
+    public function getPhotos(): array
     {
-        /** @var  $photos */
-        $photosApi = $this->graphNode->getField('photos');
+        /** @var string $query */
+        $query = $this->getPhotosGraphWithoutLimit();
+        /** @var GraphEdge $graph */
+        $graph = $this->fb->get($query)->getGraphEdge();
 
-        if (empty($photosApi)) {
+        /** @var array $photos */
+        $photos = [];
+        foreach ($graph->all() as $photo) {
+            $apiPhoto = new Photo($photo);
+            $photos[] = $this->albumHelper->fillPhotoFromDatabase($apiPhoto);
+        }
+
+
+        return $photos;
+    }
+
+    /**
+     * @param int $page
+     * @return array
+     * @throws \Facebook\Exceptions\FacebookSDKException
+     */
+    public function getPhotosByPage(int $page): array
+    {
+        /** @var string $query */
+        $query = $this->getPhotosGraphWithoutLimit() . '&limit=9';
+        /** @var GraphEdge $graph */
+        $graph = $this->fb->get($query)->getGraphEdge();
+
+        // Omg that's beautiful •ᴗ•
+        for ($i = 1; $i < $page; $i++) {
+            $graph = $this->fb->next($graph);
+        }
+
+        if (empty($graph)) {
             return [];
         }
 
+        /** @var array $photos */
         $photos = [];
-        foreach ($photosApi as $photo) {
-            $photos[] = new Photo($photo);
+        foreach ($graph->all() as $photo) {
+            $apiPhoto = new Photo($photo);
+            $photos[] = $this->albumHelper->fillPhotoFromDatabase($apiPhoto);
         }
 
         return $photos;
@@ -49,6 +114,7 @@ class Album
     /**
      * @param string $pictureSize
      * @return array
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function getPreview(string $pictureSize): array
     {
@@ -164,6 +230,38 @@ class Album
     public function getId(): string
     {
         return $this->graphNode->getField('id', '');
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        if (!$this->model) {
+            return '';
+        }
+
+        return $this->model->getUrl();
+    }
+
+    /**
+     * @param \App\Model\Album $album
+     */
+    public function setModel(\App\Model\Album $album): void
+    {
+        $this->model = $album;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisible(): bool
+    {
+        if (!$this->model) {
+            return false;
+        }
+
+        return $this->model->isVisible();
     }
 
 }

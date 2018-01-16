@@ -60,27 +60,27 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 35);
+/******/ 	return __webpack_require__(__webpack_require__.s = 36);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 35:
+/***/ 36:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(36);
+module.exports = __webpack_require__(37);
 
 
 /***/ }),
 
-/***/ 36:
+/***/ 37:
 /***/ (function(module, exports) {
 
 window.fbLoaded = function () {
-    addFacebookLoginEvent();
+    addFacebookReAuthEvent();
 };
 
-function addFacebookLoginEvent() {
+function addFacebookReAuthEvent() {
     $('#reAskPermissions').click(function () {
         FB.login(function (result) {
             window.location.href = redirectTo;

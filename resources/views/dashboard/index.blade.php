@@ -1,20 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Foliobook')
+@section('title', 'Wawat')
 
 @section('header_scripts')
 @endsection
 
 @section('content')
-    <div class="image-gradient">
-    </div>
+    <div class="image-gradient"></div>
     <div class="wrapper-dashboard">
-        <div class="head">
-            <div class="user-pic">
-                <img src="{{ $userHelper->getPicture() }}" alt="">
-            </div>
-            <span class="user-name">{{ $userHelper->getName() }}</span>
-        </div>
+        @include('dashboard.website.header')
 
         <div class="select-dashboard">
             <div class="select-choice">
@@ -23,7 +17,7 @@
                 </div>
                 <div class="select-action">
                     <select id="website-select">
-                        <option value="" disabled selected>Website !</option>
+                        <option value="" disabled selected>Website</option>
                         @foreach($websites as $website)
                             <option value="{{ $website['subdomain'] }}">{{ $website['name'] }}</option>
                         @endforeach
@@ -37,21 +31,34 @@
     </div>
 
     <div class="md-modal md-effect-12">
-        <div class="md-content">
+        <div class="md-content list">
             <h1>NOUVEAU SITE</h1>
             <h2>Choisissez la page à synchroniser</h2>
-            <ul>
+            <ul id="pages">
                 @foreach($pages as $page)
-                    <li>
-                        <a href="{{ route('dashboard.new', ['id' => $page['id']]) }}">
-                            <div>
-                                <img src="{{ $page['picture']['data']['url'] }}" alt="">
-                                <span>{{ $page['name'] }}</span>
-                            </div>
-                        </a>
+                    <li class="page" data-id="{{ $page['id'] }}">
+                        <div>
+                            <img src="{{ $page['picture']['data']['url'] }}" alt="">
+                            <span>{{ $page['name'] }}</span>
+                        </div>
                     </li>
                 @endforeach
             </ul>
+        </div>
+        <div class="md-content config" style="opacity: 0;">
+            <h1>Choix de l'url</h1>
+            <form action="{{ route('dashboard.new') }}">
+                <p>
+                    https://<input title="Website URL" type="text" style="text-align: center" name="new-page-url">.wawat.fr/
+                </p>
+                <input type="hidden" name="new-page-id" value="">
+
+                <div>
+                    <button id="submit-new-page">
+                        Créer mon site
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -63,11 +70,21 @@
 
     <div class="loading-overlay">
         <div class="loading">
-            <div class="animation"><div class="circle one"></div></div>
-            <div class="animation"><div class="circle two"></div></div>
-            <div class="animation"><div class="circle three"></div></div>
-            <div class="animation"><div class="circle four"></div></div>
-            <div class="animation"><div class="circle five"></div></div>
+            <div class="animation">
+                <div class="circle one"></div>
+            </div>
+            <div class="animation">
+                <div class="circle two"></div>
+            </div>
+            <div class="animation">
+                <div class="circle three"></div>
+            </div>
+            <div class="animation">
+                <div class="circle four"></div>
+            </div>
+            <div class="animation">
+                <div class="circle five"></div>
+            </div>
         </div>
     </div>
 
@@ -135,9 +152,14 @@
                 }
             });
 
-            $('.dropdown .option').on('click', function () {
+            $('.dropdown .option').on('click', function (event) {
                 let selected = $(this);
                 let dropdown = selected.closest('.dropdown');
+
+                if (selected.hasClass('disabled')) {
+                    event.preventDefault();
+                    return;
+                }
 
                 selected.closest('.list').find('.selected').removeClass('selected');
                 selected.addClass('selected');
@@ -187,6 +209,54 @@
             });
         }
 
+        function initNewPage() {
+            let pages = $('#pages .page');
+            let listModal = $('.md-modal .md-content.list');
+            let configModal = $('.md-modal .md-content.config');
+
+            pages.click(function () {
+                let sourceId = $(this).attr('data-id');
+                $('input[name="new-page-id"]').val(sourceId);
+
+                $.post('{{ route('dashboard.suggest.url') }}', {id: sourceId}).done(
+                    function (response) {
+                        $('input[name="new-page-url"]').val(response.url);
+                    }
+                ).always();
+
+                listModal.css({opacity: 0});
+                setTimeout(function () {
+                    listModal.hide();
+                    configModal.animate({opacity: 1}, 250);
+                }, 300);
+            });
+
+            $('.md-content.config form').on('submit', function (event) {
+                event.preventDefault();
+
+                let id = this['new-page-id'].value;
+                let url = this['new-page-url'].value;
+
+                $.post(this.action, {id: id, url: url}).done(
+                    function (response) {
+                        if (response.error) {
+                            addError(response.message);
+                            return;
+                        }
+
+                        addSuccess("Website created");
+                        setTimeout(function () {
+                            window.location.href = response.url;
+                        }, 750);
+                    }).fail(
+                    function (response) {
+                        addError(response.responseJSON.message);
+                    }
+                );
+            });
+        }
+
+
         $(function () {
             $('.add-page').on('click', function () {
                 $('.md-modal').addClass('md-show');
@@ -194,15 +264,30 @@
 
             $(document).on('keydown', function (event) {
                 if (event.keyCode === 27) {
-                    $('.md-modal').removeClass('md-show');
+                    hideModal();
                 }
             });
 
             $('.md-close').on('click', function () {
-                $('.md-modal').removeClass('md-show');
+                hideModal();
             });
 
+            function hideModal() {
+                let listModal = $('.md-modal .md-content.list');
+                let configModal = $('.md-modal .md-content.config');
+
+                $('.md-modal').removeClass('md-show');
+
+                listModal.css({opacity: 1});
+                listModal.show();
+                configModal.css({opacity: 0});
+
+                $('input[name="new-page-url"]').val('');
+            }
+
             initDropdown();
+            initNewPage();
         });
     </script>
+
 @endsection

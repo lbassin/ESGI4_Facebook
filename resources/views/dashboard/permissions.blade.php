@@ -28,6 +28,5 @@
     </script>
     <script src="{{ asset('js/fb-reAskPermissions.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/fb-login.js') }}"></script>
     <script src="{{ asset('js/particles.js') }}"></script>
 @endsection

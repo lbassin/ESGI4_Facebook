@@ -19,31 +19,8 @@ use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
  * Class CheckAuthFb
  * @package App\Http\Middleware
  */
-class AddViewData
+class AddWebsiteDataToView
 {
-    /**
-     * @var UserHelper
-     */
-    private $userHelper;
-    /**
-     * @var WebsiteHelper
-     */
-    private $websiteHelper;
-
-    /**
-     * AuthFb constructor.
-     * @param UserHelper $userHelper
-     * @param WebsiteHelper $websiteHelper
-     */
-    public function __construct(
-        UserHelper $userHelper,
-        WebsiteHelper $websiteHelper
-    )
-    {
-        $this->userHelper = $userHelper;
-        $this->websiteHelper = $websiteHelper;
-    }
-
     /**
      * @param $request
      * @param Closure $next
@@ -51,8 +28,7 @@ class AddViewData
      */
     public function handle(Request $request, Closure $next)
     {
-        view()->share('userHelper', $this->userHelper);
-        view()->share('subdomain', $this->websiteHelper->getCurrentWebsite()->getSubDomain());
+        view()->share('subdomain', $request->route('subdomain'));
 
         return $next($request);
     }

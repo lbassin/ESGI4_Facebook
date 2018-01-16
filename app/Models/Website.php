@@ -60,6 +60,14 @@ class Website extends Model
     }
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->{self::ID};
+    }
+
+    /**
      * @return string
      * @throws \Facebook\Exceptions\FacebookSDKException
      */
@@ -100,6 +108,8 @@ class Website extends Model
                 'message' => 'The subdomain is not valid'
             ];
         }
+
+        $this->{self::SUBDOMAIN} = strtolower($this->getSubDomain());
 
         return parent::save($options);
     }
