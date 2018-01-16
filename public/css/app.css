@@ -2529,12 +2529,37 @@ a:hover {
   color: #fff;
 }
 
+#support h1 {
+  text-align: center;
+  font-size: 35px;
+  color: white;
+  margin-bottom: 50px;
+}
+
+#support form {
+  text-align: center;
+}
+
+#support form p {
+  margin-bottom: 12px;
+}
+
+#support form label {
+  color: #fff;
+}
+
+#support form input,
+#support form text {
+  padding: 6px 12px;
+  width: 250px;
+}
+
 #policy {
   padding: 50px;
 }
 
 #policy h1 {
-  text-align: -webkit-center;
+  text-align: center;
   font-size: 35px;
   color: white;
   margin-bottom: 50px;
@@ -2555,7 +2580,7 @@ a:hover {
 
 #policy div {
   color: #ababab;
-  padding: 20px 20px 0px 20px;
+  padding: 20px 20px 0 20px;
 }
 
 #policy p {

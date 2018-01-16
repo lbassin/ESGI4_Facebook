@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Wawat')
+@section('title', ucfirst($subdomain) . ' - Events')
 
 @section('header_scripts')
 @endsection
