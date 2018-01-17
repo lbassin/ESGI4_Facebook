@@ -21,6 +21,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+    <script src="{{ asset('js/app.js') }}"></script>
     @yield('header_scripts')
 </head>
 <body>
@@ -132,6 +133,5 @@ $websiteHelper = resolve('App\Http\Helpers\WebsiteHelper');
         });
     });
 </script>
-<script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
