@@ -161,6 +161,7 @@ class AuthFb
 
     /**
      *
+     * @throws FacebookSDKException
      */
     private function setSessionData(): void
     {

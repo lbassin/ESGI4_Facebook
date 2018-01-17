@@ -105,7 +105,7 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
 
 // Website viewer
 Route::domain('{subdomain}.' . $appHelper->getAppUrlWithoutHttp(false))
-    ->middleware(['WebsiteExists', 'AddWebsiteDataToView'])
+    ->middleware(['CanDisplayWebsite', 'AddWebsiteDataToView'])
     ->group(function () {
         Route::get('/', 'WebsiteController@indexAction')
             ->name('website.home');

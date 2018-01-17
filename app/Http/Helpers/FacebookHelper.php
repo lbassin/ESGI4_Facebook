@@ -136,11 +136,20 @@ class FacebookHelper
     }
 
     /**
-     * @return string
+     * @throws FacebookSDKException
      */
     public function getUserId(): string
     {
-        return $this->session->get(FacebookHelper::FB_USER_ID_KEY) ?: '';
+        if (!$this->session->has(self::FB_USER_ID_KEY)) {
+            /** @var FacebookResponse $response */
+            $response = $this->fb->get('me?fields=id')->getDecodedBody();
+
+            if (isset($response['id'])) {
+                $this->session->put(self::FB_USER_ID_KEY, $response['id']);
+            }
+        }
+
+        return $this->session->get(self::FB_USER_ID_KEY);
     }
 
     /**
@@ -462,7 +471,7 @@ class FacebookHelper
     /**
      * @return string
      */
-    private function getAppToken(): string
+    public function getAppToken(): string
     {
         return env('FACEBOOK_APP_ID') . '|' . env('FACEBOOK_APP_SECRET');
     }
