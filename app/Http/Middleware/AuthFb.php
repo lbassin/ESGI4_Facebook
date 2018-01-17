@@ -160,6 +160,7 @@ class AuthFb
     }
 
     /**
+     *
      * @throws FacebookSDKException
      */
     private function setSessionData(): void
@@ -167,24 +168,9 @@ class AuthFb
         /** @var string $fbToken */
         $fbToken = $this->fb->getDefaultAccessToken()->getValue();
         /** @var string $fbUserId */
-        $fbUserId = $this->getUserId();
+        $fbUserId = $this->fbHelper->getUserId();
 
         $this->session->put(FacebookHelper::FB_TOKEN_KEY, $fbToken);
-        $this->session->put(FacebookHelper::FB_USER_ID, $fbUserId);
-    }
-
-    /**
-     * @throws FacebookSDKException
-     */
-    private function getUserId(): string
-    {
-        /** @var FacebookResponse $response */
-        $response = $this->fb->get('me?fields=id')->getDecodedBody();
-
-        if (!isset($response['id'])) {
-            return $response['id'];
-        }
-
-        return $response['id'];
+        $this->session->put(FacebookHelper::FB_USER_ID_KEY, $fbUserId);
     }
 }

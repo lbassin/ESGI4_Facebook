@@ -22,6 +22,29 @@ use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 class AddWebsiteDataToView
 {
     /**
+     * @var LaravelFacebookSdk
+     */
+    private $fb;
+    /**
+     * @var FacebookHelper
+     */
+    private $fbHelper;
+
+    /**
+     * AddWebsiteDataToView constructor.
+     * @param LaravelFacebookSdk $fb
+     * @param FacebookHelper $fbHelper
+     */
+    public function __construct(
+        LaravelFacebookSdk $fb,
+        FacebookHelper $fbHelper
+    )
+    {
+        $this->fb = $fb;
+        $this->fbHelper = $fbHelper;
+    }
+
+    /**
      * @param $request
      * @param Closure $next
      * @return mixed
@@ -29,6 +52,8 @@ class AddWebsiteDataToView
     public function handle(Request $request, Closure $next)
     {
         view()->share('subdomain', $request->route('subdomain'));
+
+        $this->fb->setDefaultAccessToken($this->fbHelper->getAppToken());
 
         return $next($request);
     }

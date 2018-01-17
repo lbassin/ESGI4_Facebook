@@ -16,4 +16,5 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .js('resources/assets/js/fb/fb-reAskPermissions', 'public/js')
     .js('resources/assets/js/particles.js', 'public/js')
     .sass('resources/assets/sass/dashboard/app.scss', 'public/css')
-    .sass('resources/assets/sass/website/website.scss', 'public/css');
+    .sass('resources/assets/sass/website/website.scss', 'public/css')
+    .sass('resources/assets/sass/admin/admin.scss', 'public/css');

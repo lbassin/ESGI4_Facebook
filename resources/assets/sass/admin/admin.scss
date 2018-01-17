@@ -1,0 +1,28 @@
+#admin {
+  padding-top: 24px;
+  color: #fff;
+
+
+  h1 {
+    font-size: 56px;
+  }
+
+  h2 {
+    font-size: 42px;
+    text-align: left;
+  }
+
+  .group{
+    margin-top: 56px;
+    width: 75%;
+  }
+
+  table{
+    margin-top: 16px;
+  }
+
+  table, th, td{
+    padding: 8px;
+    border: 1px solid #fff;
+  }
+}

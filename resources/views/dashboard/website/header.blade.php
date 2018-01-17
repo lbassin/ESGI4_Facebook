@@ -1,3 +1,4 @@
+<?php /** @var \App\Http\Helpers\UserHelper $userHelper */ ?>
 <div class="head">
     <div class="user-pic">
         <img src="{{ $userHelper->getPicture() }}" alt="">

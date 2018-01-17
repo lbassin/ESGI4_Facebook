@@ -32,7 +32,15 @@ class FacebookHelper
     /**
      *
      */
-    const FB_USER_ID = 'fb_user_id';
+    const FB_USER_ID_KEY = 'fb_user_id';
+    /**
+     *
+     */
+    const FB_NAME_KEY = 'fb_name';
+    /**
+     *
+     */
+    const FB_PICTURE_KEY = 'fb_picture';
     /**
      *
      */
@@ -93,7 +101,7 @@ class FacebookHelper
     public function tokenIsValid(string $token): bool
     {
         /** @var string $appToken */
-        $appToken = env('FACEBOOK_APP_ID') . '|' . env('FACEBOOK_APP_SECRET');
+        $appToken = $this->getAppToken();
 
         /** @var FacebookResponse $response */
         $response = $this->fb->get('debug_token?input_token=' . $token, $appToken);
@@ -128,11 +136,20 @@ class FacebookHelper
     }
 
     /**
-     * @return string
+     * @throws FacebookSDKException
      */
     public function getUserId(): string
     {
-        return $this->session->get(FacebookHelper::FB_USER_ID) ?: '';
+        if (!$this->session->has(self::FB_USER_ID_KEY)) {
+            /** @var FacebookResponse $response */
+            $response = $this->fb->get('me?fields=id')->getDecodedBody();
+
+            if (isset($response['id'])) {
+                $this->session->put(self::FB_USER_ID_KEY, $response['id']);
+            }
+        }
+
+        return $this->session->get(self::FB_USER_ID_KEY);
     }
 
     /**
@@ -158,14 +175,18 @@ class FacebookHelper
      */
     public function getUserPhoto(): string
     {
-        /** @var FacebookResponse $response */
-        $response = $this->fb->get('/me/picture?fields=url&redirect=false')->getDecodedBody();
+        if (!$this->session->has(self::FB_PICTURE_KEY)) {
+            /** @var FacebookResponse $response */
+            $response = $this->fb->get('/me/picture?fields=url&redirect=false')->getDecodedBody();
 
-        if (!isset($response['data']['url'])) {
-            return '';
+            if (!isset($response['data']['url'])) {
+                return '';
+            }
+
+            $this->session->put(self::FB_PICTURE_KEY, $response['data']['url']);
         }
 
-        return $response['data']['url'];
+        return $this->session->get(self::FB_PICTURE_KEY);
     }
 
     /**
@@ -174,14 +195,18 @@ class FacebookHelper
      */
     public function getUserName(): string
     {
-        /** @var FacebookResponse $response */
-        $response = $this->fb->get('/me?fields=name')->getDecodedBody();
+        if (!$this->session->has(self::FB_NAME_KEY)) {
+            /** @var FacebookResponse $response */
+            $response = $this->fb->get('/me?fields=name')->getDecodedBody();
 
-        if (!isset($response['name'])) {
-            return '';
+            if (!isset($response['name'])) {
+                return '';
+            }
+
+            $this->session->put(self::FB_NAME_KEY, $response['name']);
         }
 
-        return $response['name'];
+        return $this->session->get(self::FB_NAME_KEY);
     }
 
     /**
@@ -411,5 +436,43 @@ class FacebookHelper
         }
 
         die('Review not found'); // TODO
+    }
+
+    /**
+     * @return array
+     * @throws FacebookSDKException
+     */
+    public function getAdminUsers(): array
+    {
+        /** @var array $users */
+        $users = [];
+        /** @var string $appToken */
+        $appToken = $this->getAppToken();
+        /** @var string $query */
+        $query = '/' . env('FACEBOOK_APP_ID') . '/roles?fields=user,role';
+
+        /** @var GraphEdge $response */
+        $response = $this->fb->get($query, $appToken)->getGraphEdge();
+        /** @var array $allowedGroups */
+        $allowedGroups = ['developers', 'administrators'];
+
+        /** @var GraphNode $user */
+        foreach ($response->all() as $user) {
+            if (!in_array($user->getField('role'), $allowedGroups)) {
+                continue;
+            }
+
+            $users[] = $user->getField('user');
+        }
+
+        return $users;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAppToken(): string
+    {
+        return env('FACEBOOK_APP_ID') . '|' . env('FACEBOOK_APP_SECRET');
     }
 }

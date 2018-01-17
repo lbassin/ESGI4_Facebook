@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model;
 
 use App\Http\Helpers\FacebookHelper;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -117,9 +118,25 @@ class Website extends Model
     /**
      * @return mixed
      */
-    public function getSourceId()
+    public function getSourceId(): int
     {
         return $this->{Website::SOURCE_ID};
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserId(): int
+    {
+        return $this->{Website::USER_ID};
+    }
+
+    public function getUpdatedAt(): string
+    {
+        /** @var Carbon $date */
+        $date = $this->{$this->getUpdatedAtColumn()};
+
+        return $date->format('d/m/Y H:i');
     }
 
     /**

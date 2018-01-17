@@ -1,0 +1,30 @@
+#admin {
+  padding-top: 24px;
+  color: #fff;
+}
+
+#admin h1 {
+  font-size: 56px;
+}
+
+#admin h2 {
+  font-size: 42px;
+  text-align: left;
+}
+
+#admin .group {
+  margin-top: 56px;
+  width: 75%;
+}
+
+#admin table {
+  margin-top: 16px;
+}
+
+#admin table,
+#admin th,
+#admin td {
+  padding: 8px;
+  border: 1px solid #fff;
+}
+
