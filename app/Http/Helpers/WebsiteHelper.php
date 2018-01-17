@@ -98,7 +98,15 @@ class WebsiteHelper
      */
     public function getCurrentWebsite()
     {
-        return $this->session->get(self::WEBSITE_KEY) ?: new Website();
+        /** @var string $sourceId */
+        $sourceId = $this->session->get(self::WEBSITE_KEY);
+        /** @var Website $website */
+        $website = Website::where(Website::SOURCE_ID, $sourceId)->first();
+        if(empty($website)){
+            $website = new Website();
+        }
+
+        return $website;
     }
 
     /**
@@ -106,7 +114,7 @@ class WebsiteHelper
      */
     public function setCurrentWebsite(Website $website)
     {
-        $this->session->put(self::WEBSITE_KEY, $website);
+        $this->session->put(self::WEBSITE_KEY, $website->getSourceId());
     }
 
     /**
