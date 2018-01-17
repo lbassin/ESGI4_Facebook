@@ -94,6 +94,11 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
         Route::post('/dashboard/website/{subdomain}/reviews/details', 'Dashboard\ReviewController@detailsAction')
             ->name('dashboard.website.reviews.details');
     });
+
+    Route::prefix(env('ADMIN_URL'))->group(function () {
+        Route::get('/', 'AdminController@indexAction')
+            ->name('admin.index');
+    });
 });
 
 // Website viewer

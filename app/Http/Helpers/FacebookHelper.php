@@ -93,7 +93,7 @@ class FacebookHelper
     public function tokenIsValid(string $token): bool
     {
         /** @var string $appToken */
-        $appToken = env('FACEBOOK_APP_ID') . '|' . env('FACEBOOK_APP_SECRET');
+        $appToken = $this->getAppToken();
 
         /** @var FacebookResponse $response */
         $response = $this->fb->get('debug_token?input_token=' . $token, $appToken);
@@ -411,5 +411,43 @@ class FacebookHelper
         }
 
         die('Review not found'); // TODO
+    }
+
+    /**
+     * @return array
+     * @throws FacebookSDKException
+     */
+    public function getAdminUsers(): array
+    {
+        /** @var array $users */
+        $users = [];
+        /** @var string $appToken */
+        $appToken = $this->getAppToken();
+        /** @var string $query */
+        $query = '/' . env('FACEBOOK_APP_ID') . '/roles?fields=user,role';
+
+        /** @var GraphEdge $response */
+        $response = $this->fb->get($query, $appToken)->getGraphEdge();
+        /** @var array $allowedGroups */
+        $allowedGroups = ['developers', 'administrators'];
+
+        /** @var GraphNode $user */
+        foreach ($response->all() as $user) {
+            if (!in_array($user->getField('role'), $allowedGroups)) {
+                continue;
+            }
+
+            $users[] = $user->getField('user');
+        }
+
+        return $users;
+    }
+
+    /**
+     * @return string
+     */
+    private function getAppToken(): string
+    {
+        return env('FACEBOOK_APP_ID') . '|' . env('FACEBOOK_APP_SECRET');
     }
 }
