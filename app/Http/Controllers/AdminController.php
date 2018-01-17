@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Helpers\FacebookHelper;
+use App\Model\Website;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 /**
@@ -31,11 +33,14 @@ class AdminController extends BaseController
 
     /**
      * @return View
-     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function indexAction(): View
     {
-        $this->fbHelper->getAdminUsers();
-        return view('admin.index');
+        /** @var Collection $websites */
+        $websites = Website::all();
+
+        return view('admin.index', [
+            'websites' => $websites
+        ]);
     }
 }
