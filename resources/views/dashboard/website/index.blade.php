@@ -52,7 +52,7 @@
 
                 <div>
                     <button id="submit-new-album">
-                        Créé cet album
+                        Créer cet album
                     </button>
                 </div>
             </form>
@@ -65,7 +65,16 @@
         </button>
     </div>
 
+    @include('dashboard.website.loader')
+
     <script>
+        $(".grid ul a").on('click', function() {
+            showLoader('loader');
+        });
+        $(".grid .grid-album a").on('click', function() {
+            showLoader('loader');
+        });
+
         $('.nav-create').click(function () {
             $('.md-modal').addClass('md-show');
         });

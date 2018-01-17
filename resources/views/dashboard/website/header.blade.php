@@ -15,4 +15,7 @@
     $('.head').find('.user-pic').click(function () {
         $('.head').find('.head-menu').stop().toggle('active');
     });
+    $('.head-menu a').on('click', function() {
+        showLoader('loader');
+    })
 </script>

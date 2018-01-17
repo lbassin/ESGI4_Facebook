@@ -167,77 +167,6 @@ table {
 }
 
 /*********************************************
-***************** LOADING ********************
-*********************************************/
-
-@-webkit-keyframes loading {
-  0% {
-    -webkit-transform: rotate(0deg);
-    opacity: 0;
-  }
-
-  15% {
-    opacity: 1;
-  }
-
-  25% {
-    -webkit-transform: rotate(270deg);
-    opacity: 1;
-  }
-
-  50% {
-    -webkit-transform: rotate(960deg);
-    opacity: 1;
-  }
-
-  80% {
-    -webkit-transform: rotate(1300deg);
-    opacity: 1;
-  }
-
-  100% {
-    -webkit-transform: rotate(1820deg);
-    opacity: 0;
-  }
-}
-
-@keyframes loading {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-    opacity: 0;
-  }
-
-  15% {
-    opacity: 1;
-  }
-
-  25% {
-    -webkit-transform: rotate(270deg);
-    transform: rotate(270deg);
-    opacity: 1;
-  }
-
-  50% {
-    -webkit-transform: rotate(960deg);
-    transform: rotate(960deg);
-    opacity: 1;
-  }
-
-  80% {
-    -webkit-transform: rotate(1300deg);
-    transform: rotate(1300deg);
-    opacity: 1;
-  }
-
-  100% {
-    -webkit-transform: rotate(1820deg);
-    transform: rotate(1820deg);
-    opacity: 0;
-  }
-}
-
-/*********************************************
 ****************** APPEAR ********************
 *********************************************/
 
@@ -418,11 +347,7 @@ html {
 }
 
 body {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  overflow-x: hidden;
 }
 
 /*********************************************
@@ -1252,7 +1177,7 @@ a:hover {
   right: 0;
   width: 75%;
   height: 0;
-  z-index: 2000;
+  z-index: 825;
   visibility: hidden;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -1686,6 +1611,96 @@ a:hover {
   }
 }
 
+.vertical-centered-box {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background-color: #202126;
+  z-index: 1000;
+  display: none;
+  opacity: 0;
+}
+
+.vertical-centered-box .content {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+  font-size: 0;
+}
+
+.loader-circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  -webkit-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  margin-left: -60px;
+  margin-top: -60px;
+}
+
+.loader-line-mask {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 60px;
+  height: 120px;
+  margin-left: -60px;
+  margin-top: -60px;
+  overflow: hidden;
+  -webkit-transform-origin: 60px 60px;
+  transform-origin: 60px 60px;
+  -webkit-mask-image: -webkit-linear-gradient(top, #000000, transparent);
+  -webkit-animation: rotate 1.2s infinite linear;
+  animation: rotate 1.2s infinite linear;
+}
+
+.loader-line-mask .loader-line {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  -webkit-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.logo-wawat {
+  font-family: Befolk, sans-serif;
+  font-weight: 400;
+  font-size: 50px;
+  position: absolute;
+  left: calc(50% - 28px);
+  top: calc(50% - 12px);
+  color: #929292;
+}
+
+@-webkit-keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
 #flash-messages {
   position: absolute;
   left: 0;
@@ -1699,12 +1714,12 @@ a:hover {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  z-index: 850;
+  -ms-flex-pack: center;
+  justify-content: center;
+  z-index: 1100;
 }
 
 #flash-messages .message span {
@@ -1721,11 +1736,13 @@ a:hover {
 }
 
 #flash-messages .message span.success {
-  background-color: #26A65B;
+  background-color: #202127;
+  border: 1px solid white;
 }
 
 #flash-messages .message span.error {
-  background-color: #D91E18;
+  background-color: #202127;
+  border: 1px solid white;
 }
 
 #flash-messages .message span.show {

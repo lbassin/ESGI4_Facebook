@@ -6,11 +6,17 @@
   margin: auto;
   width: 100%;
   text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
-  z-index: 850;
-
+  z-index: 1100;
   .message {
     span {
       display: inline-block;
@@ -19,22 +25,21 @@
       padding: 12px 24px;
       border-radius: 25px;
       font-family: 'raleway_regular', sans-serif;
+      -webkit-transition: all 0.5s ease;
       transition: all 0.5s ease;
       opacity: 0;
       margin-bottom: 12px;
-
       &.success {
-        background-color: #26A65B;
+        background-color: #202127;
+        border: 1px solid white;
       }
-
       &.error {
-        background-color: #D91E18;
+        background-color: #202127;
+        border: 1px solid white;
       }
-
       &.show {
         opacity: 1;
       }
     }
-
   }
 }
