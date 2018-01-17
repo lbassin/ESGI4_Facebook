@@ -95,10 +95,12 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
             ->name('dashboard.website.reviews.details');
     });
 
-    Route::prefix(env('ADMIN_URL'))->group(function () {
-        Route::get('/', 'AdminController@indexAction')
-            ->name('admin.index');
-    });
+    Route::prefix(env('ADMIN_URL'))
+        ->middleware(['AuthAdmin'])
+        ->group(function () {
+            Route::get('/', 'AdminController@indexAction')
+                ->name('admin.index');
+        });
 });
 
 // Website viewer

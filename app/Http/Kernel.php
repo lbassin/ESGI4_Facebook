@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\AddDashboardDataToView;
 use App\Http\Middleware\AddWebsiteDataToView;
+use App\Http\Middleware\AuthAdmin;
 use App\Http\Middleware\AuthFb;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\TrimStrings;
@@ -68,6 +69,7 @@ class Kernel extends HttpKernel
         'AuthFb' => AuthFb::class,
         'WebsiteExists' => WebsiteExists::class,
         'AddDashboardDataToView' => AddDashboardDataToView::class,
-        'AddWebsiteDataToView' => AddWebsiteDataToView::class
+        'AddWebsiteDataToView' => AddWebsiteDataToView::class,
+        'AuthAdmin' => AuthAdmin::class
     ];
 }
