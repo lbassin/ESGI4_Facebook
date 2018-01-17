@@ -22,7 +22,7 @@
                     <label>Nom</label>
                 </div>
                 <div class="input text-block">
-                    <input type="email" name="email" required>
+                    <input type="email" name="email" value="" onkeyup="this.setAttribute('value', this.value);" required>
                     <label>Email</label>
                 </div>
                 <div class="input text-block">
