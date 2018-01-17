@@ -73,25 +73,7 @@
         </button>
     </div>
 
-    <div class="loading-overlay">
-        <div class="loading">
-            <div class="animation">
-                <div class="circle one"></div>
-            </div>
-            <div class="animation">
-                <div class="circle two"></div>
-            </div>
-            <div class="animation">
-                <div class="circle three"></div>
-            </div>
-            <div class="animation">
-                <div class="circle four"></div>
-            </div>
-            <div class="animation">
-                <div class="circle five"></div>
-            </div>
-        </div>
-    </div>
+    @include('dashboard.website.loader')
 
     <script>
         function initDropdown() {
@@ -172,6 +154,8 @@
                 dropdown.find('.current').text(selected.text());
                 dropdown.prev('select').val(selected.val()).trigger('change');
 
+                showLoader('loader');
+
                 window.location.href = window.URLs.websiteAdmin + '/' + selected.data('value');
             });
 
@@ -243,14 +227,19 @@
                 let id = this['new-page-id'].value;
                 let url = this['new-page-url'].value;
 
+                showLoader('loader');
+
                 $.post(this.action, {id: id, url: url}).done(
                     function (response) {
                         if (response.error) {
                             addError(response.message);
+                            setTimeout(function () {
+                                hideLoader('loader');
+                            }, 3500);
                             return;
                         }
 
-                        addSuccess("Website created");
+                        addSuccess("Website créé");
                         setTimeout(function () {
                             window.location.href = response.url;
                         }, 750);

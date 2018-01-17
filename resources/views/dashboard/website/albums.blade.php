@@ -13,9 +13,9 @@
             <div id="nav">
                 <a href="{{ route('dashboard.website', ['subdomain' => $subdomain]) }}">
                     <span class="nav-back">
-                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
-                    <span>Retour à l'accueil</span>
-                </span>
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        <span>Retour à l'accueil</span>
+                    </span>
                 </a>
                 <span class="nav-title">Gérer les albums</span>
                 <span class="nav-create">
@@ -58,7 +58,7 @@
 
                 <div>
                     <button id="submit-new-album">
-                        Créé cet album
+                        Créer cet album
                     </button>
                 </div>
             </form>
@@ -71,7 +71,16 @@
         </button>
     </div>
 
+    @include('dashboard.website.loader')
+
     <script>
+        $("#nav a").on('click', function() {
+            showLoader('loader');
+        });
+        $(".grid a").on('click', function() {
+            showLoader('loader');
+        });
+
         $('.nav-create').click(function () {
             $('.md-modal').addClass('md-show');
         });
@@ -85,10 +94,15 @@
 
             let name = $('input[name="new-album-name"]').val();
 
+            showLoader('loader');
+
             $.post(this.action, {name: name}).done(
                 function (response) {
                     if (response.error) {
                         addError(response.message);
+                        setTimeout(function () {
+                                hideLoader('loader');
+                        }, 3500);
                         return;
                     }
 

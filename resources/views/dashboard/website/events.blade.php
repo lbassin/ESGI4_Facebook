@@ -51,6 +51,8 @@
         </button>
     </div>
 
+    @include('dashboard.website.loader')
+
     <script>
         let eventsEdited = {};
 
@@ -114,12 +116,16 @@
 
         function initSaveAction() {
             $('.nav-create').click(function () {
+                showLoader('loader');
                 let url = '{{ route('dashboard.website.events.save', ['subdomain' => $subdomain]) }}';
 
                 $.post(url, {eventsEdited: eventsEdited}).done(
                     function (response) {
                         if (response.error) {
                             addError(response.message);
+                            setTimeout(function () {
+                                hideLoader('loader');
+                            }, 3500);
                             return;
                         }
 

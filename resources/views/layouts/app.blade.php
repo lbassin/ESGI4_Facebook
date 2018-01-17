@@ -97,7 +97,22 @@ $websiteHelper = resolve('App\Http\Helpers\WebsiteHelper');
 
 @yield('content')
 
-<script> // Modal
+<script>
+    function showLoader(target) {
+        $('#' + target).css("display", "block");
+        $('#' + target).animate({
+            opacity: 1
+          }, 500);
+    }
+
+    function hideLoader(target) {
+        $('#' + target).animate({
+            opacity: 0
+        }, 500, function() {
+            $('#' + target).css("display", "none");
+        });
+    }
+
     function showModal(target) {
         $('#' + target).addClass('md-show');
     }

@@ -53,6 +53,8 @@
         </button>
     </div>
 
+    @include('dashboard.website.loader')
+
     <script>
         let dataEdited = {};
 
@@ -130,12 +132,17 @@
 
         function initSaveAction() {
             $('.nav-create').click(function () {
+                showLoader('loader');
+
                 let url = '{{ route('dashboard.website.reviews.save', ['subdomain' => $subdomain]) }}';
 
                 $.post(url, {reviewsEdited: dataEdited}).done(
                     function (response) {
                         if (response.error) {
                             addError(response.message);
+                            setTimeout(function () {
+                                hideLoader('loader');
+                            }, 3500);
                             return;
                         }
 
