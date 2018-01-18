@@ -59,7 +59,7 @@ class AddWebsiteDataToView
         view()->share('subdomain', $subdomain);
 
         /** @var Website $website */
-        $website = Website::where(Website::SUBDOMAIN, $subdomain);
+        $website = Website::where(Website::SUBDOMAIN, $subdomain)->first();
         $this->fb->setDefaultAccessToken($website->getAccessToken());
 
         return $next($request);
