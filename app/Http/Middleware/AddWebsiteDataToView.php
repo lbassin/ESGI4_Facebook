@@ -54,10 +54,12 @@ class AddWebsiteDataToView
      */
     public function handle(Request $request, Closure $next)
     {
-        view()->share('subdomain', $request->route('subdomain'));
+        /** @var string $subdomain */
+        $subdomain = $request->route('subdomain');
+        view()->share('subdomain', $subdomain);
 
         /** @var Website $website */
-        $website = $this->websiteHelper->getCurrentWebsite();
+        $website = Website::where(Website::SUBDOMAIN, $subdomain);
         $this->fb->setDefaultAccessToken($website->getAccessToken());
 
         return $next($request);
