@@ -48,12 +48,10 @@
     <div id="create-album-modal" class="md-modal md-effect-12">
         <div class="md-content">
             <h1>Nouvel album</h1>
-            <form action="{{ route('dashboard.website.albums.create', ['subdomain' => $subdomain ]) }}">
-                <div>
-                    <label>
-                        Nom de l'album <br>
-                        <input type="text" name="new-album-name">
-                    </label>
+            <form action="{{ route('dashboard.website.albums.create', ['subdomain' => $subdomain ]) }}" class="m-form">
+                <div class="input input-text">
+                    <input type="text" name="new-album-name" required>
+                    <label>Nom de l'album</label>
                 </div>
 
                 <div>
