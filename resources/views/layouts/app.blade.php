@@ -40,7 +40,7 @@ $websiteHelper = resolve('App\Http\Helpers\WebsiteHelper');
 
     window.URLs = {
         dashboard: '{{ route('dashboard') }}',
-        websiteAdmin: '{{ route('dashboard.website', ['subdomain' => $websiteHelper->getCurrentWebsite()->getSubDomain()]) }}',
+        websiteAdmin: '{{ route('dashboard.website', ['subdomain' => '']) }}',
         albums: {
             create: '{{ route('dashboard.website.albums.create', ['subdomain' => $websiteHelper->getCurrentWebsite()->getSubDomain() ]) }}'
         }
