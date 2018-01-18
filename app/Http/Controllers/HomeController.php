@@ -22,7 +22,7 @@ class HomeController extends BaseController
      */
     public function indexAction(): View
     {
-        return view('home');
+        return view('home.index');
     }
 
     /**
@@ -30,7 +30,7 @@ class HomeController extends BaseController
      */
     public function policyAction(): View
     {
-        return view('policy');
+        return view('home.policy');
     }
 
     /**
@@ -38,7 +38,7 @@ class HomeController extends BaseController
      */
     public function supportAction(): View
     {
-        return view('support');
+        return view('home.support');
     }
 
     /**

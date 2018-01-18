@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="wrapper">
-        @include('dashboard.website.header')
+        @include('dashboard.website.partial.header')
 
         <div class="list-content-dashboard">
             <div class="grid">
@@ -63,7 +63,7 @@
         </button>
     </div>
 
-    @include('dashboard.website.loader')
+    @include('dashboard.website.partial.loader')
 
     <script>
         $(".grid ul a").on('click', function() {

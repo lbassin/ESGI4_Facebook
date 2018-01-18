@@ -76,7 +76,7 @@ class WebsiteController extends BaseController
      */
     public function homeAction(): View
     {
-        return view('dashboard.website.home');
+        return view('dashboard.website.home.index');
     }
 
     /**
@@ -91,7 +91,7 @@ class WebsiteController extends BaseController
         /** @var array $albums */
         $albums = $this->fbHelper->getAlbums($website->getSourceId());
 
-        return view('dashboard.website.albums', [
+        return view('dashboard.website.album.index', [
             'albums' => $albums,
         ]);
     }
@@ -101,7 +101,7 @@ class WebsiteController extends BaseController
      */
     public function articlesAction(): View
     {
-        return view('dashboard.website.articles');
+        return view('dashboard.website.article.index');
     }
 
     /**
@@ -115,7 +115,7 @@ class WebsiteController extends BaseController
         /** @var array $events */
         $events = $this->fbHelper->getEvents($website->getSourceId());
 
-        return view('dashboard.website.events',[
+        return view('dashboard.website.event.index',[
             'events' => $events
         ]);
     }
@@ -132,7 +132,7 @@ class WebsiteController extends BaseController
         /** @var array $reviews */
         $reviews = $this->fbHelper->getReviews($website);
 
-        return view('dashboard.website.reviews', [
+        return view('dashboard.website.review.index', [
             'reviews' => $reviews
         ]);
     }

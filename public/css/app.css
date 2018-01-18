@@ -1390,18 +1390,20 @@ a:hover {
   }
 }
 
-.md-content form label {
-  font-family: raleway_bold, sans-serif;
+.md-content form {
+  /*input[type='text'] {
+			padding: 6px 12px;
+			text-align: center;
+			margin: 100px 15px 15px 15px;
+			border-radius: 5px;
+			font-size: 15px;
+			border: none;
+			outline: none;
+		}*/
 }
 
-.md-content form input[type='text'] {
-  padding: 6px 12px;
-  text-align: center;
-  margin: 100px 15px 15px 15px;
-  border-radius: 5px;
-  font-size: 15px;
-  border: none;
-  outline: none;
+.md-content form label {
+  font-family: raleway_bold, sans-serif;
 }
 
 .md-content form button {
@@ -2649,6 +2651,30 @@ a:hover {
   color: #fff;
 }
 
+#album-edit #steps form {
+  /*input[type="text"],
+			textarea {
+				width: 45%;
+				max-width: 500px;
+				margin-top: 4px;
+				border-radius: 4px;
+				border: 1px solid #ccc;
+				padding: 6px 12px;
+				-webkit-transition: all 0.5s ease;
+				transition: all 0.5s ease;
+				@include MQ(M) {
+					width: 60%;
+				}
+				@include MQ(S) {
+					width: 90%;
+				}
+				&:focus,
+				&:active {
+					outline: none
+				}
+			}*/
+}
+
 #album-edit #steps form p {
   margin-bottom: 24px;
 }
@@ -2661,39 +2687,6 @@ a:hover {
 
 #album-edit #steps form label {
   font-family: 'raleway_regular', sans-serif;
-}
-
-#album-edit #steps form input[type="text"],
-#album-edit #steps form textarea {
-  width: 45%;
-  max-width: 500px;
-  margin-top: 4px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  padding: 6px 12px;
-  -webkit-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
-@media only screen and (max-width: 768px) {
-  #album-edit #steps form input[type="text"],
-  #album-edit #steps form textarea {
-    width: 60%;
-  }
-}
-
-@media only screen and (max-width: 480px) {
-  #album-edit #steps form input[type="text"],
-  #album-edit #steps form textarea {
-    width: 90%;
-  }
-}
-
-#album-edit #steps form input[type="text"]:focus,
-#album-edit #steps form input[type="text"]:active,
-#album-edit #steps form textarea:focus,
-#album-edit #steps form textarea:active {
-  outline: none;
 }
 
 #preview-modal .md-content .container-preview {
@@ -2768,29 +2761,198 @@ a:hover {
   color: #fff;
 }
 
+.m-form .input {
+  position: relative;
+  margin-top: calc(1.5rem + 1rem);
+  margin-bottom: calc(1.5rem + 1rem);
+}
+
+.m-form .input input ~ label {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.m-form .input textarea ~ label {
+  top: 0;
+}
+
+.m-form .input label {
+  pointer-events: none;
+  position: absolute;
+  -webkit-transition: all ease 0.2s;
+  transition: all ease 0.2s;
+  left: 20px;
+}
+
+.m-form .input textarea {
+  resize: vertical;
+}
+
+.m-form .input input[type="email"][value=""] ~ label {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.m-form .input input[type="email"]:not([value=""]):not(:focus):invalid ~ label {
+  top: -1.5rem;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.m-form .input input,
+.m-form .input textarea {
+  width: calc(100% - 40px);
+  padding: 0 20px;
+  background: transparent;
+  border: none;
+  border-bottom: solid 1px;
+}
+
+.m-form .input input[type="checkbox"],
+.m-form .input textarea[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  pointer-events: all;
+  position: relative;
+}
+
+.m-form .input input[type="checkbox"] ~ label,
+.m-form .input textarea[type="checkbox"] ~ label {
+  display: inline-block;
+}
+
+.m-form .input input[type="file"],
+.m-form .input textarea[type="file"] {
+  padding: 0;
+}
+
+@media only screen and (max-width: 480px) {
+  .m-form .input input[type="file"],
+  .m-form .input textarea[type="file"] {
+    padding: 0 20px;
+  }
+}
+
+.m-form .input input:focus ~ label,
+.m-form .input input:valid ~ label,
+.m-form .input input:active ~ label,
+.m-form .input textarea:focus ~ label,
+.m-form .input textarea:valid ~ label,
+.m-form .input textarea:active ~ label {
+  top: -1.5rem !important;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+}
+
+.m-form {
+  text-align: center;
+  display: block;
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.m-form fieldset legend {
+  color: #fff;
+  width: 100%;
+  text-align: center;
+}
+
+.m-form .checkbox {
+  text-align: left;
+  margin: 1.5rem;
+}
+
+.m-form .input {
+  color: #fff;
+}
+
+.m-form .input label {
+  font-size: 1.5rem;
+  padding-left: 1rem;
+  font-family: 'raleway_regular';
+}
+
+.m-form .input textarea {
+  padding-top: 20px;
+  line-height: calc($fontBaseSize - 2rem);
+}
+
+.m-form .input input,
+.m-form .input textarea {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border-size: 1px;
+  border-bottom-color: #494c5b;
+  font-size: calc(1.5rem - 0.5rem);
+  color: #fff;
+  height: calc(1.5rem + 2rem);
+}
+
+.m-form .input input:focus ~ label,
+.m-form .input input:valid ~ label,
+.m-form .input input:active ~ label,
+.m-form .input textarea:focus ~ label,
+.m-form .input textarea:valid ~ label,
+.m-form .input textarea:active ~ label {
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
+  padding-left: 0;
+}
+
+.m-form .input input {
+  -webkit-transition: all ease 0.2s;
+  transition: all ease 0.2s;
+  /*
+        Not working : always invalid
+       */
+  /*&:not([value]):not(:focus):invalid{
+        box-shadow: inset 0 -5px 0 #ff0000;
+      }*/
+}
+
+.m-form .input input:focus {
+  -webkit-box-shadow: inset 0 0 0 transparent;
+          box-shadow: inset 0 0 0 transparent;
+}
+
+.m-form .input input:not(:focus):valid {
+  -webkit-box-shadow: inset 0 -2px 0 #00be2e;
+          box-shadow: inset 0 -2px 0 #00be2e;
+}
+
+.m-form .input input[type="email"]:not([value=""]):not(:focus):invalid ~ label {
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
+  padding-left: 0;
+}
+
+.m-form button {
+  outline: none;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 25px;
+  padding: 15px 50px;
+  cursor: pointer;
+  font-size: 15px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.m-form button:hover {
+  background: white;
+  color: #202126;
+}
+
 #support h1 {
   text-align: center;
   font-size: 35px;
   color: white;
   margin-bottom: 50px;
-}
-
-#support form {
-  text-align: center;
-}
-
-#support form p {
-  margin-bottom: 12px;
-}
-
-#support form label {
-  color: #fff;
-}
-
-#support form input,
-#support form text {
-  padding: 6px 12px;
-  width: 250px;
 }
 
 #policy {

@@ -24,11 +24,8 @@
                     <button class="fb-login-open">Créez votre site</button>
                 </div>
                 <div class="image">
-                    <!-- The Morphing Device -->
                     <figure class="device">
-                        <figcaption class="ir">
-                            Responsive Web Design
-                        </figcaption>
+                        <figcaption class="ir"></figcaption>
                     </figure>
                 </div>
             </div>

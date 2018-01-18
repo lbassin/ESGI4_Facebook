@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="wrapper">
-        @include('dashboard.website.header')
+        @include('dashboard.website.partial.header')
 
         <div class="list-header">
             <div id="nav">
@@ -69,7 +69,7 @@
         </button>
     </div>
 
-    @include('dashboard.website.loader')
+    @include('dashboard.website.partial.loader')
 
     <script>
         $("#nav a").on('click', function() {
