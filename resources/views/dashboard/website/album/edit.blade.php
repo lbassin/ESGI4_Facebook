@@ -62,42 +62,35 @@
 
                 <div class="step-3" style="display: none;">
                     <h2>Options</h2>
-                    <form id="configurations">
-                        <p>
+                    <form id="configurations" class="m-form">
+                        <div class="input">
+                            <input type="text" name="title"
+                                   value="{{ isset($config[\App\Model\Album::TITLE]) ? $config[\App\Model\Album::TITLE] : '' }}" required>
+                            <label>Titre de la page</label>
+                        </div>
+                        <div class="input">
+                            <input type="text" name="url"
+                            value="{{ isset($config[\App\Model\Album::URL]) ? $config[\App\Model\Album::URL] : '' }}" required>
+                            <label>URL</label>
+                        </div>
+                        <div class="input">
+                            <textarea name="description" cols="40"
+                                      rows="3">{{ isset($config[\App\Model\Album::DESCRIPTION]) ? $config[\App\Model\Album::DESCRIPTION] : '' }}</textarea>
+                            <label>Description</label>
+                        </div>
+                        <div class="checkbox">
+
                             <label>
-                                Titre de la page <br>
-                                <input type="text" name="title"
-                                       value="{{ isset($config[\App\Model\Album::TITLE]) ? $config[\App\Model\Album::TITLE] : '' }}">
-                            </label>
-                        </p>
-                        <p>
-                            <label>
-                                Description <br>
-                                <textarea name="description" cols="40"
-                                          rows="3">{{ isset($config[\App\Model\Album::DESCRIPTION]) ? $config[\App\Model\Album::DESCRIPTION] : '' }}</textarea>
-                            </label>
-                        </p>
-                        <p>
-                            <label>
-                                URL <br>
-                                <input type="text" name="url"
-                                       value="{{ isset($config[\App\Model\Album::URL]) ? $config[\App\Model\Album::URL] : '' }}">
-                            </label>
-                        </p>
-                        <p>
-                            <label>
-                                Masquer les nouvelles images
                                 <input type="checkbox"
                                        name="hide_new" {{ !empty($config[\App\Model\Album::HIDE_NEW]) ? 'checked' : '' }}>
-                            </label>
-                        </p>
-                        <p>
+                                Masquer les nouvelles images</label>
+                        </div>
+                        <div class="checkbox">
                             <label>
-                                Album visible
                                 <input type="checkbox"
                                        name="visible" {{ !empty($config[\App\Model\Album::VISIBLE]) ? 'checked' : '' }}>
-                            </label>
-                        </p>
+                                Album visible</label>
+                        </div>
                     </form>
                     <div class="options">
                         <div class="submit">

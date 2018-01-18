@@ -48,6 +48,21 @@ $fontBaseSize : 1.5rem;
       background:transparent;
       border:none;
       border-bottom:solid 1px;
+      &[type="checkbox"]{
+        width:20px;
+        height: 20px;
+        display: inline-block;
+        & ~ label{
+          display: inline-block;}
+          pointer-events: all;
+        position:relative;
+      }
+      &[type="file"]{
+        padding:0;
+        @include MQ(S){
+          padding:0 20px;
+        }
+      }
       &:focus,&:valid,&:active{
         & ~ label{
           top: -$fontBaseSize !important;
@@ -58,95 +73,99 @@ $fontBaseSize : 1.5rem;
   }
 }
 
+.m-form{
+  text-align: center;
+  display: block;
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
 
-#support {
-  .m-form{
-    text-align: center;
-    display: block;
-    max-width: 700px;
-    width: 100%;
-    margin: 0 auto;
-
-    fieldset{
-      legend{
-        color:#fff;
-        width: 100%;
-        text-align:center;
-      }
-      .input{
-        color:#fff;
-        label{
-          font-size: $fontBaseSize;
-          padding-left:1rem;
-          font-family: 'raleway_regular';
-        }
-        textarea{
-          padding-top:20px;
-          line-height: calc($fontBaseSize - 2rem);
-        }
-        input, textarea{
-          box-shadow: none;
-          border-size:1px;
-          border-bottom-color: #494c5b;
-          font-size: calc(#{$fontBaseSize} - 0.5rem);
-          color:#fff;
-            height: calc(#{$fontBaseSize} + 2rem);
-          &:focus,&:valid,&:active{
-            & ~ label{
-              transform:scale(0.8);
-              padding-left:0;
-            }
-          }
-        }
-
-        input{
-          transition:all ease 0.2s;
-
-          &:focus{
-            box-shadow :inset 0 0 0 transparent;
-          }
-          /*
-            Not working : always invalid
-           */
-          /*&:not([value]):not(:focus):invalid{
-            box-shadow: inset 0 -5px 0 #ff0000;
-          }*/
-          &:not(:focus):valid{
-            box-shadow: inset 0 -5px 0 #00be2e;
-          }
-        }
-
-        input{
-          &[type="email"]{
-            &:not([value=""]):not(:focus):invalid{
-              & ~ label{
-                transform:scale(0.8);
-                padding-left:0;
-              }
-            }
-          }
-        }
-
-      }
-      button {
-        outline: none;
-        background: transparent;
-        color: #fff;
-        border: 1px solid #fff;
-        border-radius: 25px;
-        padding: 15px 50px;
-        cursor: pointer;
-        font-size: 15px;
-        -webkit-transition: all 0.3s ease;
-        transition: all 0.3s ease;
-        &:hover {
-          background: white;
-          color: $color1;
-        }
-      }
-
+  fieldset{
+    legend{
+      color:#fff;
+      width: 100%;
+      text-align:center;
     }
   }
+  .checkbox{
+    text-align: left;
+    margin:$fontBaseSize;
+  }
+  .input{
+    color:#fff;
+    label{
+      font-size: $fontBaseSize;
+      padding-left:1rem;
+      font-family: 'raleway_regular';
+    }
+    textarea{
+      padding-top:20px;
+      line-height: calc($fontBaseSize - 2rem);
+    }
+    input, textarea{
+      box-shadow: none;
+      border-size:1px;
+      border-bottom-color: #494c5b;
+      font-size: calc(#{$fontBaseSize} - 0.5rem);
+      color:#fff;
+      height: calc(#{$fontBaseSize} + 2rem);
+      &:focus,&:valid,&:active{
+        & ~ label{
+          transform:scale(0.8);
+          padding-left:0;
+        }
+      }
+    }
+
+    input{
+      transition:all ease 0.2s;
+
+      &:focus{
+        box-shadow :inset 0 0 0 transparent;
+      }
+      /*
+        Not working : always invalid
+       */
+      /*&:not([value]):not(:focus):invalid{
+        box-shadow: inset 0 -5px 0 #ff0000;
+      }*/
+      &:not(:focus):valid{
+        box-shadow: inset 0 -2px 0 #00be2e;
+      }
+    }
+
+    input{
+      &[type="email"]{
+        &:not([value=""]):not(:focus):invalid{
+          & ~ label{
+            transform:scale(0.8);
+            padding-left:0;
+          }
+        }
+      }
+    }
+
+  }
+
+  button {
+    outline: none;
+    background: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 25px;
+    padding: 15px 50px;
+    cursor: pointer;
+    font-size: 15px;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    &:hover {
+      background: white;
+      color: $color1;
+    }
+  }
+}
+#support {
+
   h1 {
     text-align: center;
     font-size: 35px;

@@ -13,7 +13,7 @@
 
     <div id="support">
         <h1>Support</h1>
-        <form name="contact" class="m-form">
+        <form name="contact" method="POST" class="m-form">
             <fieldset>
                 <legend>Fill this form to contact the support</legend>
 
