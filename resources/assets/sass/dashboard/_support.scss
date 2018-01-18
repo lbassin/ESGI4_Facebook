@@ -1,25 +1,156 @@
+$fontBaseSize : 1.5rem;
+
+.m-form{
+  .input{
+    position:relative;
+    margin-top: calc(#{$fontBaseSize} + 1rem);
+    margin-bottom: calc(#{$fontBaseSize} + 1rem);
+    input{
+      & ~ label{
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+    textarea{
+      & ~ label{
+        top:0;
+      }
+    }
+    label{
+      pointer-events:none;
+      position: absolute;
+      transition: all ease 0.2s;
+      left: 20px;
+    }
+
+    textarea{
+      resize: vertical;
+    }
+    input{
+      &[type="email"]{
+        &[value=""]{
+          & ~ label{
+            top: 50%;
+            transform: translateY(-50%);
+          }
+        }
+        &:not([value=""]):not(:focus):invalid{
+          & ~ label{
+            top: -$fontBaseSize;
+            transform: translateY(-50%);
+          }
+        }
+      }
+    }
+    input, textarea{
+      width: calc(100% - 40px);
+      padding: 0 20px;
+      background:transparent;
+      border:none;
+      border-bottom:solid 1px;
+      &:focus,&:valid,&:active{
+        & ~ label{
+          top: -$fontBaseSize !important;
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+}
+
+
 #support {
+  .m-form{
+    text-align: center;
+    display: block;
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+
+    fieldset{
+      legend{
+        color:#fff;
+        width: 100%;
+        text-align:center;
+      }
+      .input{
+        color:#fff;
+        label{
+          font-size: $fontBaseSize;
+          padding-left:1rem;
+          font-family: 'raleway_regular';
+        }
+        textarea{
+          padding-top:20px;
+          line-height: calc($fontBaseSize - 2rem);
+        }
+        input, textarea{
+          box-shadow: none;
+          border-size:1px;
+          border-bottom-color: #494c5b;
+          font-size: calc(#{$fontBaseSize} - 0.5rem);
+          color:#fff;
+            height: calc(#{$fontBaseSize} + 2rem);
+          &:focus,&:valid,&:active{
+            & ~ label{
+              transform:scale(0.8);
+              padding-left:0;
+            }
+          }
+        }
+
+        input{
+          transition:all ease 0.2s;
+
+          &:focus{
+            box-shadow :inset 0 0 0 transparent;
+          }
+          /*
+            Not working : always invalid
+           */
+          /*&:not([value]):not(:focus):invalid{
+            box-shadow: inset 0 -5px 0 #ff0000;
+          }*/
+          &:not(:focus):valid{
+            box-shadow: inset 0 -5px 0 #00be2e;
+          }
+        }
+
+        input{
+          &[type="email"]{
+            &:not([value=""]):not(:focus):invalid{
+              & ~ label{
+                transform:scale(0.8);
+                padding-left:0;
+              }
+            }
+          }
+        }
+
+      }
+      button {
+        outline: none;
+        background: transparent;
+        color: #fff;
+        border: 1px solid #fff;
+        border-radius: 25px;
+        padding: 15px 50px;
+        cursor: pointer;
+        font-size: 15px;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        &:hover {
+          background: white;
+          color: $color1;
+        }
+      }
+
+    }
+  }
   h1 {
     text-align: center;
     font-size: 35px;
     color: white;
     margin-bottom: 50px;
-  }
-
-  form {
-    text-align: center;
-
-    p{
-      margin-bottom: 12px;
-    }
-
-    label {
-      color: #fff;
-    }
-
-    input, text{
-      padding: 6px 12px;
-      width: 250px;
-    }
   }
 }

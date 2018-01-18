@@ -13,32 +13,28 @@
 
     <div id="support">
         <h1>Support</h1>
-        <form name="contact">
-            <p>
-                <label>
-                    Nom <br>
+        <form name="contact" class="m-form">
+            <fieldset>
+                <legend>Fill this form to contact the support</legend>
+
+                <div class="input text-block">
                     <input type="text" name="name" required>
-                </label>
-            </p>
-            <p>
-                <label>
-                    Email <br>
-                    <input type="email" name="email" required>
-                </label>
-            </p>
-            <p>
-                <label>
-                    Object <br>
+                    <label>Nom</label>
+                </div>
+                <div class="input text-block">
+                    <input type="email" name="email" value="" onkeyup="this.setAttribute('value', this.value);" required>
+                    <label>Email</label>
+                </div>
+                <div class="input text-block">
                     <input type="text" name="subject" required>
-                </label>
-            </p>
-            <p>
-                <label>
-                    Message <br>
+                    <label>Object</label>
+                </div>
+                <div class="input textarea-block">
                     <textarea name="content" id="" cols="30" rows="10" required></textarea>
-                </label>
-            </p>
-            <button>Envoyer</button>
+                    <label>Message</label>
+                </div>
+                <button>Envoyer</button>
+            </fieldset>
         </form>
     </div>
 
