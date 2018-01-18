@@ -5,14 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use App\Http\Helpers\FacebookHelper;
-use App\Http\Helpers\UserHelper;
 use App\Http\Helpers\WebsiteHelper;
+use App\Model\Website;
 use Closure;
-use Facebook\Authentication\AccessToken;
-use Facebook\Exceptions\FacebookSDKException;
-use Facebook\FacebookResponse;
 use Illuminate\Http\Request;
-use Illuminate\Session\Store;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 
 /**
@@ -29,19 +25,26 @@ class AddWebsiteDataToView
      * @var FacebookHelper
      */
     private $fbHelper;
+    /**
+     * @var WebsiteHelper
+     */
+    private $websiteHelper;
 
     /**
      * AddWebsiteDataToView constructor.
      * @param LaravelFacebookSdk $fb
      * @param FacebookHelper $fbHelper
+     * @param WebsiteHelper $websiteHelper
      */
     public function __construct(
         LaravelFacebookSdk $fb,
-        FacebookHelper $fbHelper
+        FacebookHelper $fbHelper,
+        WebsiteHelper $websiteHelper
     )
     {
         $this->fb = $fb;
         $this->fbHelper = $fbHelper;
+        $this->websiteHelper = $websiteHelper;
     }
 
     /**
@@ -53,7 +56,9 @@ class AddWebsiteDataToView
     {
         view()->share('subdomain', $request->route('subdomain'));
 
-        $this->fb->setDefaultAccessToken($this->fbHelper->getAppToken());
+        /** @var Website $website */
+        $website = $this->websiteHelper->getCurrentWebsite();
+        $this->fb->setDefaultAccessToken($website->getAccessToken());
 
         return $next($request);
     }
