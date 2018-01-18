@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', ucfirst($subdomain) . ' - Events')
+@section('title', ucfirst($subdomain) . ' - Avis')
 
 @section('header_scripts')
 @endsection
 
 @section('content')
-    <div id="event-list" class="wrapper">
-        @include('dashboard.website.header')
+    <div id="review-list" class="wrapper">
+        @include('dashboard.website.partial.header')
 
         <div class="list-header">
             <div id="nav">
@@ -17,7 +17,7 @@
                         <span>Retour à l'accueil</span>
                     </span>
                 </a>
-                <span class="nav-title">Gérer les événements</span>
+                <span class="nav-title">Gérer les avis</span>
                 <span class="nav-create">
                     <span>Sauvegarder</span>
                     <i class="fa fa-floppy-o" aria-hidden="true"></i>
@@ -27,15 +27,16 @@
 
         <div class="list-content">
             <div class="grid">
-                <?php /** @var \App\Http\Api\Event $event */ ?>
-                @foreach($events as $event)
+                <?php /** @var \App\Http\Api\Review $review */ ?>
+                @foreach($reviews as $review)
                     <article class="module desktop-4 tablet-6">
-                        <div class="element-image"
-                             style="background: url('{{ $event->getCover() }}');background-repeat: no-repeat;background-position: center center;background-size: cover;">
+                        <div class="element-texte">
+                            {{ $review->getText() }}
                         </div>
-                        <div class="element-name" data-id="{{ $event->getId() }}">
-                            <div class="visibility"><i class="fa {{ $event->isVisible() ? 'fa-eye' : 'fa-eye-slash' }}" aria-hidden="true"></i></div>
-                            <span>{{ $event->getName() }}</span>
+                        <div class="element-name" data-id="{{ $review->getId() }}">
+                            <input type="hidden" value="{{ $review->getRating() }}">
+                            <div class="visibility"><i class="fa {{ $review->isVisible() ? 'fa-eye' : 'fa-eye-slash' }}" aria-hidden="true"></i></div>
+                            <span></span>
                             <div class="details"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
                         </div>
                     </article>
@@ -44,29 +45,44 @@
         </div>
     </div>
 
-    @include('dashboard.website.modal', ['name' => 'details-modal'])
+
+    @include('dashboard.website.partial.modal', ['name' => 'details-modal'])
     <div class="md-overlay">
         <button class="md-close">
             <i class="fa fa-times" aria-hidden="true"></i>
         </button>
     </div>
 
-    @include('dashboard.website.loader')
+    @include('dashboard.website.partial.loader')
 
     <script>
-        let eventsEdited = {};
+        let dataEdited = {};
 
         let list = $('.list-content');
 
         initChangeVisibility();
         initSaveAction();
+        displayStars();
+
+        function displayStars() {
+            $(".element-name").each(function() {
+                var stars = 0;
+                for (i = 0; i < $(this).find("input").val(); i++) {
+                    $(this).find("span").append("<i class='fa fa-star' aria-hidden='true'></i>");
+                    stars++;              
+                }
+                for (stars; stars < 5; stars++) {
+                    $(this).find("span").append("<i class='fa fa-star-o' aria-hidden='true'></i>");           
+                }
+            });
+        }
 
         function initChangeVisibility() {
             list.find('.visibility').each(function () {
                 let id = $(this).parent().data('id');
 
-                if (id in eventsEdited) {
-                    setVisibility(!eventsEdited[id].visible, this);
+                if (id in dataEdited) {
+                    setVisibility(!dataEdited[id].visible, this);
                 }
 
                 $(this).click(changeVisibility)
@@ -91,7 +107,7 @@
                 let visible = icon.hasClass('fa-eye');
                 let id = $(this).parent().data('id');
 
-                eventsEdited[id] = {
+                dataEdited[id] = {
                     visible: !visible
                 };
 
@@ -100,7 +116,7 @@
 
             list.find('.details').click(function () {
                 let id = $(this).parent().data('id');
-                let url = '{{ route('dashboard.website.events.details', ['subdomain' => $subdomain]) }}';
+                let url = '{{ route('dashboard.website.reviews.details', ['subdomain' => $subdomain]) }}';
                 let detailsModal = $('#details-modal');
 
                 detailsModal.find('.md-content').html('');
@@ -117,9 +133,10 @@
         function initSaveAction() {
             $('.nav-create').click(function () {
                 showLoader('loader');
-                let url = '{{ route('dashboard.website.events.save', ['subdomain' => $subdomain]) }}';
 
-                $.post(url, {eventsEdited: eventsEdited}).done(
+                let url = '{{ route('dashboard.website.reviews.save', ['subdomain' => $subdomain]) }}';
+
+                $.post(url, {reviewsEdited: dataEdited}).done(
                     function (response) {
                         if (response.error) {
                             addError(response.message);

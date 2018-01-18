@@ -9,7 +9,7 @@
 
 @section('content')
     <div id="album-edit" class="wrapper">
-        @include('dashboard.website.header')
+        @include('dashboard.website.partial.header')
 
         <div class="container">
             <nav>
@@ -65,12 +65,14 @@
                     <form id="configurations" class="m-form">
                         <div class="input">
                             <input type="text" name="title"
-                                   value="{{ isset($config[\App\Model\Album::TITLE]) ? $config[\App\Model\Album::TITLE] : '' }}" required>
+                                   value="{{ isset($config[\App\Model\Album::TITLE]) ? $config[\App\Model\Album::TITLE] : '' }}"
+                                   required>
                             <label>Titre de la page</label>
                         </div>
                         <div class="input">
                             <input type="text" name="url"
-                            value="{{ isset($config[\App\Model\Album::URL]) ? $config[\App\Model\Album::URL] : '' }}" required>
+                                   value="{{ isset($config[\App\Model\Album::URL]) ? $config[\App\Model\Album::URL] : '' }}"
+                                   required>
                             <label>URL</label>
                         </div>
                         <div class="input">
@@ -102,9 +104,9 @@
         </div>
     </div>
 
-    @include('dashboard.website.modal', ['name' => 'preview-modal'])
-    @include('dashboard.website.modal', ['name' => 'image-modal'])
-    @include('dashboard.website.modal', ['name' => 'upload-modal', 'content' => 'dashboard.website.album.images.upload-modal'])
+    @include('dashboard.website.partial.modal', ['name' => 'preview-modal'])
+    @include('dashboard.website.partial.modal', ['name' => 'image-modal'])
+    @include('dashboard.website.partial.modal', ['name' => 'upload-modal', 'content' => 'dashboard.website.album.images.upload-modal'])
 
     <div class="md-overlay">
         <button class="md-close">

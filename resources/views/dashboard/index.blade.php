@@ -8,7 +8,7 @@
 @section('content')
     <div class="image-gradient"></div>
     <div class="wrapper-dashboard">
-        @include('dashboard.website.header')
+        @include('dashboard.website.partial.header')
 
         <div class="select-dashboard">
             <div class="select-choice">
@@ -73,7 +73,7 @@
         </button>
     </div>
 
-    @include('dashboard.website.loader')
+    @include('dashboard.website.partial.loader')
 
     <script>
         function initDropdown() {

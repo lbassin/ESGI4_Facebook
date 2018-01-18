@@ -1,4 +1,4 @@
-@extends('website.layouts.home')
+@extends('layouts.website')
 
 @section('content')
     <?php /** @var \App\Http\Api\Event $event */ ?>

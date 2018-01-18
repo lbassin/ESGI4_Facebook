@@ -7,7 +7,7 @@
 
 @section('content')
     <div id="posts-list" class="wrapper">
-        @include('dashboard.website.header')
+        @include('dashboard.website.partial.header')
 
         <div class="list-header">
             <div id="nav">
