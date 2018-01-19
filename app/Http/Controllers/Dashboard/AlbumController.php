@@ -198,8 +198,16 @@ class AlbumController extends BaseController
         $album = $this->fbHelper->getAlbum($id);
         /** @var array $photos */
         $photos = $album->getPhotosByPage($page);
+        /** @var bool $hideControles */
+        $hideControles = $page == 1 && count($photos) < Album::PAGINATION_SIZE;
+        /** @var bool $nextDisabled */
+        $nextDisabled = count($photos) < Album::PAGINATION_SIZE;
 
-        return view('dashboard.website.album.images.image-grid', ['photos' => $photos]);
+        return view('dashboard.website.album.images.image-grid', [
+            'photos' => $photos,
+            'hideControls' => $hideControles,
+            'nextDisabled' => $nextDisabled
+        ]);
     }
 
     /**

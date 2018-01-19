@@ -45,6 +45,10 @@ class Album extends Model
      *
      */
     const VISIBLE = 'is_visible';
+    /**
+     *
+     */
+    const PAGINATION_SIZE = 9;
 
     /**
      * @var string

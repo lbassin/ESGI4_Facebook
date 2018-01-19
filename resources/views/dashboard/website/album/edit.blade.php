@@ -44,19 +44,8 @@
                         <h2>Mes images</h2>
                         <div class="action">Ajouter une photo <i class="fa fa-upload" aria-hidden="true"></i></div>
                     </div>
-                    <div id="images" class="preview-grid">
-                        @include('dashboard.website.album.images.image-grid', ['photos' => $album->getPhotosByPage(1)])
-                    </div>
-                    <div class="options">
-                        <div class="pagination">
-                            <div class="controls">
-                                <span class="previous">Précedent</span>
-                                <span class="next">Suivant</span>
-                            </div>
-                        </div>
-                        <div class="submit">
-                            <span class="next">Valider</span>
-                        </div>
+                    <div class="ajax-updated">
+
                     </div>
                 </div>
 
@@ -121,7 +110,6 @@
         let imagesEdited = {};
 
         let templates = $('#templates');
-        let images = $('#images');
 
         @if(!empty($templateId))
             templateId = '{{ $templateId }}';
@@ -130,10 +118,9 @@
         initMenu();
         initTemplatePagination();
         initTemplatePreviews();
-        initImagePagination();
-        initImagePreviews();
         initImageUpload();
         initSubmitEvent();
+        updateImagesGrid();
 
         function showTemplates() {
             $('.step-1').fadeIn();
@@ -261,9 +248,12 @@
         }
 
         function initImagePagination() {
-            let imagePagination = images.next('.options').find('.pagination');
+            let imagePagination = $('#images').next('.options').find('.pagination');
+
             imagePagination.find('.next').click(function () {
-                // TODO  : Check if last page
+                if ($(this).attr('disabled')) {
+                    return;
+                }
 
                 currentImagePage += 1;
                 updateImagesGrid();
@@ -282,24 +272,24 @@
         }
 
         function updateImagesGrid() {
-            images.fadeOut();
-            images.next('.options').fadeOut();
+            let updatedDiv = $('.step-2').find('.ajax-updated');
+            updatedDiv.fadeOut();
 
             let url = '{{ route('dashboard.website.albums.images.grid', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
 
             $.post(url, {page: currentImagePage}).done(
                 function (response) {
-                    images.html(response);
+                    updatedDiv.html(response);
                     initImagePreviews();
+                    initImagePagination();
 
-                    images.fadeIn();
-                    images.next('.options').fadeIn();
+                    updatedDiv.fadeIn();
                 }
             ).fail(errorAjax)
         }
 
         function initImagePreviews() {
-            images.find('.visibility').each(function () {
+            $('#images').find('.visibility').each(function () {
                 let id = $(this).parent().data('id');
 
                 if (id in imagesEdited) {
@@ -335,7 +325,7 @@
                 setVisibility(visible, this);
             }
 
-            images.find('.view').click(function () {
+            $('#images').find('.view').click(function () {
                 let id = $(this).parent().data('id');
                 let url = '{{ route('dashboard.website.albums.images.preview', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
                 let imageModal = $('#image-modal');
