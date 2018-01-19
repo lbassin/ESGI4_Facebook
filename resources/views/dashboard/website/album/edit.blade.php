@@ -156,7 +156,9 @@
         function initTemplatePagination() {
             let templatePagination = $('#templates').next('.options').find('.pagination');
             templatePagination.find('.next').click(function () {
-                // TODO  : Check if last page
+                if ($(this).attr('disabled')) {
+                    return;
+                }
 
                 currentTemplatePage += 1;
                 updateTemplatesGrid();
