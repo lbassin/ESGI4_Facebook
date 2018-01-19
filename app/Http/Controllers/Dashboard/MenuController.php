@@ -58,15 +58,19 @@ class MenuController extends BaseController
         $website = $this->websiteHelper->getCurrentWebsite();
         /** @var Menu $menu */
         $menu = Menu::where(Menu::WEBSITE_ID, $website->getId())->first();
+
         /** @var array $config */
-        $config = [
-            Menu::NAME => $menu->getName(),
-            Menu::ACCUEIL => $menu->isVisible(Menu::ACCUEIL),
-            Menu::ALBUMS => $menu->isVisible(Menu::ALBUMS),
-            Menu::ARTICLES => $menu->isVisible(Menu::ARTICLES),
-            Menu::EVENTS => $menu->isVisible(Menu::EVENTS),
-            Menu::REVIEWS => $menu->isVisible(Menu::REVIEWS),
-        ];
+        $config = [];
+        if (!empty($menu)) {
+            $config = [
+                Menu::NAME => $menu->getName(),
+                Menu::ACCUEIL => $menu->isVisible(Menu::ACCUEIL),
+                Menu::ALBUMS => $menu->isVisible(Menu::ALBUMS),
+                Menu::ARTICLES => $menu->isVisible(Menu::ARTICLES),
+                Menu::EVENTS => $menu->isVisible(Menu::EVENTS),
+                Menu::REVIEWS => $menu->isVisible(Menu::REVIEWS),
+            ];
+        }
 
         return view('dashboard.website.menu.index', [
             'templateId' => $menu->getTemplateId(),
