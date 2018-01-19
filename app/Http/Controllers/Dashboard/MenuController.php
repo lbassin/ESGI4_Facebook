@@ -165,7 +165,7 @@ class MenuController extends BaseController
 
         return response()->json([
             'message' => 'Menu sauvegardé',
-            'url' => route('dashboard.website.albums', ['subdomain' => $subdomain])
+            'url' => route('dashboard.website', ['subdomain' => $subdomain])
         ]);
     }
 }
