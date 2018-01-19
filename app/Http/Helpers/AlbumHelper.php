@@ -58,7 +58,7 @@ class AlbumHelper
     public function getTemplates(): Collection
     {
         /** @var Collection $templates */
-        $templates = Template::all();
+        $templates = Template::where(Template::TYPE, Template::TYPE_ALBUM)->get();
 
         return $templates;
     }
@@ -70,9 +70,9 @@ class AlbumHelper
     public function getTemplatesByPage($page): array
     {
         /** @var Collection $templates */
-        $templates = Template::all();
+        $templates = Template::where(Template::TYPE, Template::TYPE_ALBUM)->get();
 
-        return $templates->forPage($page, 9)->all();
+        return $templates->forPage($page, Template::PAGINATION_SIZE)->all();
     }
 
     /**

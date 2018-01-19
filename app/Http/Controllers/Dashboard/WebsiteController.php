@@ -6,9 +6,8 @@ use App\Http\Helpers\AlbumHelper;
 use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\WebsiteHelper;
 use App\Http\Helpers\UserHelper;
+use App\Model\Menu;
 use App\Model\Website;
-use Facebook\GraphNodes\GraphAlbum;
-use Facebook\GraphNodes\GraphUser;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
 
@@ -67,7 +66,7 @@ class WebsiteController extends BaseController
         $albums = $this->fbHelper->getAlbums($website->getSourceId());
 
         return view('dashboard.website.index', [
-            'albums' => array_slice($albums,0,6)
+            'albums' => array_slice($albums, 0, 6)
         ]);
     }
 
@@ -106,6 +105,7 @@ class WebsiteController extends BaseController
 
     /**
      * @return View
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function eventsAction(): View
     {
@@ -115,7 +115,7 @@ class WebsiteController extends BaseController
         /** @var array $events */
         $events = $this->fbHelper->getEvents($website->getSourceId());
 
-        return view('dashboard.website.event.index',[
+        return view('dashboard.website.event.index', [
             'events' => $events
         ]);
     }

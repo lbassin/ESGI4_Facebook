@@ -29,6 +29,18 @@ class Template extends Model
      *
      */
     const PAGINATION_SIZE = 9;
+    /**
+     *
+     */
+    const TYPE = 'type';
+    /**
+     *
+     */
+    const TYPE_ALBUM = 1;
+    /**
+     *
+     */
+    const TYPE_MENU = 2;
 
     /**
      * @var string
