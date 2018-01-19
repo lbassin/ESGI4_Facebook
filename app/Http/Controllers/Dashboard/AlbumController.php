@@ -165,22 +165,31 @@ class AlbumController extends BaseController
     {
         /** @var int $page */
         $page = $request->post('page');
-        /** @var Collection $templates */
+        /** @var array $templates */
         $templates = $this->albumHelper->getTemplatesByPage($page);
         /** @var string $templateId */
         $templateId = '';
-        /** @var Album $album */
+        /** @var bool $hideControls */
+        $hideControls = $page == 1 && count($templates) < Album::PAGINATION_SIZE;
+        /** @var bool $nextDisabled */
+        $nextDisabled = count($templates) < Album::PAGINATION_SIZE;
 
         if ($request->post('templateId')) {
             $templateId = $request->post('templateId');
         } else {
+            /** @var Album $album */
             $album = Album::where(Album::ID, $id)->first();
             if (!empty($album)) {
                 $templateId = (string)$album->getTemplateId();
             }
         }
 
-        return view('dashboard.website.album.templates.preview-grid', ['templates' => $templates, 'selectedTemplate' => $templateId]);
+        return view('dashboard.website.album.templates.preview-grid', [
+            'templates' => $templates,
+            'selectedTemplate' => $templateId,
+            'hideControls' => $hideControls,
+            'nextDisabled' => $nextDisabled
+        ]);
     }
 
     /**
@@ -198,14 +207,14 @@ class AlbumController extends BaseController
         $album = $this->fbHelper->getAlbum($id);
         /** @var array $photos */
         $photos = $album->getPhotosByPage($page);
-        /** @var bool $hideControles */
-        $hideControles = $page == 1 && count($photos) < Album::PAGINATION_SIZE;
+        /** @var bool $hideControls */
+        $hideControls = $page == 1 && count($photos) < Album::PAGINATION_SIZE;
         /** @var bool $nextDisabled */
         $nextDisabled = count($photos) < Album::PAGINATION_SIZE;
 
         return view('dashboard.website.album.images.image-grid', [
             'photos' => $photos,
-            'hideControls' => $hideControles,
+            'hideControls' => $hideControls,
             'nextDisabled' => $nextDisabled
         ]);
     }

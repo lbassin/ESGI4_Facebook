@@ -23,19 +23,8 @@
             <div id="steps">
                 <div class="step-1">
                     <h2>Mes templates</h2>
-                    <div id="templates" class="preview-grid">
-                        @include('dashboard.website.album.templates.preview-grid', ['templates' => $templates, 'selectedTemplate' => $templateId])
-                    </div>
-                    <div class="options">
-                        <div class="pagination">
-                            <div class="controls">
-                                <span class="previous">Précedent</span>
-                                <span class="next">Suivant</span>
-                            </div>
-                        </div>
-                        <div class="submit">
-                            <span class="next">Valider</span>
-                        </div>
+                    <div class="ajax-updated">
+
                     </div>
                 </div>
 
@@ -109,17 +98,14 @@
         let currentImagePage = 1;
         let imagesEdited = {};
 
-        let templates = $('#templates');
-
         @if(!empty($templateId))
             templateId = '{{ $templateId }}';
         @endif
 
         initMenu();
-        initTemplatePagination();
-        initTemplatePreviews();
         initImageUpload();
         initSubmitEvent();
+        updateTemplatesGrid();
         updateImagesGrid();
 
         function showTemplates() {
@@ -168,7 +154,7 @@
         }
 
         function initTemplatePagination() {
-            let templatePagination = templates.next('.options').find('.pagination');
+            let templatePagination = $('#templates').next('.options').find('.pagination');
             templatePagination.find('.next').click(function () {
                 // TODO  : Check if last page
 
@@ -191,8 +177,9 @@
         }
 
         function updateTemplatesGrid(withLocalData) {
-            templates.fadeOut();
-            templates.next('.options').fadeOut();
+            let updatedDiv = $('.step-1').find('.ajax-updated');
+            console.log(updatedDiv);
+            updatedDiv.fadeOut();
 
             let url = '{{ route('dashboard.website.albums.templates.grid', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
 
@@ -203,17 +190,17 @@
 
             $.post(url, params).done(
                 function (response) {
-                    templates.html(response);
+                    updatedDiv.html(response);
                     initTemplatePreviews();
+                    initTemplatePagination();
 
-                    templates.fadeIn();
-                    templates.next('.options').fadeIn();
+                    updatedDiv.fadeIn();
                 }
             ).fail(errorAjax)
         }
 
         function initTemplatePreviews() {
-            templates.find('.preview').click(function () {
+            $('#templates').find('.preview').click(function () {
                 let target = $(this).data('target');
                 templateId = $(this).data('id');
 
