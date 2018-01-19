@@ -7,8 +7,6 @@ use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\WebsiteHelper;
 use App\Http\Helpers\UserHelper;
 use App\Model\Website;
-use Facebook\GraphNodes\GraphAlbum;
-use Facebook\GraphNodes\GraphUser;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
 
@@ -77,6 +75,11 @@ class WebsiteController extends BaseController
     public function homeAction(): View
     {
         return view('dashboard.website.home.index');
+    }
+
+    public function menuAction(): View
+    {
+        return view('dashboard.website.menu.index');
     }
 
     /**

@@ -13,6 +13,7 @@
             <div class="grid">
                 <ul>
                     <li><a href="{{ route('dashboard.website.home', ['subdomain' => $subdomain]) }}">Gestion de l'accueil</a></li>
+                    <li><a href="{{ route('dashboard.website.menu', ['subdomain' => $subdomain]) }}">Gestion du menu</a></li>
                     <li><a href="{{ route('dashboard.website.albums', ['subdomain' => $subdomain]) }}">Gestion des albums</a></li>
                     <li><a href="{{ route('dashboard.website.articles', ['subdomain' => $subdomain]) }}">Gestion des articles</a></li>
                     <li><a href="{{ route('dashboard.website.events', ['subdomain' => $subdomain]) }}">Gestion des evenements</a></li>
