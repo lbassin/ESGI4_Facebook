@@ -23,19 +23,8 @@
             <div id="steps">
                 <div class="step-1">
                     <h2>Mes templates</h2>
-                    <div id="templates" class="preview-grid">
-                        @include('dashboard.website.album.templates.preview-grid', ['templates' => $templates, 'selectedTemplate' => $templateId])
-                    </div>
-                    <div class="options">
-                        <div class="pagination">
-                            <div class="controls">
-                                <span class="previous">Précedent</span>
-                                <span class="next">Suivant</span>
-                            </div>
-                        </div>
-                        <div class="submit">
-                            <span class="next">Valider</span>
-                        </div>
+                    <div class="ajax-updated">
+
                     </div>
                 </div>
 
@@ -44,19 +33,8 @@
                         <h2>Mes images</h2>
                         <div class="action">Ajouter une photo <i class="fa fa-upload" aria-hidden="true"></i></div>
                     </div>
-                    <div id="images" class="preview-grid">
-                        @include('dashboard.website.album.images.image-grid', ['photos' => $album->getPhotosByPage(1)])
-                    </div>
-                    <div class="options">
-                        <div class="pagination">
-                            <div class="controls">
-                                <span class="previous">Précedent</span>
-                                <span class="next">Suivant</span>
-                            </div>
-                        </div>
-                        <div class="submit">
-                            <span class="next">Valider</span>
-                        </div>
+                    <div class="ajax-updated">
+
                     </div>
                 </div>
 
@@ -120,20 +98,15 @@
         let currentImagePage = 1;
         let imagesEdited = {};
 
-        let templates = $('#templates');
-        let images = $('#images');
-
         @if(!empty($templateId))
             templateId = '{{ $templateId }}';
         @endif
 
         initMenu();
-        initTemplatePagination();
-        initTemplatePreviews();
-        initImagePagination();
-        initImagePreviews();
         initImageUpload();
         initSubmitEvent();
+        updateTemplatesGrid();
+        updateImagesGrid();
 
         function showTemplates() {
             $('.step-1').fadeIn();
@@ -181,7 +154,7 @@
         }
 
         function initTemplatePagination() {
-            let templatePagination = templates.next('.options').find('.pagination');
+            let templatePagination = $('#templates').next('.options').find('.pagination');
             templatePagination.find('.next').click(function () {
                 // TODO  : Check if last page
 
@@ -204,8 +177,9 @@
         }
 
         function updateTemplatesGrid(withLocalData) {
-            templates.fadeOut();
-            templates.next('.options').fadeOut();
+            let updatedDiv = $('.step-1').find('.ajax-updated');
+            console.log(updatedDiv);
+            updatedDiv.fadeOut();
 
             let url = '{{ route('dashboard.website.albums.templates.grid', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
 
@@ -216,17 +190,17 @@
 
             $.post(url, params).done(
                 function (response) {
-                    templates.html(response);
+                    updatedDiv.html(response);
                     initTemplatePreviews();
+                    initTemplatePagination();
 
-                    templates.fadeIn();
-                    templates.next('.options').fadeIn();
+                    updatedDiv.fadeIn();
                 }
             ).fail(errorAjax)
         }
 
         function initTemplatePreviews() {
-            templates.find('.preview').click(function () {
+            $('#templates').find('.preview').click(function () {
                 let target = $(this).data('target');
                 templateId = $(this).data('id');
 
@@ -261,9 +235,12 @@
         }
 
         function initImagePagination() {
-            let imagePagination = images.next('.options').find('.pagination');
+            let imagePagination = $('#images').next('.options').find('.pagination');
+
             imagePagination.find('.next').click(function () {
-                // TODO  : Check if last page
+                if ($(this).attr('disabled')) {
+                    return;
+                }
 
                 currentImagePage += 1;
                 updateImagesGrid();
@@ -282,24 +259,24 @@
         }
 
         function updateImagesGrid() {
-            images.fadeOut();
-            images.next('.options').fadeOut();
+            let updatedDiv = $('.step-2').find('.ajax-updated');
+            updatedDiv.fadeOut();
 
             let url = '{{ route('dashboard.website.albums.images.grid', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
 
             $.post(url, {page: currentImagePage}).done(
                 function (response) {
-                    images.html(response);
+                    updatedDiv.html(response);
                     initImagePreviews();
+                    initImagePagination();
 
-                    images.fadeIn();
-                    images.next('.options').fadeIn();
+                    updatedDiv.fadeIn();
                 }
             ).fail(errorAjax)
         }
 
         function initImagePreviews() {
-            images.find('.visibility').each(function () {
+            $('#images').find('.visibility').each(function () {
                 let id = $(this).parent().data('id');
 
                 if (id in imagesEdited) {
@@ -335,7 +312,7 @@
                 setVisibility(visible, this);
             }
 
-            images.find('.view').click(function () {
+            $('#images').find('.view').click(function () {
                 let id = $(this).parent().data('id');
                 let url = '{{ route('dashboard.website.albums.images.preview', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
                 let imageModal = $('#image-modal');

@@ -88,7 +88,7 @@ class Album
     public function getPhotosByPage(int $page): array
     {
         /** @var string $query */
-        $query = $this->getPhotosGraphWithoutLimit() . '&limit=9';
+        $query = $this->getPhotosGraphWithoutLimit() . '&limit=' . \App\Model\Album::PAGINATION_SIZE;
         /** @var GraphEdge $graph */
         $graph = $this->fb->get($query)->getGraphEdge();
 

@@ -2562,6 +2562,10 @@ a:hover {
   min-width: 125px;
 }
 
+#album-edit #steps .options .pagination .hide {
+  display: none;
+}
+
 #album-edit #steps .options .submit {
   margin-top: 12px;
   float: right;
@@ -2653,26 +2657,26 @@ a:hover {
 
 #album-edit #steps form {
   /*input[type="text"],
-			textarea {
-				width: 45%;
-				max-width: 500px;
-				margin-top: 4px;
-				border-radius: 4px;
-				border: 1px solid #ccc;
-				padding: 6px 12px;
-				-webkit-transition: all 0.5s ease;
-				transition: all 0.5s ease;
-				@include MQ(M) {
-					width: 60%;
-				}
-				@include MQ(S) {
-					width: 90%;
-				}
-				&:focus,
-				&:active {
-					outline: none
-				}
-			}*/
+      textarea {
+          width: 45%;
+          max-width: 500px;
+          margin-top: 4px;
+          border-radius: 4px;
+          border: 1px solid #ccc;
+          padding: 6px 12px;
+          -webkit-transition: all 0.5s ease;
+          transition: all 0.5s ease;
+          @include MQ(M) {
+              width: 60%;
+          }
+          @include MQ(S) {
+              width: 90%;
+          }
+          &:focus,
+          &:active {
+              outline: none
+          }
+      }*/
 }
 
 #album-edit #steps form p {
@@ -2742,6 +2746,12 @@ a:hover {
 
 #upload-modal .image-preview img {
   max-width: 50%;
+}
+
+.album-status {
+  position: absolute;
+  top: 0;
+  right: 12px;
 }
 
 #details-modal img {
