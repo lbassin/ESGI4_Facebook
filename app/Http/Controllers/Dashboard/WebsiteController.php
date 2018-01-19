@@ -105,6 +105,7 @@ class WebsiteController extends BaseController
 
     /**
      * @return View
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function eventsAction(): View
     {
