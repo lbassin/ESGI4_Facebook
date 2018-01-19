@@ -208,9 +208,9 @@ class AlbumController extends BaseController
         /** @var array $photos */
         $photos = $album->getPhotosByPage($page);
         /** @var bool $hideControls */
-        $hideControls = $page == 1 && count($photos) < Album::PAGINATION_SIZE;
+        $hideControls = $page == 1 && count($photos) < Template::PAGINATION_SIZE;
         /** @var bool $nextDisabled */
-        $nextDisabled = count($photos) < Album::PAGINATION_SIZE;
+        $nextDisabled = count($photos) < Template::PAGINATION_SIZE;
 
         return view('dashboard.website.album.images.image-grid', [
             'photos' => $photos,

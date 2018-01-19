@@ -25,6 +25,10 @@ class Template extends Model
      *
      */
     const MOBILE_PREVIEW = 'mobile_preview';
+    /**
+     *
+     */
+    const PAGINATION_SIZE = 9;
 
     /**
      * @var string
