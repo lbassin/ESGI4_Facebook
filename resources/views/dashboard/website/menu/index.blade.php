@@ -31,34 +31,41 @@
                     <h2>Options</h2>
                     <form id="configurations" class="m-form">
                         <div class="input">
-                            <input type="text" name="title"
-                                   value="{{ isset($config[\App\Model\Album::TITLE]) ? $config[\App\Model\Album::TITLE] : '' }}"
+                            <input type="text" name="name"
+                                   value="{{ isset($config[\App\Model\Menu::NAME]) ? $config[\App\Model\Menu::NAME] : '' }}"
                                    required>
-                            <label>Titre de la page</label>
+                            <label>Nom du site</label>
                         </div>
-                        <div class="input">
-                            <input type="text" name="url"
-                                   value="{{ isset($config[\App\Model\Album::URL]) ? $config[\App\Model\Album::URL] : '' }}"
-                                   required>
-                            <label>URL</label>
-                        </div>
-                        <div class="input">
-                            <textarea name="description" cols="40"
-                                      rows="3">{{ isset($config[\App\Model\Album::DESCRIPTION]) ? $config[\App\Model\Album::DESCRIPTION] : '' }}</textarea>
-                            <label>Description</label>
-                        </div>
+                        <h3>Selectionnez les liens que vous voulez faire apparaitre</h3>
                         <div class="checkbox">
-
                             <label>
                                 <input type="checkbox"
-                                       name="hide_new" {{ !empty($config[\App\Model\Album::HIDE_NEW]) ? 'checked' : '' }}>
-                                Masquer les nouvelles images</label>
+                                       name="accueil" {{ !empty($config[\App\Model\Menu::ACCUEIL]) ? 'checked' : '' }}>
+                                Accueil</label>
                         </div>
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox"
-                                       name="visible" {{ !empty($config[\App\Model\Album::VISIBLE]) ? 'checked' : '' }}>
-                                Album visible</label>
+                                       name="albums" {{ !empty($config[\App\Model\Menu::ALBUMS]) ? 'checked' : '' }}>
+                                Albums</label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       name="articles" {{ !empty($config[\App\Model\Menu::ARTICLES]) ? 'checked' : '' }}>
+                                Articles</label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       name="events" {{ !empty($config[\App\Model\Menu::EVENTS]) ? 'checked' : '' }}>
+                                Evenements</label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       name="reviews" {{ !empty($config[\App\Model\Menu::REVIEWS]) ? 'checked' : '' }}>
+                                Avis</label>
                         </div>
                     </form>
                     <div class="options">
@@ -88,6 +95,7 @@
 
         initMenu();
         updateTemplatesGrid();
+        initSubmitEvent();
 
         function showTemplates() {
             $('.step-1').fadeIn();
@@ -176,7 +184,7 @@
             });
 
             $('#templates').next('.options').find('.submit').click(function () {
-                showImages();
+                showOptions();
             });
         }
 
@@ -196,6 +204,32 @@
 
                 $('.md-close').trigger('click');
             });
+        }
+
+        function initSubmitEvent() {
+            $('#configurations').next('.options').find('.submit').click(function () {
+                let options = $('#configurations').serializeArray();
+                let data = {
+                    'template': templateId,
+                    'options': options
+                };
+
+                let url = '{{ route('dashboard.website.menu.save', ['subdomain' => $subdomain]) }}';
+
+                $.post(url, data).done(
+                    function (response) {
+                        if (response.error) {
+                            addError(response.message);
+                            return;
+                        }
+
+                        addSuccess(response.message);
+                        setTimeout(function () {
+                            window.location.href = response.url;
+                        }, 750);
+                    }
+                ).fail(errorAjax);
+            })
         }
     </script>
 @endsection
