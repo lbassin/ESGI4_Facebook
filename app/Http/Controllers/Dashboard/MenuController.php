@@ -58,7 +58,8 @@ class MenuController extends BaseController
         $website = $this->websiteHelper->getCurrentWebsite();
         /** @var Menu $menu */
         $menu = Menu::where(Menu::WEBSITE_ID, $website->getId())->first();
-
+        /** @var string $templateId */
+        $templateId = '';
         /** @var array $config */
         $config = [];
         if (!empty($menu)) {
@@ -70,10 +71,12 @@ class MenuController extends BaseController
                 Menu::EVENTS => $menu->isVisible(Menu::EVENTS),
                 Menu::REVIEWS => $menu->isVisible(Menu::REVIEWS),
             ];
+
+            $templateId = $menu->getTemplateId();
         }
 
         return view('dashboard.website.menu.index', [
-            'templateId' => $menu->getTemplateId(),
+            'templateId' => $templateId,
             'config' => $config
         ]);
     }
