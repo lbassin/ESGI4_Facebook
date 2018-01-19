@@ -37,6 +37,9 @@
                             </div>
                             <div class="element-name">
                                 <span>{{ $album->getName() }}</span>
+                                @if($album->isVisible())
+                                    <div class="album-status"><i class="fa fa-eye" aria-hidden="true"></i></div>
+                                @endif
                             </div>
                         </article>
                     </a>
@@ -72,10 +75,10 @@
     @include('dashboard.website.partial.loader')
 
     <script>
-        $("#nav a").on('click', function() {
+        $("#nav a").on('click', function () {
             showLoader('loader');
         });
-        $(".grid a").on('click', function() {
+        $(".grid a").on('click', function () {
             showLoader('loader');
         });
 
@@ -99,7 +102,7 @@
                     if (response.error) {
                         addError(response.message);
                         setTimeout(function () {
-                                hideLoader('loader');
+                            hideLoader('loader');
                         }, 3500);
                         return;
                     }
