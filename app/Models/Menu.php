@@ -101,4 +101,18 @@ class Menu extends Model
     {
         return (bool)$this->{$link};
     }
+
+    /**
+     * @return array
+     */
+    public function getConfig(): array
+    {
+        return [
+            self::ACCUEIL => $this->isVisible(self::ACCUEIL),
+            self::ALBUMS => $this->isVisible(self::ALBUMS),
+            self::ARTICLES => $this->isVisible(self::ARTICLES),
+            self::EVENTS => $this->isVisible(self::EVENTS),
+            self::REVIEWS => $this->isVisible(self::REVIEWS),
+        ];
+    }
 }

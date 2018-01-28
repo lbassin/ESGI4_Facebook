@@ -131,6 +131,9 @@ class Website extends Model
         return $this->{Website::USER_ID};
     }
 
+    /**
+     * @return string
+     */
     public function getUpdatedAt(): string
     {
         /** @var Carbon $date */
@@ -161,6 +164,14 @@ class Website extends Model
     public function setAccessToken($accessToken)
     {
         $this->{self::ACCESS_TOKEN} = $accessToken;
+    }
+
+    /**
+     * @return Menu
+     */
+    public function getMenu(): Menu
+    {
+        return $this->hasOne(Menu::class, Menu::WEBSITE_ID)->first();
     }
 
 }

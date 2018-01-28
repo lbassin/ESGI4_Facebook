@@ -17,11 +17,21 @@
 <body>
 <nav>
     <ul>
-        <li><a href="{{ route('website.home', ['subdomain' => $subdomain]) }}">Accueil</a></li>
-        <li><a href="{{ route('website.albums', ['subdomain' => $subdomain]) }}">Albums</a></li>
-        <li><a href="{{ route('website.articles', ['subdomain' => $subdomain]) }}">Articles</a></li>
-        <li><a href="{{ route('website.events', ['subdomain' => $subdomain]) }}">Evenements</a></li>
-        <li><a href="{{ route('website.reviews', ['subdomain' => $subdomain]) }}">Avis</a></li>
+        @if(isset($menu[\App\Model\Menu::ACCUEIL]) && $menu[\App\Model\Menu::ACCUEIL])
+            <li><a href="{{ route('website.home', ['subdomain' => $subdomain]) }}">Accueil</a></li>
+        @endif
+        @if(isset($menu[\App\Model\Menu::ALBUMS]) && $menu[\App\Model\Menu::ALBUMS])
+            <li><a href="{{ route('website.albums', ['subdomain' => $subdomain]) }}">Albums</a></li>
+        @endif
+        @if(isset($menu[\App\Model\Menu::ARTICLES]) && $menu[\App\Model\Menu::ARTICLES])
+            <li><a href="{{ route('website.articles', ['subdomain' => $subdomain]) }}">Articles</a></li>
+        @endif
+        @if(isset($menu[\App\Model\Menu::EVENTS]) && $menu[\App\Model\Menu::EVENTS])
+            <li><a href="{{ route('website.events', ['subdomain' => $subdomain]) }}">Evenements</a></li>
+        @endif
+        @if(isset($menu[\App\Model\Menu::REVIEWS]) && $menu[\App\Model\Menu::REVIEWS])
+            <li><a href="{{ route('website.reviews', ['subdomain' => $subdomain]) }}">Avis</a></li>
+        @endif
     </ul>
 </nav>
 @yield('content')
