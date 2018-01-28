@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 $appHelper = app()->make(\App\Http\Helpers\AppHelper::class);
 
 // Admin dashboard
-Route::domain($appHelper->getAppUrlWithoutHttp(false))->group(function () {
+Route::domain($appHelper->getAppUrlWithoutHttp(false))->middleware(['HttpsProtocol'])->group(function () {
     Route::get('/', 'HomeController@indexAction')
         ->name('home');
 
