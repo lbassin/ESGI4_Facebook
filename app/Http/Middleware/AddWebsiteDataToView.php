@@ -6,6 +6,7 @@ namespace App\Http\Middleware;
 
 use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\WebsiteHelper;
+use App\Model\Menu;
 use App\Model\Website;
 use Closure;
 use Illuminate\Http\Request;
@@ -56,7 +57,13 @@ class AddWebsiteDataToView
     {
         /** @var string $subdomain */
         $subdomain = $request->route('subdomain');
+        /** @var Website $website */
+        $website = Website::where(Website::SUBDOMAIN, $subdomain)->first();
+        /** @var Menu $menu */
+        $menu = $website->getMenu();
+
         view()->share('subdomain', $subdomain);
+        view()->share('menu', $menu->getConfig());
 
         /** @var Website $website */
         $website = Website::where(Website::SUBDOMAIN, $subdomain)->first();

@@ -1,5 +1,8 @@
 <?php /** @var \App\Http\Helpers\UserHelper $userHelper */ ?>
 <div class="head">
+    <div class="logo">
+        Wawat
+    </div>
     <div class="user-pic">
         <img src="{{ $userHelper->getPicture() }}" alt="">
         <div class="head-menu">
