@@ -28,7 +28,7 @@ class HttpsProtocol
     {
         // This middleware fix https issues
         // It could be remove after the installation of https wildcard
-        if (env('APP_ENV') != 'prod') {
+        if (env('APP_ENV') != 'production') {
             return $next($request);
         }
 
