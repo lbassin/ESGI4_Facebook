@@ -8,6 +8,7 @@ use App\Http\Middleware\AuthAdmin;
 use App\Http\Middleware\AuthFb;
 use App\Http\Middleware\CanDisplayWebsite;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\HttpsProtocol;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\VerifyCsrfToken;
@@ -72,6 +73,7 @@ class Kernel extends HttpKernel
         'AddDashboardDataToView' => AddDashboardDataToView::class,
         'AddWebsiteDataToView' => AddWebsiteDataToView::class,
         'AuthAdmin' => AuthAdmin::class,
-        'CanDisplayWebsite' => CanDisplayWebsite::class
+        'CanDisplayWebsite' => CanDisplayWebsite::class,
+        'HttpsProtocol' => HttpsProtocol::class
     ];
 }
