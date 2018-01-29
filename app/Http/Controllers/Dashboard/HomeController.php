@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Model\HomeBlock;
 use App\Model\HomeCategory;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -43,6 +44,22 @@ class HomeController extends BaseController
 
         return view('dashboard.website.home.elements.blocks-grid', [
             'blocks' => $blocks
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return View
+     */
+    public function blockConfigAction(Request $request): View
+    {
+        /** @var string $blockId */
+        $blockId = $request->input('block');
+        /** @var HomeBlock $block */
+        $block = HomeBlock::where(HomeBlock::ID, $blockId)->first();
+
+        return view('dashboard.website.home.elements.config-modal', [
+            'block' => $block
         ]);
     }
 }

@@ -33,6 +33,7 @@
     @include('dashboard.website.partial.loader')
     @include('dashboard.website.partial.modal', ['name' => 'categories-modal'])
     @include('dashboard.website.partial.modal', ['name' => 'blocks-modal'])
+    @include('dashboard.website.partial.modal', ['name' => 'config-modal'])
     <div class="md-overlay">
         <button class="md-close">
             <i class="fa fa-times" aria-hidden="true"></i>
