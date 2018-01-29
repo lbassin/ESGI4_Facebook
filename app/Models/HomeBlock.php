@@ -5,16 +5,8 @@ declare(strict_types=1);
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Collection;
 
-/**
- * Class HomeCategory
- *
- * @author Laurent Bassin <laurent@bassin.info>
- */
-class HomeCategory extends Model
+class HomeBlock extends Model
 {
     /**
      *
@@ -32,7 +24,7 @@ class HomeCategory extends Model
     /**
      * @var string
      */
-    protected $table = 'home_category';
+    protected $table = 'home_block';
 
     /**
      * @var array
@@ -61,13 +53,5 @@ class HomeCategory extends Model
     public function getPreview(): string
     {
         return $this->{self::PREVIEW};
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getBlocks(): Collection
-    {
-        return $this->belongsToMany(HomeBlock::class, 'home_category_block', 'category_id', 'block_id')->get();
     }
 }
