@@ -31,7 +31,7 @@
     </div>
 
     @include('dashboard.website.partial.loader')
-    @include('dashboard.website.partial.modal', ['name' => 'elements-modal'])
+    @include('dashboard.website.partial.modal', ['name' => 'categories-modal'])
     <div class="md-overlay">
         <button class="md-close">
             <i class="fa fa-times" aria-hidden="true"></i>
@@ -39,19 +39,19 @@
     </div>
 
     <script>
-        $('.add-element').click(displayElementsModal);
+        $('.add-element').click(displayCategoriesModal);
 
-        function displayElementsModal() {
-            let updatedDiv = $('#elements-modal').find('.md-content');
+         function displayCategoriesModal() {
+            let updatedDiv = $('#categories-modal').find('.md-content');
             showLoader('loader');
 
-            let url = '{{ route('dashboard.website.home.elements', ['subdomain' => $subdomain]) }}';
+            let url = '{{ route('dashboard.website.home.categories', ['subdomain' => $subdomain]) }}';
 
             $.post(url).done(
                 function (response) {
                     updatedDiv.html(response);
 
-                    showModal('elements-modal');
+                    showModal('categories-modal');
                     setTimeout(hideLoader, 350, 'loader');
                 }
             ).fail(errorAjax)
