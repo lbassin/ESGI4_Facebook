@@ -13,5 +13,6 @@
         setTimeout(hideModal, 350, 'config-modal');
 
         addBlock($(this).serializeArray(), '{{ base64_encode($block->getSvgPreview()) }}');
+        hideLoader('loader');
     });
 </script>

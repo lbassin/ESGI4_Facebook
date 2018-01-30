@@ -46,6 +46,10 @@
     <script>
         let config = [];
 
+        JSON.parse('{!! $config ?? '{}' !!}').forEach(function (block) {
+            addBlock(block.config, block.preview);
+        });
+
         $('.add-element').click(displayCategoriesModal);
         $('.nav-create').click(saveConfig);
 
@@ -74,8 +78,6 @@
             blocksDiv.find('.empty').remove();
 
             blocksDiv.append(block);
-
-            hideLoader('loader');
         }
 
         function saveConfig() {
@@ -86,15 +88,20 @@
 
             $.post(url, data).done(
                 function (response) {
-                    console.log(response);
+                    if (response.error) {
+                        addError(response.message);
+                        setTimeout(function () {
+                            hideLoader('loader');
+                        }, 3500);
+                        return;
+                    }
+
+                    addSuccess(response.message);
+                    setTimeout(function () {
+                        window.location.href = response.url;
+                    }, 350);
                 }
             ).fail(errorAjax);
         }
     </script>
-
-    <?php
-            /** @var \App\Model\Website $website */
-            $website = \App\Model\Website::where('subdomain', 'axolo')->first();
-            $website->getHomeBlocks();
-    ?>
 @endsection

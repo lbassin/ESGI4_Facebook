@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Helpers\WebsiteHelper;
 use App\Model\HomeBlock;
 use App\Model\HomeCategory;
 use App\Model\Website;
@@ -11,7 +12,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 /**
@@ -21,6 +21,61 @@ use Illuminate\View\View;
  */
 class HomeController extends BaseController
 {
+    /**
+     * @var WebsiteHelper
+     */
+    private $websiteHelper;
+
+    /**
+     * HomeController constructor.
+     * @param WebsiteHelper $websiteHelper
+     */
+    public function __construct(WebsiteHelper $websiteHelper)
+    {
+        $this->websiteHelper = $websiteHelper;
+    }
+
+    /**
+     * @return View
+     */
+    public function indexAction(): View
+    {
+        /** @var Website $website */
+        $website = $this->websiteHelper->getCurrentWebsite();
+        /** @var array $blocks */
+        $blocks = $website->getHomeBlocks();
+        /** @var array $config */
+        $config = [];
+
+        /** @var WebsiteHomeBlock $block */
+        foreach ($blocks as $block) {
+
+            /** @var array $blockConfig */
+            $blockConfig = [];
+
+            foreach (json_decode($block->getConfig()) as $name => $value) {
+                $blockConfig[] = [
+                    'name' => $name,
+                    'value' => $value
+                ];
+            }
+
+            $blockConfig[] = [
+                'name' => 'block_id',
+                'value' => $block->getBlockId()
+            ];
+
+            $config[] = [
+                'config' => $blockConfig,
+                'preview' => base64_encode($block->getSvgPreview())
+            ];
+        }
+
+        return view('dashboard.website.home.index', [
+            'config' => json_encode($config)
+        ]);
+    }
+
     /**
      * @return View
      */
@@ -81,44 +136,54 @@ class HomeController extends BaseController
         $website = Website::where(Website::SUBDOMAIN, $subdomain)->first();
         /** @var Collection $oldBlocks */
         $oldBlocks = $website->getHomeBlocks();
-        /** @var array $config */
-        $config = [];
         /** @var int $order */
         $order = 0;
 
-        /** @var array $block */
-        foreach ($blocks as $blockData) {
-            foreach ($blockData as $data) {
-                if (!isset($data['name']) || !isset($data['value'])) {
-                    continue;
-                }
-
-                $config[$data['name']] = $data['value'];
-            }
-            $order += 1;
-        }
-
-        /** @var int $blockId */
-        $blockId = $config['block_id'] ?? -1;
-        unset($config['block_id']);
-
         WebsiteHomeBlock::where(WebsiteHomeBlock::WEBSITE_ID, $website->getId())->delete();
 
-        /** @var WebsiteHomeBlock $block */
-        $block = new WebsiteHomeBlock([
-            WebsiteHomeBlock::WEBSITE_ID => $website->getId(),
-            WebsiteHomeBlock::ORDER => $order,
-            WebsiteHomeBlock::CONFIG => json_encode($config),
-            WebsiteHomeBlock::BLOCK_ID => $blockId
-        ]);
+        if (empty($blocks)) {
+            $blocks = [];
+        }
 
-        try{
-            $block->save();
-        }catch (QueryException $exception){
+        try {
+            /** @var array $block */
+            foreach ($blocks as $blockData) {
+                /** @var array $config */
+                $config = [];
+
+                foreach ($blockData as $data) {
+                    if (!isset($data['name']) || !isset($data['value'])) {
+                        continue;
+                    }
+
+                    $config[$data['name']] = $data['value'];
+                }
+
+                /** @var int $blockId */
+                $blockId = $config['block_id'] ?? -1;
+                unset($config['block_id']);
+
+                /** @var WebsiteHomeBlock $block */
+                $block = new WebsiteHomeBlock([
+                    WebsiteHomeBlock::WEBSITE_ID => $website->getId(),
+                    WebsiteHomeBlock::ORDER => $order,
+                    WebsiteHomeBlock::CONFIG => json_encode($config),
+                    WebsiteHomeBlock::BLOCK_ID => $blockId
+                ]);
+
+                $block->save();
+                $order += 1;
+            }
+        } catch (QueryException $exception) {
+            die('ERROR');
             // TODO
+            // Cancel saved blocks
             // Save $oldBlocks
         }
 
-        die('ok');
+        return response()->json([
+            'message' => 'Page sauvegardée',
+            'url' => route('dashboard.website', ['subdomain' => $subdomain])
+        ]);
     }
 }
