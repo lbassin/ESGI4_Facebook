@@ -72,14 +72,6 @@ class WebsiteController extends BaseController
 
     /**
      * @return View
-     */
-    public function homeAction(): View
-    {
-        return view('dashboard.website.home.index');
-    }
-
-    /**
-     * @return View
      * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function albumsAction(): View

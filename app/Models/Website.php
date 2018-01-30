@@ -7,6 +7,7 @@ namespace App\Model;
 use App\Http\Helpers\FacebookHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * Class Website
@@ -171,7 +172,12 @@ class Website extends Model
      */
     public function getMenu(): Menu
     {
-        return $this->hasOne(Menu::class, Menu::WEBSITE_ID)->first();
+        return $this->hasOne(Menu::class, Menu::WEBSITE_ID)->get()->first();
+    }
+
+    public function getHomeBlocks(): Collection
+    {
+        return $this->hasMany(WebsiteHomeBlock::class, WebsiteHomeBlock::WEBSITE_ID, 'id')->get();
     }
 
 }

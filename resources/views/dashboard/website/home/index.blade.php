@@ -46,7 +46,12 @@
     <script>
         let config = [];
 
+        JSON.parse('{!! $config ?? '{}' !!}').forEach(function (block) {
+            addBlock(block.config, block.preview);
+        });
+
         $('.add-element').click(displayCategoriesModal);
+        $('.nav-create').click(saveConfig);
 
         function displayCategoriesModal() {
             let updatedDiv = $('#categories-modal').find('.md-content');
@@ -73,8 +78,30 @@
             blocksDiv.find('.empty').remove();
 
             blocksDiv.append(block);
+        }
 
-            hideLoader('loader');
+        function saveConfig() {
+            let url = '{{ route('dashboard.website.home.save', ['subdomain' => $subdomain]) }}';
+            let data = {
+                'blocks': config
+            };
+
+            $.post(url, data).done(
+                function (response) {
+                    if (response.error) {
+                        addError(response.message);
+                        setTimeout(function () {
+                            hideLoader('loader');
+                        }, 3500);
+                        return;
+                    }
+
+                    addSuccess(response.message);
+                    setTimeout(function () {
+                        window.location.href = response.url;
+                    }, 350);
+                }
+            ).fail(errorAjax);
         }
     </script>
 @endsection
