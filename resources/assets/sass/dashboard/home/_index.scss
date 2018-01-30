@@ -1,9 +1,9 @@
 #home-config {
     margin-top: 24px;
-    height: 450px;
     width: 55%;
     border: 1px solid #fff;
     border-radius: 5px;
+    background-color: #fff;
 
     @include MQ(M) {
         width: 75%;
@@ -14,21 +14,23 @@
     }
 
     h2 {
-        color: #fff;
         text-align: center;
         padding-top: 24px;
+        padding-bottom: 24px;
         font-size: 16px;
     }
 
-    .add-element {
-        width: 100%;
-        padding-top: 24px;
-        text-align: center;
-        color: #fff;
-        font-size: 24px;
+    & + .controls {
+        .add-element {
+            width: 100%;
+            padding-top: 24px;
+            text-align: center;
+            color: #fff;
+            font-size: 24px;
 
-        i{
-            cursor: pointer;
+            i {
+                cursor: pointer;
+            }
         }
     }
 }

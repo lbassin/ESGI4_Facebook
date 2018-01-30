@@ -23,7 +23,9 @@
         </div>
 
         <div id="home-config">
-            <h2>Vous n'avez aucun élément visible</h2>
+            <h2 class="empty">Vous n'avez aucun élément visible</h2>
+        </div>
+        <div class="controls">
             <div class="add-element">
                 <i class="fa fa-plus" aria-hidden="true"></i>
             </div>
@@ -34,6 +36,7 @@
     @include('dashboard.website.partial.modal', ['name' => 'categories-modal'])
     @include('dashboard.website.partial.modal', ['name' => 'blocks-modal'])
     @include('dashboard.website.partial.modal', ['name' => 'config-modal'])
+
     <div class="md-overlay">
         <button class="md-close">
             <i class="fa fa-times" aria-hidden="true"></i>
@@ -41,9 +44,11 @@
     </div>
 
     <script>
+        let config = [];
+
         $('.add-element').click(displayCategoriesModal);
 
-         function displayCategoriesModal() {
+        function displayCategoriesModal() {
             let updatedDiv = $('#categories-modal').find('.md-content');
             showLoader('loader');
 
@@ -57,6 +62,19 @@
                     setTimeout(hideLoader, 350, 'loader');
                 }
             ).fail(errorAjax);
+        }
+
+        function addBlock(blockConfig, preview) {
+            config.push(blockConfig);
+            preview = atob(preview);
+
+            let blocksDiv = $('#home-config');
+            let block = $('<div>').html(preview);
+            blocksDiv.find('.empty').remove();
+
+            blocksDiv.append(block);
+
+            hideLoader('loader');
         }
     </script>
 @endsection
