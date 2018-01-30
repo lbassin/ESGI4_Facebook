@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Helpers\FacebookHelper;
 use App\Http\Helpers\UserHelper;
 use App\Http\Helpers\WebsiteHelper;
+use App\Model\Menu;
+use App\Model\Template;
 use App\Model\Website;
 use Facebook\Exceptions\FacebookSDKException;
 use Illuminate\Database\QueryException;
@@ -162,6 +164,18 @@ class DashboardController extends BaseController
         if (!empty($error)) {
             return response()->json($error);
         }
+
+        /** @var Template $template */
+        $template = Template::where(Template::TYPE, Template::TYPE_MENU)->where(Template::DEFAULT, true)->first();
+        /** @var Menu $menu */
+        $menu = new Menu([
+            Menu::TEMPLATE_ID => $template->getId(),
+            Menu::WEBSITE_ID => $website->getId(),
+            Menu::NAME => $website->getName()
+        ]);
+
+        $menu->save();
+
 
         /** @var array $response */
         $response = [

@@ -71,10 +71,21 @@
 
         function addBlock(blockConfig, preview) {
             config.push(blockConfig);
-            preview = atob(preview);
+            preview = $.parseHTML(atob(preview));
+
+            console.log(preview);
 
             let blocksDiv = $('#home-config');
             let block = $('<div>').html(preview);
+
+            blockConfig.forEach(function (data) {
+                let element = block.find('svg').find('#' + data.name);
+
+                if (element) {
+                    element.text(data.value);
+                }
+            });
+
             blocksDiv.find('.empty').remove();
 
             blocksDiv.append(block);
