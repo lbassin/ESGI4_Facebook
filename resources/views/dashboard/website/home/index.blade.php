@@ -47,6 +47,7 @@
         let config = [];
 
         $('.add-element').click(displayCategoriesModal);
+        $('.nav-create').click(saveConfig);
 
         function displayCategoriesModal() {
             let updatedDiv = $('#categories-modal').find('.md-content');
@@ -76,5 +77,24 @@
 
             hideLoader('loader');
         }
+
+        function saveConfig() {
+            let url = '{{ route('dashboard.website.home.save', ['subdomain' => $subdomain]) }}';
+            let data = {
+                'blocks': config
+            };
+
+            $.post(url, data).done(
+                function (response) {
+                    console.log(response);
+                }
+            ).fail(errorAjax);
+        }
     </script>
+
+    <?php
+            /** @var \App\Model\Website $website */
+            $website = \App\Model\Website::where('subdomain', 'axolo')->first();
+            $website->getHomeBlocks();
+    ?>
 @endsection

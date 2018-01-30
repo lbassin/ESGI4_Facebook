@@ -55,6 +55,9 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))->middleware(['HttpsProtoc
         Route::post('/dashboard/website/{subdomain}/home/block/config', 'Dashboard\HomeController@blockConfigAction')
             ->name('dashboard.website.home.block.config');
 
+        Route::post('/dashboard/website/{subdomain}/home/save', 'Dashboard\HomeController@saveAction')
+            ->name('dashboard.website.home.save');
+
         Route::get('/dashboard/website/{subdomain}/menu', 'Dashboard\MenuController@indexAction')
             ->name('dashboard.website.menu');
 
