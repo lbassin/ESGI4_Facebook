@@ -1,0 +1,36 @@
+#home-config {
+    margin-top: 24px;
+    width: 55%;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    background-color: #fff;
+
+    @include MQ(M) {
+        width: 75%;
+    }
+
+    @include MQ(S) {
+        width: 85%;
+    }
+
+    h2 {
+        text-align: center;
+        padding-top: 24px;
+        padding-bottom: 24px;
+        font-size: 16px;
+    }
+
+    & + .controls {
+        .add-element {
+            width: 100%;
+            padding-top: 24px;
+            text-align: center;
+            color: #fff;
+            font-size: 24px;
+
+            i {
+                cursor: pointer;
+            }
+        }
+    }
+}

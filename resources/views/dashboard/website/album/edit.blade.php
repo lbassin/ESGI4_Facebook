@@ -180,7 +180,6 @@
 
         function updateTemplatesGrid(withLocalData) {
             let updatedDiv = $('.step-1').find('.ajax-updated');
-            console.log(updatedDiv);
             updatedDiv.fadeOut();
 
             let url = '{{ route('dashboard.website.albums.templates.grid', ['subdomain' => $subdomain, 'id' => $album->getId()]) }}';
