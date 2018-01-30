@@ -41,6 +41,10 @@ class Template extends Model
      *
      */
     const TYPE_MENU = 2;
+    /**
+     *
+     */
+    const DEFAULT = 'default';
 
     /**
      * @var string
