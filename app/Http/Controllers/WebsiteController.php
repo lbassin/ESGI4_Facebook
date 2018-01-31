@@ -46,11 +46,17 @@ class WebsiteController extends BaseController
     }
 
     /**
+     * @param string $subdomain
      * @return View
      */
-    public function indexAction(): View
+    public function indexAction(string $subdomain): View
     {
-        return view('website.index');
+        /** @var Website $website */
+        $website = Website::where(Website::SUBDOMAIN, $subdomain)->first();
+
+        return view('website.index', [
+            'blocks' => $website->getHomeBlocks()
+        ]);
     }
 
     /**

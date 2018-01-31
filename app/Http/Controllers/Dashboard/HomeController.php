@@ -53,7 +53,7 @@ class HomeController extends BaseController
             /** @var array $blockConfig */
             $blockConfig = [];
 
-            foreach (json_decode($block->getConfig()) as $name => $value) {
+            foreach ($block->getConfig() as $name => $value) {
                 $blockConfig[] = [
                     'name' => $name,
                     'value' => $value
