@@ -37,11 +37,10 @@ class Kernel extends HttpKernel
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
-        TrustProxies::class,
-        CookieConsentMiddleware::class
+        TrustProxies::class
     ];
 
-    /**T
+    /**
      * The application's route middleware groups.
      *
      * @var array
@@ -74,6 +73,7 @@ class Kernel extends HttpKernel
         'AddWebsiteDataToView' => AddWebsiteDataToView::class,
         'AuthAdmin' => AuthAdmin::class,
         'CanDisplayWebsite' => CanDisplayWebsite::class,
-        'HttpsProtocol' => HttpsProtocol::class
+        'HttpsProtocol' => HttpsProtocol::class,
+        'CookieConsent' => CookieConsentMiddleware::class
     ];
 }
