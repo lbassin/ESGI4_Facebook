@@ -33,4 +33,51 @@
             }
         }
     }
+
+    & > div{
+        position: relative;
+    }
+
+    .overlay{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        .controls{
+            width: 17%;
+            height: 100%;
+            float: right;
+
+            display: flex;
+            flex-direction: column;
+
+            background-color: rgba(140, 140, 140, 0.4);
+            border-bottom: 1px solid #fff;
+
+            @include MQ(M){
+                width: 22%;
+            }
+
+            div{
+                height: 50%;
+                width: 100%;
+                text-align: center;
+                font-size: 2.4em;
+                position: relative;
+                cursor: pointer;
+
+                @include MQ(M){
+                    font-size: 1.8em;
+                }
+
+                i{
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%) translateX(-50%);
+                }
+            }
+        }
+    }
 }

@@ -70,25 +70,29 @@
         }
 
         function addBlock(blockConfig, preview) {
-            config.push(blockConfig);
             preview = $.parseHTML(atob(preview));
 
-            console.log(preview);
-
             let blocksDiv = $('#home-config');
+            let overlay = $('<div>').addClass('overlay');
+            let controls = $('<div>').addClass('controls');
+            let controlEdit = $('<div>').addClass('edit');
+            let controlRemove = $('<div>').addClass('remove');
             let block = $('<div>').html(preview);
 
-            blockConfig.forEach(function (data) {
-                let element = block.find('svg').find('#' + data.name);
+            controlEdit.html('<i class="fa fa-pencil"></i>');
+            controlRemove.html('<i class="fa fa-trash" aria-hidden="true"></i>');
+            controlRemove.data('target', config.length);
 
-                if (element) {
-                    element.text(data.value);
-                }
-            });
+            controls.append(controlEdit).append(controlRemove);
+            overlay.append(controls);
+            block.append(overlay);
+            $(block).attr('data-id', config.length);
 
             blocksDiv.find('.empty').remove();
 
+            $(controlRemove).on('click', removeBlock);
             blocksDiv.append(block);
+            config.push(blockConfig);
         }
 
         function saveConfig() {
@@ -113,6 +117,15 @@
                     }, 350);
                 }
             ).fail(errorAjax);
+        }
+
+        function removeBlock() {
+            let id = $(this).data('target');
+            let target = $('[data-id="'+id+'"]');
+
+            target.remove();
+
+            config.splice(id, 1);
         }
     </script>
 @endsection
