@@ -14,13 +14,5 @@
             margin: auto;
             text-align: center;
         }
-
-        .wrapper .logo {
-            margin-top: 15%;
-        }
-
-        h1, h2 {
-            font-family: 'Montserrat', sans-serif;
-        }
     </style>
 @endsection

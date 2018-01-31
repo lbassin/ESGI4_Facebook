@@ -1,1 +1,1 @@
-<h1>{{ $title ?? '' }}</h1>
+<h1 style="font-family: 'Montserrat', sans-serif;margin-top: 75px;">{{ $title ?? '' }}</h1>
