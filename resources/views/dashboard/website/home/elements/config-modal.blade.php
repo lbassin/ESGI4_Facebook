@@ -3,6 +3,10 @@
 <form action="" name="block-config">
     @include('dashboard.website.home.elements.config.' . $block->getConfigPath())
     <input type="hidden" name="block_id" value="{{ $block->getId() }}">
+    @if(isset($blockPosition))
+        <input type="hidden" name="position" value="{{ $blockPosition }}">
+    @endif
+    <button>Valider</button>
 </form>
 
 <script>

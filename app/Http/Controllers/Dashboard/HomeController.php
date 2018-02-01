@@ -121,6 +121,8 @@ class HomeController extends BaseController
         $configReceived = $request->input('config') ?? [];
         /** @var array $config */
         $config = [];
+        /** @var int $blockPosition */
+        $blockPosition = $request->input('position') ?? null;
 
         foreach ($configReceived as $data) {
             if (!isset($data['name']) || !isset($data['value'])) {
@@ -132,7 +134,8 @@ class HomeController extends BaseController
 
         return view('dashboard.website.home.elements.config-modal', [
             'block' => $block,
-            'config' => $config
+            'config' => $config,
+            'blockPosition' => $blockPosition
         ]);
     }
 

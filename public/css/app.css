@@ -374,7 +374,6 @@ body {
   animation-delay: 0.5s;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
-  overflow-x: hidden;
 }
 
 .wrapper .title {

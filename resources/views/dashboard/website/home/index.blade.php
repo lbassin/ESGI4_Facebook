@@ -70,6 +70,20 @@
         }
 
         function addBlock(blockConfig, preview) {
+
+            let position = -1;
+            blockConfig.forEach(function (data, index) {
+                if (data.name === 'position') {
+                    position = data.value;
+                    blockConfig.splice(index, 1);
+                }
+            });
+
+            if (position >= 0) {
+                config[position] = blockConfig;
+                return;
+            }
+
             preview = $.parseHTML(atob(preview));
 
             let blocksDiv = $('#home-config');
@@ -87,6 +101,7 @@
             controls.append(controlEdit).append(controlRemove);
             overlay.append(controls);
             block.append(overlay);
+
             $(block).attr('data-id', config.length);
 
             blocksDiv.find('.empty').remove();
@@ -134,8 +149,8 @@
             let blockConfig = config[id];
 
             let blockId = 0;
-            blockConfig.forEach(function(data){
-                if(data.name === 'block_id'){
+            blockConfig.forEach(function (data) {
+                if (data.name === 'block_id') {
                     blockId = data.value;
                 }
             });
@@ -146,7 +161,7 @@
             let updatedDiv = $('#config-modal').find('.md-content');
             let url = '{{ route('dashboard.website.home.block.config', ['subdomain' => $subdomain]) }}';
 
-            $.post(url, {block_id: blockId, config: blockConfig}).done(
+            $.post(url, {block_id: blockId, config: blockConfig, position: id}).done(
                 function (response) {
                     updatedDiv.html(response);
 
