@@ -22,7 +22,7 @@
         let url = '{{ route('dashboard.website.home.block.config', ['subdomain' => $subdomain]) }}';
         let blockId = $(this).parent().data('id');
 
-        $.post(url, {block: blockId}).done(
+        $.post(url, {block_id: blockId}).done(
             function (response) {
                 updatedDiv.html(response);
 

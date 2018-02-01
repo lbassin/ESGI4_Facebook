@@ -79,9 +79,10 @@
             let controlRemove = $('<div>').addClass('remove');
             let block = $('<div>').html(preview);
 
+            controls.data('target', config.length);
+
             controlEdit.html('<i class="fa fa-pencil"></i>');
             controlRemove.html('<i class="fa fa-trash" aria-hidden="true"></i>');
-            controlRemove.data('target', config.length);
 
             controls.append(controlEdit).append(controlRemove);
             overlay.append(controls);
@@ -90,6 +91,7 @@
 
             blocksDiv.find('.empty').remove();
 
+            $(controlEdit).on('click', editBlock);
             $(controlRemove).on('click', removeBlock);
             blocksDiv.append(block);
             config.push(blockConfig);
@@ -97,9 +99,7 @@
 
         function saveConfig() {
             let url = '{{ route('dashboard.website.home.save', ['subdomain' => $subdomain]) }}';
-            let data = {
-                'blocks': config
-            };
+            let data = {'blocks': config};
 
             $.post(url, data).done(
                 function (response) {
@@ -120,12 +120,40 @@
         }
 
         function removeBlock() {
-            let id = $(this).data('target');
-            let target = $('[data-id="'+id+'"]');
+            let id = $(this).parent().data('target');
+            let target = $('[data-id="' + id + '"]');
 
             target.remove();
 
             config.splice(id, 1);
+        }
+
+        function editBlock() {
+            let id = $(this).parent().data('target');
+
+            let blockConfig = config[id];
+
+            let blockId = 0;
+            blockConfig.forEach(function(data){
+                if(data.name === 'block_id'){
+                    blockId = data.value;
+                }
+            });
+
+            showLoader('loader');
+            setTimeout(hideModal, 350, 'blocks-modal');
+
+            let updatedDiv = $('#config-modal').find('.md-content');
+            let url = '{{ route('dashboard.website.home.block.config', ['subdomain' => $subdomain]) }}';
+
+            $.post(url, {block_id: blockId, config: blockConfig}).done(
+                function (response) {
+                    updatedDiv.html(response);
+
+                    showModal('config-modal');
+                    setTimeout(hideLoader, 350, 'loader');
+                }
+            ).fail(errorAjax);
         }
     </script>
 @endsection
