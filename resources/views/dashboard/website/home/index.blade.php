@@ -139,8 +139,8 @@
             let target = $('[data-id="' + id + '"]');
 
             target.remove();
-
-            config.splice(id, 1);
+            // config.splice(id, 1);
+            config[id] = [];
         }
 
         function editBlock() {
