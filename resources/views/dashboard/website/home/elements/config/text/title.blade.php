@@ -1,1 +1,1 @@
-<label>Titre <input type="text" name="title"></label>
+<label>Titre <input type="text" name="title" value="{{ $config['title'] ?? '' }}"></label>

@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="wrapper">
-        <div class="logo">
-            <h1>Wawat</h1>
-            <h2>The futur is now, old man</h2>
-        </div>
+        <?php /** @var \App\Model\WebsiteHomeBlock $block */ ?>
+        @foreach($blocks as $block)
+            @include('website.home.templates.' . $block->getBlock()->getViewPath(), $block->getConfig())
+        @endforeach
     </div>
 
     <style>
@@ -13,14 +13,6 @@
             width: 90%;
             margin: auto;
             text-align: center;
-        }
-
-        .wrapper .logo {
-            margin-top: 15%;
-        }
-
-        h1, h2 {
-            font-family: 'Montserrat', sans-serif;
         }
     </style>
 @endsection

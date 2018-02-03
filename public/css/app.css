@@ -374,7 +374,6 @@ body {
   animation-delay: 0.5s;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
-  overflow-x: hidden;
 }
 
 .wrapper .title {
@@ -2105,6 +2104,61 @@ a:hover {
 
 #home-config + .controls .add-element i {
   cursor: pointer;
+}
+
+#home-config > div {
+  position: relative;
+}
+
+#home-config .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#home-config .overlay .controls {
+  width: 17%;
+  height: 100%;
+  float: right;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: rgba(140, 140, 140, 0.4);
+  border-bottom: 1px solid #fff;
+}
+
+@media only screen and (max-width: 768px) {
+  #home-config .overlay .controls {
+    width: 22%;
+  }
+}
+
+#home-config .overlay .controls div {
+  height: 50%;
+  width: 100%;
+  text-align: center;
+  font-size: 2.4em;
+  position: relative;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  #home-config .overlay .controls div {
+    font-size: 1.8em;
+  }
+}
+
+#home-config .overlay .controls div i {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%) translateX(-50%);
+          transform: translateY(-50%) translateX(-50%);
 }
 
 .list-header-dashboard {

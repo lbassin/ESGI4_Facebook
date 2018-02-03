@@ -53,7 +53,7 @@ class HomeController extends BaseController
             /** @var array $blockConfig */
             $blockConfig = [];
 
-            foreach (json_decode($block->getConfig()) as $name => $value) {
+            foreach ($block->getConfig() as $name => $value) {
                 $blockConfig[] = [
                     'name' => $name,
                     'value' => $value
@@ -114,12 +114,28 @@ class HomeController extends BaseController
     public function blockConfigAction(Request $request): View
     {
         /** @var string $blockId */
-        $blockId = $request->input('block');
+        $blockId = $request->input('block_id');
         /** @var HomeBlock $block */
         $block = HomeBlock::where(HomeBlock::ID, $blockId)->first();
+        /** @var array $configReceived */
+        $configReceived = $request->input('config') ?? [];
+        /** @var array $config */
+        $config = [];
+        /** @var int $blockPosition */
+        $blockPosition = $request->input('position') ?? null;
+
+        foreach ($configReceived as $data) {
+            if (!isset($data['name']) || !isset($data['value'])) {
+                continue;
+            }
+
+            $config[$data['name']] = $data['value'];
+        }
 
         return view('dashboard.website.home.elements.config-modal', [
-            'block' => $block
+            'block' => $block,
+            'config' => $config,
+            'blockPosition' => $blockPosition
         ]);
     }
 

@@ -45,11 +45,11 @@ class WebsiteHomeBlock extends Model
     protected $fillable = [self::ID, self::WEBSITE_ID, self::BLOCK_ID, self::CONFIG, self::ORDER];
 
     /**
-     * @return string
+     * @return array
      */
-    public function getConfig(): string
+    public function getConfig(): array
     {
-        return $this->{self::CONFIG};
+        return json_decode($this->{self::CONFIG}, true);
     }
 
     /**
@@ -67,5 +67,13 @@ class WebsiteHomeBlock extends Model
     public function getBlockId(): int
     {
         return $this->{self::BLOCK_ID};
+    }
+
+    /**
+     * @return HomeBlock
+     */
+    public function getBlock(): HomeBlock
+    {
+        return $this->hasOne(HomeBlock::class, HomeBlock::ID, self::BLOCK_ID)->get()->first();
     }
 }

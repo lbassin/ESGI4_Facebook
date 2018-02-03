@@ -70,32 +70,51 @@
         }
 
         function addBlock(blockConfig, preview) {
-            config.push(blockConfig);
-            preview = $.parseHTML(atob(preview));
 
-            console.log(preview);
-
-            let blocksDiv = $('#home-config');
-            let block = $('<div>').html(preview);
-
-            blockConfig.forEach(function (data) {
-                let element = block.find('svg').find('#' + data.name);
-
-                if (element) {
-                    element.text(data.value);
+            let position = -1;
+            blockConfig.forEach(function (data, index) {
+                if (data.name === 'position') {
+                    position = data.value;
+                    blockConfig.splice(index, 1);
                 }
             });
 
+            if (position >= 0) {
+                config[position] = blockConfig;
+                return;
+            }
+
+            preview = $.parseHTML(atob(preview));
+
+            let blocksDiv = $('#home-config');
+            let overlay = $('<div>').addClass('overlay');
+            let controls = $('<div>').addClass('controls');
+            let controlEdit = $('<div>').addClass('edit');
+            let controlRemove = $('<div>').addClass('remove');
+            let block = $('<div>').html(preview);
+
+            controls.data('target', config.length);
+
+            controlEdit.html('<i class="fa fa-pencil"></i>');
+            controlRemove.html('<i class="fa fa-trash" aria-hidden="true"></i>');
+
+            controls.append(controlEdit).append(controlRemove);
+            overlay.append(controls);
+            block.append(overlay);
+
+            $(block).attr('data-id', config.length);
+
             blocksDiv.find('.empty').remove();
 
+            $(controlEdit).on('click', editBlock);
+            $(controlRemove).on('click', removeBlock);
             blocksDiv.append(block);
+            config.push(blockConfig);
         }
 
         function saveConfig() {
             let url = '{{ route('dashboard.website.home.save', ['subdomain' => $subdomain]) }}';
-            let data = {
-                'blocks': config
-            };
+            let data = {'blocks': config};
 
             $.post(url, data).done(
                 function (response) {
@@ -111,6 +130,43 @@
                     setTimeout(function () {
                         window.location.href = response.url;
                     }, 350);
+                }
+            ).fail(errorAjax);
+        }
+
+        function removeBlock() {
+            let id = $(this).parent().data('target');
+            let target = $('[data-id="' + id + '"]');
+
+            target.remove();
+            // config.splice(id, 1);
+            config[id] = [];
+        }
+
+        function editBlock() {
+            let id = $(this).parent().data('target');
+
+            let blockConfig = config[id];
+
+            let blockId = 0;
+            blockConfig.forEach(function (data) {
+                if (data.name === 'block_id') {
+                    blockId = data.value;
+                }
+            });
+
+            showLoader('loader');
+            setTimeout(hideModal, 350, 'blocks-modal');
+
+            let updatedDiv = $('#config-modal').find('.md-content');
+            let url = '{{ route('dashboard.website.home.block.config', ['subdomain' => $subdomain]) }}';
+
+            $.post(url, {block_id: blockId, config: blockConfig, position: id}).done(
+                function (response) {
+                    updatedDiv.html(response);
+
+                    showModal('config-modal');
+                    setTimeout(hideLoader, 350, 'loader');
                 }
             ).fail(errorAjax);
         }

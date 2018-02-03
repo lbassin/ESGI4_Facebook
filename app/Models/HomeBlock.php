@@ -87,4 +87,12 @@ class HomeBlock extends Model
     {
         return $this->{self::SVG_PREVIEW};
     }
+
+    /**
+     * @return string
+     */
+    public function getViewPath(): string
+    {
+        return $this->{self::VIEW_FILE};
+    }
 }
