@@ -76,6 +76,5 @@ class Kernel extends HttpKernel
         'CanDisplayWebsite' => CanDisplayWebsite::class,
         'HttpsProtocol' => HttpsProtocol::class,
         'CookieConsent' => CookieConsentMiddleware::class,
-        'HttpProtocol' => HttpProtocol::class
     ];
 }

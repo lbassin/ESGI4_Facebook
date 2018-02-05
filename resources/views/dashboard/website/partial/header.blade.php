@@ -6,7 +6,7 @@
     <div class="user-pic">
         <img src="{{ $userHelper->getPicture() }}" alt="">
         <div class="head-menu">
-            <a href="{{ route('website.home', ['subdomain' => $subdomain]) }}">Voir mon site</a>
+            <a href="{{ str_replace('https://', 'http://', route('website.home', ['subdomain' => $subdomain])) /** I'm sorry */ }}">Voir mon site</a>
             <a href="{{ route('dashboard') }}">Dashboard</a>
             <a href="{{ route('docs') }}">Documentation</a>
             <a href="{{ route('support') }}">Support</a>
