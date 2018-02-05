@@ -8,6 +8,7 @@ use App\Http\Middleware\AuthAdmin;
 use App\Http\Middleware\AuthFb;
 use App\Http\Middleware\CanDisplayWebsite;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\HttpProtocol;
 use App\Http\Middleware\HttpsProtocol;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
@@ -74,6 +75,7 @@ class Kernel extends HttpKernel
         'AuthAdmin' => AuthAdmin::class,
         'CanDisplayWebsite' => CanDisplayWebsite::class,
         'HttpsProtocol' => HttpsProtocol::class,
-        'CookieConsent' => CookieConsentMiddleware::class
+        'CookieConsent' => CookieConsentMiddleware::class,
+        'HttpProtocol' => HttpProtocol::class
     ];
 }
