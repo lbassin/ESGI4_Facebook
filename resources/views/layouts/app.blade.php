@@ -39,6 +39,7 @@ $websiteHelper = resolve('App\Http\Helpers\WebsiteHelper');
     };
 
     window.URLs = {
+        login: '{{ route('login') }}',
         dashboard: '{{ route('dashboard') }}',
         websiteAdmin: '{{ route('dashboard.website', ['subdomain' => '']) }}',
         albums: {
