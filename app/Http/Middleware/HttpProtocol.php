@@ -12,11 +12,11 @@ use Illuminate\Http\Request;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 
 /**
- * Class HttpsProtocol
+ * Class HttpProtocol
  *
  * @author Laurent Bassin <laurent@bassin.info>
  */
-class HttpsProtocol
+class HttpProtocol
 {
 
     /**
@@ -32,10 +32,10 @@ class HttpsProtocol
             return $next($request);
         }
 
-        if (!$request->secure()) {
-            /** @var string $secureUrl */
-            $secureUrl = url($request->path(), [], true);
-            return response()->redirectTo($secureUrl);
+        if ($request->secure()) {
+            /** @var string $unsecureUrl */
+            $unsecureUrl = url($request->path(), [], false);
+            return response()->redirectTo($unsecureUrl);
         }
 
         return $next($request);
