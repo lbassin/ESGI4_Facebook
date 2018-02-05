@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\FacebookHelper;
+use App\Http\Middleware\AuthFb;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
@@ -17,6 +20,16 @@ use Illuminate\View\View;
  */
 class HomeController extends BaseController
 {
+    /**
+     * @var Store
+     */
+    private $session;
+
+    public function __construct(Store $session)
+    {
+        $this->session = $session;
+    }
+
     /**
      * @return View
      */
@@ -39,6 +52,15 @@ class HomeController extends BaseController
     public function supportAction(): View
     {
         return view('home.support');
+    }
+
+    public function demoAction(): RedirectResponse
+    {
+        $this->session->flush();
+        $this->session->put(FacebookHelper::FB_TOKEN_KEY, env('DEMO_TOKEN'));
+
+
+        return response()->redirectToRoute('dashboard');
     }
 
     /**
