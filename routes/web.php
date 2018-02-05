@@ -24,6 +24,9 @@ Route::domain($appHelper->getAppUrlWithoutHttp(false))
         Route::get('/demo', 'HomeController@demoAction')
             ->name('demo');
 
+        Route::get('login', 'HomeController@loginAction')
+            ->name('login');
+
         Route::post('/support', 'HomeController@supportSubmitAction')
             ->name('support.submit');
 

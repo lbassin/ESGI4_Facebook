@@ -59,6 +59,12 @@ class HomeController extends BaseController
         $this->session->flush();
         $this->session->put(FacebookHelper::FB_TOKEN_KEY, env('DEMO_TOKEN'));
 
+        return response()->redirectToRoute('dashboard');
+    }
+
+    public function loginAction(): RedirectResponse
+    {
+        $this->session->flush();
 
         return response()->redirectToRoute('dashboard');
     }

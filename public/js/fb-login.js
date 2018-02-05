@@ -84,7 +84,7 @@ function addFacebookLoginEvent() {
     $('.login-fb').click(function () {
         FB.login(function (result) {
             if (result.status === 'connected') {
-                window.location.href = window.URLs.dashboard;
+                window.location.href = window.URLs.login;
             } else {
                 alert('Error');
             }

@@ -216,7 +216,7 @@ class DashboardController extends BaseController
         if (!empty($redirectTo)) {
             $redirectTo = url($redirectTo);
         } else {
-            $redirectTo = url(route('dashboard'));
+            $redirectTo = url(route('login'));
         }
 
         $this->session->forget(FacebookHelper::FB_TOKEN_KEY);
