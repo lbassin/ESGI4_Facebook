@@ -72,7 +72,7 @@ class HomeController extends BaseController
         }
 
         return view('dashboard.website.home.index', [
-            'config' => json_encode($config)
+            'config' => base64_encode(json_encode($config))
         ]);
     }
 

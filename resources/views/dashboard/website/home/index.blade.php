@@ -45,8 +45,9 @@
 
     <script>
         let config = [];
+        let savedConfig = atob("{{ $config }}");
 
-        JSON.parse('{!! $config ?? '{}' !!}').forEach(function (block) {
+        JSON.parse(savedConfig).forEach(function (block) {
             addBlock(block.config, block.preview);
         });
 
@@ -139,7 +140,6 @@
             let target = $('[data-id="' + id + '"]');
 
             target.remove();
-            // config.splice(id, 1);
             config[id] = [];
         }
 
