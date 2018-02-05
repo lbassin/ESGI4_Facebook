@@ -136,8 +136,10 @@ class WebsiteController extends BaseController
      */
     public function viewAction(Request $request, string $subdomain, string $url): View
     {
+        /** @var Website $website */
+        $website = Website::where(Website::SUBDOMAIN, $subdomain)->first();
         /** @var Album $album */
-        $album = Album::where(Album::URL, $url)->first();
+        $album = Album::where(Album::URL, $url)->where(Album::WEBSITE_ID, $website->getId())->first();
         if (!empty($album)) {
             return $this->viewAlbum($album);
         }
